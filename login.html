@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>ログイン画面</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="login-container">
+
+    <img src="image/ロゴ.png" id="logo">
+
+    <form id="loginForm">
+        <label for="email">メールアドレス</label>
+        <input type="email" id="email" required>
+
+        <label for="password">パスワード</label>
+        <input type="password" id="password" required>
+
+        <a href="forgot.html" class="forgot">
+            パスワードを忘れた場合
+        </a>
+
+        <button type="submit">ログイン</button>
+    </form>
+
+    <h2>－または－</h2>
+
+    <button type="button" id="googleLogin">
+        Googleでログイン
+    </button>
+
+    <button type="button" id="appleLogin">
+        Appleでログイン
+    </button>
+
+    <p>アカウントをお持ちでないですか？</p>
+
+    <button type="button" id="register">
+        新規登録
+    </button>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
