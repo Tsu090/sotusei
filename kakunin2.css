@@ -1,0 +1,207 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Noto Sans JP", sans-serif;
+    background-color: #ffffff;
+    color: #222;
+}
+
+/* 全体の配置 */
+.container {
+    width: 90%;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 30px 0 50px;
+}
+
+/* ロゴ */
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 200px;
+    height: 190px;
+    object-fit: contain;
+}
+
+/* タイトル */
+h1 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: normal;
+    margin-bottom: 30px;
+}
+
+/* 説明文 */
+.description {
+    text-align: center;
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.8;
+    margin-bottom: 65px;
+}
+
+/* 入力内容エリア */
+.confirm-area {
+    width: 100%;
+}
+
+/* イコール線 */
+.equal-line {
+    width: 100%;
+    height: 8px;
+    border-top: 3px double #777;
+    border-bottom: 3px double #777;
+    margin: 0 0 20px;
+}
+
+/* 各項目 */
+.confirm-item {
+    width: 100%;
+    padding: 12px 0 20px;
+}
+
+/* 項目名 */
+.item-title {
+    font-size: 19px;
+    margin-bottom: 8px;
+    font-weight: normal;
+}
+
+/* 入力内容と修正リンク */
+.item-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+/* 修正・再送リンク */
+.item-content a {
+    color: #222;
+    text-decoration: none;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+/* パスワード */
+.password {
+    font-size: 21px;
+    letter-spacing: 3px;
+    margin-top: 8px;
+}
+
+/* 破線 */
+.dash-line {
+    width: 100%;
+    border-top: 2px dashed #999;
+    margin: 0;
+}
+
+/* 下部ボタン */
+.button-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 55px;
+    gap: 15px;
+}
+
+/* ボタン共通 */
+.button-area a {
+    color: #222;
+    text-decoration: none;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+/* 戻るボタン */
+.back-button {
+    text-align: left;
+}
+
+/* 確定ボタン */
+.confirm-button {
+    text-align: right;
+}
+
+/* スマートフォン対応 */
+@media screen and (max-width: 600px) {
+
+    .container {
+        width: 90%;
+        padding-top: 20px;
+    }
+
+    .logo {
+        margin-bottom: 45px;
+    }
+
+    .logo img {
+        width: 120px;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 25px;
+    }
+
+    .description {
+        font-size: 12px;
+        margin-bottom: 55px;
+    }
+
+    .item-title {
+        font-size: 16px;
+    }
+
+    .item-content {
+        font-size: 14px;
+    }
+
+    .item-content a {
+        font-size: 13px;
+    }
+
+    .password {
+        font-size: 17px;
+    }
+
+    .button-area {
+        margin-top: 40px;
+        gap: 5px;
+    }
+
+    .button-area a {
+        font-size: 12px;
+    }
+}
+
+/* 小さいスマホ */
+@media screen and (max-width: 360px) {
+
+    .button-area a {
+        font-size: 10px;
+    }
+
+    .description {
+        font-size: 11px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .logo {
+        margin-bottom: 20px;
+    }
+}
