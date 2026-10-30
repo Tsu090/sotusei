@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>パーソナルカラー・骨格診断</title>
+    <link rel="stylesheet" href="Untitled-2.css">
+</head>
+<body>
+
+    <main class="app">
+
+        <header class="page-header">
+            <h1>パーソナルカラー・骨格診断</h1>
+        </header>
+
+        <p class="description">
+            パーソナルカラーと自分の骨格を入力してください。
+            入力した情報をもとに、あなたに似合う
+            コーディネートを提案します。
+        </p>
+
+        <!-- パーソナルカラー -->
+        <section class="section">
+            <h2 class="section-title">パーソナルカラー</h2>
+            <p class="section-description">
+                あなたのパーソナルカラーを選択してください。
+            </p>
+
+            <div class="color-grid">
+                <label class="color-card">
+                    <input type="radio" name="color" value="春（イエベ春）">
+                    <span class="color-circles">
+                        <span class="circle pink"></span>
+                        <span class="circle orange"></span>
+                        <span class="circle yellow"></span>
+                    </span>
+                    <span class="option-label">春（イエベ春）</span>
+                </label>
+
+                <label class="color-card">
+                    <input type="radio" name="color" value="夏（ブルベ夏）">
+                    <span class="color-circles">
+                        <span class="circle pink"></span>
+                        <span class="circle orange"></span>
+                        <span class="circle yellow"></span>
+                    </span>
+                    <span class="option-label">夏（ブルベ夏）</span>
+                </label>
+
+                <label class="color-card">
+                    <input type="radio" name="color" value="秋（イエベ秋）">
+                    <span class="color-circles">
+                        <span class="circle pink"></span>
+                        <span class="circle orange"></span>
+                        <span class="circle yellow"></span>
+                    </span>
+                    <span class="option-label">秋（イエベ秋）</span>
+                </label>
+
+                <label class="color-card">
+                    <input type="radio" name="color" value="冬（ブルベ冬）">
+                    <span class="color-circles">
+                        <span class="circle pink"></span>
+                        <span class="circle orange"></span>
+                        <span class="circle yellow"></span>
+                    </span>
+                    <span class="option-label">冬（ブルベ冬）</span>
+                </label>
+            </div>
+        </section>
+
+        <!-- 骨格診断 -->
+        <section class="section body-section">
+            <h2 class="section-title">骨格診断</h2>
+            <p class="section-description">
+                あなたの骨格タイプを選択してください。
+            </p>
+
+            <div class="body-grid">
+                <label class="body-card">
+                    <input type="radio" name="bodyType" value="ストレート">
+                    <svg class="body-figure" viewBox="0 0 100 180"
+                         xmlns="http://www.w3.org/2000/svg"
+                         aria-label="ストレートの体型イラスト">
+                        <g fill="white" stroke="black"
+                           stroke-width="1.5" stroke-linejoin="round">
+                            <path d="M39 18 Q35 9 44 6 Q50 3 56 7
+                                     Q64 11 60 19 L57 25
+                                     Q62 29 70 34 L79 45
+                                     L83 88 L78 115 L74 113
+                                     L73 81 L69 53 L63 48
+                                     L62 77 L58 103 L58 139
+                                     L63 169 L52 171 L46 143
+                                     L45 108 L40 108 L38 143
+                                     L34 170 L22 169 L27 138
+                                     L27 103 L22 76 L21 48
+                                     L15 54 L13 83 L17 112
+                                     L12 115 L7 88 L9 45
+                                     L20 34 L34 27 Z"/>
+                        </g>
+                    </svg>
+                    <span class="option-label">ストレート</span>
+                </label>
+
+                <label class="body-card">
+                    <input type="radio" name="bodyType" value="ウェーブ">
+                    <svg class="body-figure" viewBox="0 0 100 180"
+                         xmlns="http://www.w3.org/2000/svg"
+                         aria-label="ウェーブの体型イラスト">
+                        <g fill="white" stroke="black"
+                           stroke-width="1.5" stroke-linejoin="round">
+                            <path d="M39 18 Q35 9 44 6 Q50 3 56 7
+                                     Q64 11 60 19 L57 25
+                                     Q62 29 70 34 L78 46
+                                     L82 79 L76 100 L71 96
+                                     L72 76 L67 52 L62 48
+                                     L63 72 L58 84 L62 101
+                                     L57 112 L60 139 L64 168
+                                     L52 171 L46 144 L43 117
+                                     L38 117 L35 145 L33 170
+                                     L21 168 L27 138 L29 111
+                                     L23 100 L27 84 L22 73
+                                     L20 50 L14 55 L12 77
+                                     L17 96 L12 101 L7 80
+                                     L9 45 L20 34 L34 27 Z"/>
+                            <path d="M29 84 Q24 88 30 92
+                                     M58 84 Q64 88 58 92
+                                     M29 105 Q24 109 31 112
+                                     M57 105 Q63 109 56 112"/>
+                        </g>
+                    </svg>
+                    <span class="option-label">ウェーブ</span>
+                </label>
+
+                <label class="body-card">
+                    <input type="radio" name="bodyType" value="ナチュラル">
+                    <svg class="body-figure natural" viewBox="0 0 100 180"
+                         xmlns="http://www.w3.org/2000/svg"
+                         aria-label="ナチュラルの体型イラスト">
+                        <g fill="white" stroke="black"
+                           stroke-width="2.4" stroke-linejoin="round">
+                            <path d="M38 18 Q34 9 44 6 Q51 2 57 7
+                                     Q65 11 60 20 L57 25
+                                     L71 34 L80 45 L84 83
+                                     L78 99 L72 82 L68 54
+                                     L63 48 L61 76 L56 99
+                                     L60 115 L56 143 L64 169
+                                     L51 172 L44 143 L44 112
+                                     L39 112 L37 143 L33 170
+                                     L20 168 L27 139 L28 112
+                                     L22 91 L20 51 L15 56
+                                     L12 82 L17 102 L12 109
+                                     L7 85 L9 46 L20 34 L34 27 Z"/>
+                        </g>
+                    </svg>
+                    <span class="option-label">ナチュラル</span>
+                </label>
+            </div>
+        </section>
+
+        <!-- 入力ボタン -->
+        <div class="button-area">
+            <button type="button" id="submitButton">
+                入力する
+            </button>
+        </div>
+
+        <p id="result" class="result" aria-live="polite"></p>
+    </main>
+
+    <script src="Untitled-1.js"></script>
+</body>
+</html>

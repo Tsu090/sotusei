@@ -1,0 +1,285 @@
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    /* background: #f4f4f4; */
+    font-family: Arial, "Noto Sans JP", sans-serif;
+    color: #111;
+    background-color: #F9F5E9;
+}
+
+.app {
+    width: 100%;
+    max-width: 450px;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 10px 8px 30px;
+    /* background: #f9f5e9; */
+}
+
+.breadcrumb {
+    margin: 0 0 10px;
+    color: #b5b5b5;
+    font-size: 11px;
+}
+
+.page-header {
+    background: #c5b9a9;
+    padding: 14px 5px;
+    text-align: center;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: clamp(17px, 4.8vw, 24px);
+    font-weight: bold;
+}
+
+.description {
+    margin: 16px 10px;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+/* 各セクション */
+.section {
+    margin: 16px 2px 28px;
+    padding: 0 8px 12px;
+    background: #c5b9a9;
+}
+
+.section-title {
+    margin: 0 -8px 8px;
+    padding: 7px 10px;
+    border-bottom: 2px solid #f9f5e9;
+    text-align: center;
+    font-size: 15px;
+}
+
+.section-description {
+    margin: 8px 2px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+/* パーソナルカラー */
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 12px;
+    padding: 0 4px;
+}
+
+.color-card {
+    min-width: 0;
+    min-height: 100px;
+    background: #fff;
+    border: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    gap: 3px;
+}
+
+.color-card input,
+.body-card input {
+    appearance: none;
+    width: 21px;
+    height: 21px;
+    margin: 0;
+    flex-shrink: 0;
+    border: 1px solid #333;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+}
+
+.color-card input:checked,
+.body-card input:checked {
+    background: #536fce;
+    border: 5px solid #dce3ff;
+    outline: 2px solid #536fce;
+}
+
+.color-circles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3px;
+}
+
+.circle {
+    display: block;
+    width: clamp(34px, 10vw, 43px);
+    height: clamp(34px, 10vw, 43px);
+    border-radius: 50%;
+    margin-left: -5px;
+}
+
+.circle:first-child {
+    margin-left: 0;
+}
+
+.pink {
+    background: #e5a7a9;
+}
+
+.orange {
+    background: #dfb56f;
+}
+
+.yellow {
+    background: #f6df73;
+}
+
+.option-label {
+    font-size: clamp(12px, 3.5vw, 15px);
+    font-weight: bold;
+    text-align: center;
+}
+
+/* 骨格診断 */
+.body-section {
+    padding-bottom: 14px;
+}
+
+.body-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.body-card {
+    min-width: 0;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 8px 2px 10px;
+    gap: 7px;
+    cursor: pointer;
+}
+
+.body-figure {
+    width: 100%;
+    height: 140px;
+    max-width: 90px;
+}
+
+.body-figure.natural {
+    stroke-width: 3;
+}
+
+/* 入力ボタン */
+.button-area {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0 20px;
+}
+
+#submitButton {
+    width: 68%;
+    min-height: 56px;
+    border: none;
+    border-radius: 50%;
+    background: #c5b9a9;
+    font-size: 23px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#submitButton:active {
+    background: #bcbcbc;
+}
+
+.result {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.7;
+}
+
+@media (max-width: 350px) {
+    .app {
+        padding-left: 6px;
+        padding-right: 6px;
+    }
+
+    .color-grid {
+        gap: 10px 8px;
+        padding: 0;
+    }
+
+    .color-card {
+        min-height: 88px;
+    }
+
+    .body-figure {
+        height: 120px;
+    }
+
+    .option-label {
+        font-size: 12px;
+    }
+}
+
+
+/* 春：イエベ春 - 明るく暖かい色 */
+.color-card:nth-child(1) .pink {
+    background-color: #F2A6A1;
+}
+
+.color-card:nth-child(1) .orange {
+    background-color: #F6BD60;
+}
+
+.color-card:nth-child(1) .yellow {
+    background-color: #FFE66D;
+}
+
+/* 夏：ブルベ夏 - 淡く涼しげな色 */
+.color-card:nth-child(2) .pink {
+    background-color: #D9A7C7;
+}
+
+.color-card:nth-child(2) .orange {
+    background-color: #B8C9E8;
+}
+
+.color-card:nth-child(2) .yellow {
+    background-color: #E8DDF2;
+}
+
+/* 秋：イエベ秋 - 深みのある暖かい色 */
+.color-card:nth-child(3) .pink {
+    background-color: #C77B68;
+}
+
+.color-card:nth-child(3) .orange {
+    background-color: #B8793E;
+}
+
+.color-card:nth-child(3) .yellow {
+    background-color: #D6B65D;
+}
+
+/* 冬：ブルベ冬 - 鮮やかでクールな色 */
+.color-card:nth-child(4) .pink {
+    background-color: #D93667;
+}
+
+.color-card:nth-child(4) .orange {
+    background-color: #6554C0;
+}
+
+.color-card:nth-child(4) .yellow {
+    background-color: #F4D93B;
+}
