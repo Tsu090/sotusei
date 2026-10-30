@@ -1,0 +1,191 @@
+/* =========================
+   ログイン画面コンテナ
+========================= */
+.login-container {
+    width: 100%;
+    height: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+    padding: 20px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly; /* 要素を上下に綺麗に等間隔配置 */
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+}
+
+/* =========================
+   ロゴ・タイトルエリア
+========================= */
+.logo-area {
+    margin-bottom: 0;
+}
+
+.logo-image {
+    max-width: 140px;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin: 10px 0 0;
+    text-align: left;
+    width: 100%;
+}
+
+/* =========================
+   フォーム関連
+========================= */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    text-align: left;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    color: #444;
+    margin-bottom: 4px;
+    padding-left: 2px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    height: 38px;
+    padding: 8px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f5e9;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input:focus {
+    border-color: #888;
+}
+
+.forgot {
+    display: block;
+    font-size: 12px;
+    color: #000;
+    text-decoration: none;
+    text-align: center;
+    margin: 2px 0 8px;
+}
+
+/* =========================
+   見出し・テキスト・ボタン
+========================= */
+h2 {
+    font-size: 13px;
+    font-weight: normal;
+    color: #666;
+    margin: 4px 0;
+}
+
+p {
+    font-size: 12px;
+    color: #666;
+    margin: 4px 0;
+}
+
+/* ボタン共通 */
+button, .btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 25px;
+    background-color: #c5b9a9;
+    color: #333;
+    font-size: 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+button:hover, .btn:hover {
+    opacity: 0.8;
+}
+
+/* ログインボタン（送信ボタン） */
+#loginForm button[type="submit"] {
+    background-color: #c5b9a9;
+    color: #fff;
+    font-weight: bold;
+    max-width: 160px;
+    margin: 0 auto;
+}
+
+/* SNSボタン・新規登録ボタン */
+#googleLogin,
+#appleLogin,
+#register {
+    background-color: #c5b9a9;
+    color: #333;
+    font-size: 13px;
+    padding: 8px;
+}
+
+
+/* ===================================================
+   📱 iPhone SEなど「高さが低い（700px以下）端末」専用の調整
+=================================================== */
+@media screen and (max-height: 700px) {
+    .login-container {
+        padding: 10px 16px;
+    }
+
+    .logo-image {
+        max-width: 110px;
+    }
+
+    .title {
+        font-size: 16px;
+        margin-top: 4px;
+    }
+
+    .form-group {
+        margin-bottom: 4px;
+    }
+
+    label {
+        font-size: 11px;
+        margin-bottom: 2px;
+    }
+
+    input {
+        height: 32px;
+        padding: 4px 8px;
+        font-size: 13px;
+    }
+
+    .forgot {
+        margin: 0 0 4px;
+    }
+
+    button, .btn {
+        padding: 7px;
+        font-size: 12px;
+    }
+
+    h2, p {
+        margin: 2px 0;
+        font-size: 10px;
+    }
+}
