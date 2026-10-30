@@ -1,0 +1,116 @@
+/* サイドバー全体の設定 */
+.sidebar {
+    width: 72px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #0f0f0f;
+    border-right: 1px solid #262626;
+    padding: 30px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 150px;
+    z-index: 100;
+    overflow: hidden;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar:hover {
+    width: 240px;
+}
+
+/* 上側のメニュー群 */
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 30px; /* ロゴとメニューの間の隙間をここで調整できます */
+}
+
+/* ロゴ・アイテム共通 */
+.sidebar-logo .logo-img {
+    height: 60px;
+    width: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    color: #a8a8a8;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-item:hover, 
+.nav-item.active {
+    color: #ffffff;
+    background-color: #1a1a1a;
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.nav-label {
+    font-size: 15px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.sidebar:hover .nav-label {
+    opacity: 1;
+}
+
+/* メインコンテンツエリア全体の指定（左側に余白を開ける） */
+.main-content {
+    margin-left: 72px; /* 左のメニューバーとボックスの間の余白 */
+    padding: 20px 40px;
+    flex: 1;
+    background-color: #0f0f0f;
+    min-height: 100vh;
+}
+
+/* トップヘッダーのレイアウト */
+.top-header {
+    display: flex;
+    justify-content: space-between; /* 左右に端と端へ配置 */
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #262626; /* 主張しすぎないうすい下線 */
+    margin-bottom: 30px;
+}
+
+/* 左側のMODEX文字 */
+.header-logo {
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #ffffff;
+}
+
+/* 右側のプロフィールアイコン */
+.profile-icon-wrapper {
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+}
+
+.profile-icon-wrapper:hover {
+    opacity: 0.7;
+}
+
+.header-icon {
+    width: 24px;
+    height: 24px;
+}
