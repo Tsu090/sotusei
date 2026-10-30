@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>確認画面</title>
+    <link rel="stylesheet" href="kakunin.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- 上部ヘッダー -->
+        <header class="header">
+            <button class="btn-back">◀ 戻る</button>
+            <h1 class="title">【確認画面】</h1>
+            <span class="note">◀ 最上部：戻れる安心感を担保</span>
+        </header>
+
+        <p class="intro-text">✨ 診断を始める前に、写真を確認してください</p>
+
+        <!-- 【1】パーソナルカラー用 -->
+        <section class="section">
+            <h2 class="section-title">【1】パーソナルカラー用（顔写真）</h2>
+            <div class="photo-placeholder">
+                <div class="preview-area">[顔写真]</div>
+                <div class="guideline-desc">
+                    ◀ ガイドライン（卵型）<br>が重なった状態で表示
+                </div>
+            </div>
+            <button class="btn-secondary">🔄 写真を変更する</button>
+            <div class="check-list">
+                <p class="check-title">└ チェック項目：</p>
+                <label class="check-item"><input type="checkbox" checked> 明るい昼間の自然光で撮れていますか？</label>
+                <label class="check-item"><input type="checkbox" checked> 前髪やメガネで輪郭が隠れていませんか？</label>
+            </div>
+        </section>
+
+        <!-- 【2】骨格診断用 -->
+        <section class="section">
+            <h2 class="section-title">【2】骨格診断用（全身写真）</h2>
+            <div class="photo-placeholder">
+                <div class="preview-area">[全身写真]</div>
+                <div class="guideline-desc">
+                    ◀ 首・腰・膝の基準点<br>がドットで表示される
+                </div>
+            </div>
+            <button class="btn-secondary">🔄 写真を変更する</button>
+            <div class="check-list">
+                <p class="check-title">└ チェック項目：</p>
+                <label class="check-item"><input type="checkbox" checked> カメラに対して真っ直ぐ立っていますか？</label>
+                <label class="check-item"><input type="checkbox" checked> 体のラインが分かる服装ですか？</label>
+            </div>
+        </section>
+
+        <!-- 【3】基本情報 -->
+        <section class="section">
+            <h2 class="section-title">【3】基本情報</h2>
+            <ul class="info-list">
+                <li>・ 地毛の色：[ 暗いブラウン ]</li>
+                <li>・ 日焼け時の変化：[ 赤くなってから黒くなる ]</li>
+            </ul>
+            <button class="btn-secondary text-btn">✏️ 修正する</button>
+        </section>
+
+        <!-- 下部アクションエリア -->
+        <footer class="footer">
+            <div class="action-area">
+                <button class="btn-primary">[ AI診断を開始する ]</button>
+                <div class="action-desc">
+                    ◀ 最下部：押し booking しやすい<br>目立つ色（ブランドカラー等）のボタン
+                </div>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>
