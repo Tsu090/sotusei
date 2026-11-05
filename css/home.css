@@ -5,8 +5,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #0f0f0f;
-    border-right: 1px solid #262626;
+    background-color: #c5b9a9;
     padding: 30px 16px;
     display: flex;
     flex-direction: column;
@@ -42,16 +41,10 @@
     gap: 16px;
     padding: 12px;
     border-radius: 8px;
-    color: #a8a8a8;
+    color: #1c1917;
     text-decoration: none;
     white-space: nowrap;
     transition: background-color 0.2s, color 0.2s;
-}
-
-.nav-item:hover, 
-.nav-item.active {
-    color: #ffffff;
-    background-color: #1a1a1a;
 }
 
 .nav-icon {
@@ -73,9 +66,8 @@
 /* メインコンテンツエリア全体の指定（左側に余白を開ける） */
 .main-content {
     margin-left: 72px; /* 左のメニューバーとボックスの間の余白 */
-    padding: 20px 40px;
     flex: 1;
-    background-color: #0f0f0f;
+    background-color: #f9f5e9;
     min-height: 100vh;
 }
 
@@ -84,9 +76,13 @@
     display: flex;
     justify-content: space-between; /* 左右に端と端へ配置 */
     align-items: center;
-    padding: 20px 0;
-    border-bottom: 1px solid #262626; /* 主張しすぎないうすい下線 */
-    margin-bottom: 30px;
+    padding: 20px 40px;
+    background-color: #c5b9a9;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.content-body {
+    padding: 30px 40px;
 }
 
 /* 左側のMODEX文字 */
@@ -94,12 +90,17 @@
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 2px;
-    color: #ffffff;
+    color: #4b5563;
+}
+
+.header-logo-link {
+    text-decoration: none;
+    color: inherit;
 }
 
 /* 右側のプロフィールアイコン */
 .profile-icon-wrapper {
-    color: #ffffff;
+    color: #1c1917;
     display: flex;
     align-items: center;
     justify-content: center;
