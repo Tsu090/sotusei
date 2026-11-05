@@ -10,8 +10,9 @@
     padding: 30px 16px;
     display: flex;
     flex-direction: column;
-    gap: 150px;
+    justify-content: space-between; /*要素ごとにスペースを自動で均等に振り分ける */
     z-index: 100;
+    overflow-y: auto;
     overflow: hidden;
     transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -25,7 +26,6 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin-top: 30px; /* ロゴとメニューの間の隙間をここで調整できます */
 }
 
 /* ロゴ・アイテム共通 */
