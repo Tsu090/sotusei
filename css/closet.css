@@ -1,0 +1,192 @@
+.content-body {
+    height: calc(100vh - 80px); /*画面全体(100hv)からヘッダー(60px)とpadding(20px)を引く*/
+    box-sizing: border-box; /*意図しないサイズの膨張を防ぐ(200pxのボックス以上にならない)*/
+    display: flex;
+    flex-direction: column;
+}
+
+.closet-section {
+    height: 50%; /*bodyの高さを50%にして2項目の服をきれいに表示する*/
+    display: grid;
+    grid-template-rows: 15% 40% 40%; /*それぞれの領域を15%、40%、40%に分ける*/
+    gap: 4px;
+    box-sizing: border-box;
+}
+
+.section-header { /*横並びにして上下中央揃えにしつつ、文字をの隙間を開ける*/
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 100%;
+}
+
+.section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1c1917;
+}
+
+.item-count {
+    font-size: 0.9rem;
+    color: #4b5563;
+}
+
+.closet-grid {
+    grid-row: 2 / 4; 
+    display: grid;
+    grid-template-rows: repeat(2, 1fr); /*グリッドを縦2段高さが均等に分割*/
+    grid-auto-flow: column;
+    grid-auto-columns: max-content; /*グリッドが右に続くようにする*/
+    gap: 16px;
+    height: 100%;
+    overflow-x: auto; /*画面外のアイテムを横スクロールできるようにする*/
+    padding-bottom: 6px; /*上下反転させているからbottom*/
+}
+
+.closet-grid .item-card {
+    height: 100%; 
+    aspect-ratio: 1 / 1; /*正方形にするために1対1にしている*/
+    background-color: #141414; /*写真が読み込まれてないときの保険*/
+    border: 1px solid #262626; /*写真が読み込まれてないときの保険*/
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+}
+
+.closet-grid::-webkit-scrollbar {
+    height: 6px; /*スクロールバーの高さ*/
+}
+
+.closet-grid::-webkit-scrollbar-track {
+    background: #c5b9a9; /*バーの背景色*/
+}
+
+.closet-grid::-webkit-scrollbar-thumb {
+    background: #3b3b3b; /*中のバーの色*/
+    border-radius: 3px;
+}
+
+.image-wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: #0a0a0a;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 基準位置にするため、カード側に relative を指定 */
+.item-card {
+    position: relative; 
+    /* (既存の height, aspect-ratio, border などの設定はそのまま) */
+}
+
+/* 右上に配置するハートボタンのデザイン */
+.favorite-btn {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background: rgba(0, 0, 0, 0.6); /* 半透明の黒背景で写真が見づらくならないようにする */
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.2s ease;
+    z-index: 2; /* 画像より手前に表示させる */
+}
+
+/* ハートのアイコンの通常時の色（白っぽく控えめに） */
+.favorite-btn .heart-icon {
+    color: #ffffff;
+    transition: fill 0.2s ease, color 0.2s ease;
+}
+
+/* ホバーしたときのちょっとした浮き上がり */
+.favorite-btn:hover {
+    transform: scale(1.1);
+    background: rgba(0, 0, 0, 0.8);
+}
+
+/* ＝★ お気に入り登録された（.favorited がついた）ときのスタイル ＝ */
+.item-card.favorited .favorite-btn .heart-icon {
+    color: #ff4d4d; /* 鮮やかな赤色に */
+    fill: #ff4d4d; /* 中身を赤く塗りつぶす */
+}
+
+.closet-title-filter select {
+    color: #1c1917; 
+    font-size: 1.2rem;
+    font-weight: 700;
+    outline: none;
+    padding: 0 20px 0 0;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231f2428' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right center;
+    transition: opacity 0.2s ease;
+}
+
+.closet-title-filter select:hover {
+    opacity: 0.7;
+}
+
+.closet-title-filter select option {
+    background-color: #f9f5e9;
+    color: #1c1917;
+    font-size: 0.95rem;
+    padding: 10px;
+}
+
+.closet-title-filter select option:checked {
+    background-color: #b39c8b;
+    color: #ffffff;
+}
+
+/* 非表示にするためのクラス */
+.item-card.hidden {
+    display: none !important;
+}
+
+/* 「服を追加する」ボタン全体のスタイル */
+.add-item-trigger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 文字と丸ボタンの間隔 */
+    transition: opacity 0.2s ease;
+    padding-left: 20px;
+}
+
+.add-item-trigger:hover {
+    opacity: 0.7;
+}
+
+/* 「服を追加する」のテキスト部分 */
+.add-item-text {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1c1917;
+    font-family: inherit;
+}
+
+/* 丸いプラスアイコン部分 */
+.add-item-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #1c1917;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
