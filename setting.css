@@ -1,0 +1,102 @@
+/* 全体のリセットと背景設定 */
+body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    background-color: #f9f5e9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #000000;
+}
+
+/* スマホ幅に収めるコンテナ */
+.container {
+    width: 100%;
+    max-width: 320px; /* 1枚目の縦長比率に合わせた幅 */
+    padding: 40px 20px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+/* ロゴのサイズ調整CSS */
+.logo-area {
+    margin-bottom: 35px;
+}
+.logo-area img {
+    width: 100%;
+    max-width: 180px; /* 画像の大きさを変更したい場合はここの数値を調整してください */
+    height: auto;
+    object-fit: contain;
+}
+
+/* タイトル（パスワードの再設定） */
+h1 {
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 25px;
+    letter-spacing: 0.5px;
+}
+
+/* 説明文 */
+.description {
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+/* フォームの配置 */
+form {
+    text-align: left;
+}
+
+/* ラベル（メールアドレス） */
+label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+/* 1枚目を再現したグレーの入力欄 */
+input[type="email"] {
+    width: 100%;
+    height: 34px;
+    background-color: #c5b9a9; /* 画像内の薄いグレー */
+    border: none;
+    border-radius: 0; /* 角を丸くしないフラットなデザイン */
+    padding: 0 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 35px;
+    outline: none;
+}
+
+/* 1枚目を再現したグレーの送信ボタン */
+.submit-btn {
+    width: 100%;
+    height: 38px;
+    background-color: #c5b9a9; /* 入力欄より少し濃いグレー */
+    border: none;
+    border-radius: 0;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-sizing: border-box;
+    margin-bottom: 45px;
+}
+.submit-btn:hover {
+    background-color: #c5b9a9;
+}
+
+/* 戻るリンク */
+.back-link {
+    display: inline-block;
+    color: #000000;
+    text-decoration: none;
+    font-size: 14px;
+}
+.back-link:hover {
+    text-decoration: underline;
+}
