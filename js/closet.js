@@ -102,3 +102,21 @@ if (favoritesFilter) {
     // ★【ここがポイント！】画面を開いた直後に、最初から選ばれている「お気に入り」で一回絞り込む
     applyFavoritesFilter();
 }
+
+// 例：ユーザーが画像を設定した（またはAPIから画像URLを取得した）とき
+const userHasPhoto = true; // 写真があるかどうか（フラグやURLの有無）
+const avatarImg = document.getElementById('userAvatarImg');
+const defaultIcon = document.querySelector('.default-icon');
+
+if (userHasPhoto) {
+    // 1. 画像のパス（URL）をセットする
+    avatarImg.src = 'uploads/user-profile.jpg';
+    
+    // 2. 画像を表示し、デフォルトのアイコンを隠す
+    avatarImg.style.display = 'block';
+    defaultIcon.style.display = 'none';
+} else {
+    // 写真がない場合はデフォルトのままにする
+    avatarImg.style.display = 'none';
+    defaultIcon.style.display = 'block';
+}
