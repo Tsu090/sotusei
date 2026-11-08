@@ -27,6 +27,35 @@
     gap: 8px;
 }
 
+.profile-open {
+    position: relative;
+    z-index: 102;
+}
+
+.profile-drawer {
+    width: 300px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 100px 50px;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow: hidden;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none; /*当たり判定をなくしている*/
+    border-radius: 15px 0 0 15px;
+}
+
+.profile-open:hover + .profile-drawer,
+.profile-drawer:hover {
+    transform: translateX(0);
+    background-color: #fff;
+    pointer-events: auto; /*開いている時だけ当たり判定をつける */
+}
+
 /* ロゴ・アイテム共通 */
 .sidebar-logo .logo-img {
     height: 60px;
