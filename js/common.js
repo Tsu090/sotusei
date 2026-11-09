@@ -168,3 +168,55 @@ if (reportProblemBtn && reportModal) {
         });
     }
 }
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 画面全体でクリックを監視する（ボタンが後から読み込まれても確実に反応します）
+    window.addEventListener('click', (e) => {
+        const mainMenuBtn = e.target.closest('#main-menu');
+        const openModalBtn = e.target.closest('#openModalBtn');
+        const cancelBtn = e.target.closest('.btn-cancel');
+        const modalOverlay = document.querySelector('.add-item-modal-overlay');
+
+        // 1. 「#main-menu」または「#openModalBtn」がクリックされたとき
+        if ((mainMenuBtn || openModalBtn) && modalOverlay) {
+            modalOverlay.classList.add('is-active');
+        }
+
+        // 2. 「キャンセルボタン」がクリックされたとき
+        if (cancelBtn && modalOverlay) {
+            modalOverlay.classList.remove('is-active');
+        }
+
+        // 3. モーダルの背景（オーバーレイ部分）がクリックされたとき
+        if (modalOverlay && e.target === modalOverlay) {
+            modalOverlay.classList.remove('is-active');
+        }
+    });
+
+    // 各選択カードのクリックイベント（こちらは通常通りでOK）
+    const modalOverlay = document.querySelector('.add-item-modal-overlay');
+    if (modalOverlay) {
+        const selectionCards = modalOverlay.querySelectorAll('.selection-card');
+        selectionCards.forEach((card, index) => {
+            card.addEventListener('click', () => {
+                switch(index) {
+                    case 0:
+                        console.log('「カメラで撮影」が選択されました');
+                        break;
+                    case 1:
+                        console.log('「アルバム・ファイルから選択」が選択されました');
+                        break;
+                    case 2:
+                        console.log('「ウェブ検索」が選択されました');
+                        break;
+                    case 3:
+                        console.log('「AI自動追加」が選択されました');
+                        break;
+                }
+                modalOverlay.classList.remove('is-active');
+            });
+        });
+    }
+});
