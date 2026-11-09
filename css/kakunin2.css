@@ -111,6 +111,17 @@ h2 {
     margin-bottom: 10px;
 }
 
+/* パスワード表示切り替えボタン */
+.eye-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0 5px;
+    margin-left: 70px;
+
+}
+
 /* 破線 */
 .dash-line {
     width: 100%;

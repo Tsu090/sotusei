@@ -1,0 +1,262 @@
+/* 全体のリセットと背景設定 */
+body {
+    font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+    background-color: #f9f5e9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #000000;
+}
+ 
+/* スマホ幅に収めるコンテナ */
+.container {
+    width: 100%;
+    max-width: 320px; /* 1枚目の縦長比率に合わせた幅 */
+    padding: 40px 20px;
+    box-sizing: border-box;
+    text-align: center;
+    margin: auto;
+}
+ 
+/* ロゴのサイズ調整CSS */
+.logo-area {
+    margin-bottom: 35px;
+}
+.logo-area img {
+    width: 100%;
+    max-width: 180px; /* 画像の大きさを変更したい場合はここの数値を調整してください */
+    height: auto;
+    object-fit: contain;
+}
+ 
+/* タイトル（パスワードの再設定） */
+h1 {
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 25px;
+    letter-spacing: 0.5px;
+}
+ 
+/* 説明文 */
+.description {
+    font-size: 12px;
+    line-height: 1.5;
+    text-align: right !important;
+    margin-bottom: 25px;
+}
+ 
+/* フォームの配置 */
+form {
+    text-align: right !important;
+}
+ 
+/* ラベル（メールアドレス） */
+label {
+    display: block;
+    width: 100%;
+    font-size: 14px;
+    margin-bottom: 12px;
+    text-align: center !important;
+}
+ 
+/* 1枚目を再現したグレーの入力欄 */
+input[type="email"] {
+    width: 100%;
+    height: 34px;
+    background-color: #c5b9a9; /* 画像内の薄いグレー */
+    border: none;
+    border-radius: 0; /* 角を丸くしないフラットなデザイン */
+    padding: 0 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 35px;
+    outline: none;
+}
+ 
+/* 1枚目を再現したグレーの送信ボタン */
+.submit-btn {
+    width: 100%;
+    height: 38px;
+    background-color: #c5b9a9; /* 入力欄より少し濃いグレー */
+    border: none;
+    border-radius: 0;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-sizing: border-box;
+    margin-bottom: 45px;
+}
+.submit-btn:hover {
+    background-color: #c5b9a9;
+}
+ 
+/* 戻るリンク */
+.back-link {
+    display: inline-block;
+    color: #000000;
+    text-decoration: none;
+    font-size: 14px;
+}
+.back-link:hover {
+    text-decoration: underline;
+}
+/* スマホ風に表示するための簡易スタイル（※プレビュー用） */
+.mobile-container {
+  max-width: 375px;
+  margin: 0 auto;
+  padding: 24px;
+  border: 1px solid #e0e0e0;
+  border-radius: 32px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.mobile-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+.mobile-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333333;
+  margin: 0;
+}
+.mobile-description {
+  font-size: 14px;
+  color: #666666;
+  margin-top: 12px;
+  line-height: 1.5;
+}
+.form-group {
+  margin-bottom: 24px;
+}
+.form-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #888888;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.form-input {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+  background-color: #fafafa;
+}
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: #007aff;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.btn-back {
+  display: block;
+  text-align: center;
+  color: #007aff;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* =========================
+   文字の位置を強制的に中央揃え
+========================= */
+
+.container {
+    text-align: center !important;
+}
+
+.container .description {
+    text-align: center !important;
+    width: 100%;
+}
+
+.container form {
+    text-align: center !important;
+}
+
+.container form label {
+    display: block;
+    width: 100%;
+    text-align: center !important;
+}
+
+/* 画面の高さに合わせて調整 */
+@media (max-height: 800px) {
+    .container {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .logo-area {
+        margin-bottom: 15px;
+    }
+
+    .logo-area img {
+        max-width: 140px;
+    }
+
+    h1 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .description {
+        margin-bottom: 15px;
+    }
+
+    input[type="email"] {
+        margin-bottom: 20px;
+        height: 32px;
+    }
+
+    .submit-btn {
+        margin-bottom: 20px;
+        height: 34px;
+    }
+}
+
+/* さらに画面が低い場合 */
+@media (max-height: 650px) {
+    .container {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .logo-area img {
+        max-width: 110px;
+    }
+
+    .logo-area {
+        margin-bottom: 10px;
+    }
+
+    h1 {
+        margin-bottom: 10px;
+    }
+
+    .description {
+        margin-bottom: 10px;
+    }
+
+    input[type="email"] {
+        margin-bottom: 12px;
+    }
+
+    .submit-btn {
+        margin-bottom: 12px;
+    }
+}
