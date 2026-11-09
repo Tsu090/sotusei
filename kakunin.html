@@ -29,34 +29,40 @@
 
             <div class="equal-line"></div>
 
+             <div class="confirm-item">
+                <p class="item-title">ニックネーム</p>
+                <div class="item-content">
+                    <span id="confirmName"></span>
+                    <a href="new-login.html">[修正する]</a>
+                </div>
+            </div>
+
+            <div class="dash-line"></div>
+
             <!-- メールアドレス -->
-            <div class="confirm-item">
+          <div class="confirm-item">
                 <p class="item-title">メールアドレス</p>
                 <div class="item-content">
-                    <span>user@example.com</span>
-                    <a href="#">[修正する]</a>
+                    <span id="confirmEmail"></span>
+                    <a href="new-login.html">[修正する]</a>
                 </div>
             </div>
 
             <div class="dash-line"></div>
 
             <!-- パスワード -->
-            <div class="confirm-item">
+           <div class="confirm-item">
                 <p class="item-title">パスワード</p>
-                <p class="password">＊＊＊＊＊＊＊＊＊＊＊＊</p>
-            </div>
-
-            <div class="dash-line"></div>
-
-            <!-- お名前 -->
-            <div class="confirm-item">
-                <p class="item-title">お名前</p>
                 <div class="item-content">
-                    <span>山田　太郎</span>
-                    <a href="#">[修正する]</a>
+                    <span id="confirmPassword"></span>
+
+                    <button type="button" id="togglePassword" class="eye-button">
+                        👁
+                    </button>
+
+                    <a href="new-login.html">[修正する]</a>
                 </div>
             </div>
-
             <div class="dash-line"></div>
 
             <!-- お問い合わせ内容 -->
@@ -67,7 +73,7 @@
                         パスワード再設定のメールが届きません。<br>
                         再送をお願いします。
                     </span>
-                    <a href="#">[再送する]</a>
+                    <a href="passsetting.html">[再送する]</a>
                 </div>
             </div>
 
@@ -77,7 +83,7 @@
 
         <!-- 下部ボタン -->
         <div class="button-area">
-            <a href="#" class="back-button">
+            <a href="new-login.html" class="back-button">
                 【◀戻って修正する】
             </a>
 
@@ -89,5 +95,6 @@
     </main>
     </div>
 
+    <script src="js/kakunin.js"></script>
 </body>
 </html>
