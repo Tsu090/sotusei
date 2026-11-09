@@ -193,3 +193,70 @@ input[type="email"] {
     width: 100%;
     text-align: center !important;
 }
+
+/* 画面の高さに合わせて調整 */
+@media (max-height: 800px) {
+    .container {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .logo-area {
+        margin-bottom: 15px;
+    }
+
+    .logo-area img {
+        max-width: 140px;
+    }
+
+    h1 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .description {
+        margin-bottom: 15px;
+    }
+
+    input[type="email"] {
+        margin-bottom: 20px;
+        height: 32px;
+    }
+
+    .submit-btn {
+        margin-bottom: 20px;
+        height: 34px;
+    }
+}
+
+/* さらに画面が低い場合 */
+@media (max-height: 650px) {
+    .container {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .logo-area img {
+        max-width: 110px;
+    }
+
+    .logo-area {
+        margin-bottom: 10px;
+    }
+
+    h1 {
+        margin-bottom: 10px;
+    }
+
+    .description {
+        margin-bottom: 10px;
+    }
+
+    input[type="email"] {
+        margin-bottom: 12px;
+    }
+
+    .submit-btn {
+        margin-bottom: 12px;
+    }
+}
