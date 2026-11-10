@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MODEX - ワードローブ管理</title>
+    <!-- リセットCSS -->
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+    <link rel="stylesheet" href="css/home-styale.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/phone.css">
+</head>
+<body>
+<!-- ==============================================================
+   左のメニューバー
+   ============================================================== -->
+<aside class="sidebar">
+    <!-- ロゴ部分 -->
+    <div class="sidebar-logo">
+        <a href="#">
+            <img src="image/文字なしロゴ.png" alt="MODEX" class="logo-img">
+        </a>
+    </div>
+
+    <!-- ナビゲーションメニュー一覧 -->
+    <nav class="sidebar-nav">
+        <!-- 1. ホーム -->
+        <a href="#" class="nav-item active" id="main-menu">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span class="nav-label">ホーム</span>
+        </a>
+
+        <!-- 2. クローゼット -->
+        <a href="#" class="nav-item" id="main-menu">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="1"></rect><line x1="12" y1="3" x2="12" y2="21"></line><circle cx="10" cy="12" r="1"></circle><circle cx="14" cy="12" r="1"></circle></svg>
+            <span class="nav-label">クローゼット</span>
+        </a>
+
+        <!-- 3. プラス（十字） -->
+        <button type="button" class="nav-item" id="main-menu">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <span class="nav-label">追加</span>
+        </button>
+
+        <!-- 4. ハンガー -->
+        <a href="#" class="nav-item" id="main-menu">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4a1.5 1.5 0 0 1 1.5 1.5V7h-3V5.5A1.5 1.5 0 0 1 12 4z"></path><path d="M21 16.5a2 2 0 0 1-1.8 1.99H4.8A2 2 0 0 1 3 16.5V16l9-7 9 7v.5z"></path></svg>
+            <span class="nav-label">コーディネート</span>
+        </a>
+
+        <!-- 5. AI（文字）-->
+        <a href="#" class="nav-item" id="main-menu">
+            <?xml version="1.0" encoding="UTF-8"?>
+            <svg class="nav-icon" id="_繝ｬ繧､繝､繝ｼ_1" data-name="繝ｬ繧､繝､繝ｼ 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400.59 254.98">
+            <defs>
+                <style>
+                .cls-1 {
+                    fill: currentColor;
+                }
+                </style>
+            </defs>
+            <path class="cls-1" d="M239.77,207.98l-1.71,9.74c-4.1.34-7.69.51-10.77.51-4.44,0-9.8-.34-16.06-1.03-10.71-1.14-17.49-1.71-20.34-1.71-4.79,0-12.13.74-22.05,2.22,3.53-8.89,6.49-18.23,8.89-28.03,1.71-6.95,3.53-18.91,5.47-35.89-13.31-.11-33.95.17-61.93.85-29.01,44.21-50.26,71.97-63.76,83.31-13.5,11.34-26.35,17-38.54,17-6.38,0-11.14-1.23-14.27-3.67-3.13-2.45-4.7-5.61-4.7-9.48,0-2.96.91-5.41,2.73-7.35,1.82-1.94,4.1-2.91,6.84-2.91,1.6,0,3.76.28,6.49.85,6.84,1.59,11.39,2.39,13.67,2.39,7.63,0,16.06-4.33,25.29-12.99,15.03-14.13,37.23-43.75,66.6-88.87,33.25-51.04,60.17-88.18,80.78-111.43-28.11,2.51-45.63,4.9-52.57,7.18-9.56,3.08-16.73,7.63-21.51,13.67-4.78,6.04-7.17,12.19-7.17,18.46,0,2.05.74,4.96,2.22,8.72,1.59,4.22,2.39,7.29,2.39,9.23,0,2.51-.97,4.73-2.91,6.67s-4.27,2.91-7.01,2.91c-3.87,0-6.98-1.45-9.31-4.36-2.34-2.91-3.5-7.26-3.5-13.07,0-8.2,2.14-16.15,6.41-23.84s10.4-14.13,18.37-19.31c7.97-5.18,17.94-9.14,29.91-11.88,6.15-1.48,16.98-2.79,32.47-3.93,13.46-1.14,21.9-2.22,25.32-3.25,5.36-1.48,10.49-4.38,15.4-8.72-3.42,14.01-5.88,26.26-7.36,36.74l-13.35,98.78-7.7,70.75c8.43,2.17,16.01,3.25,22.73,3.25,4.44,0,9.29-.51,14.53-1.54ZM184.74,141.16c5.47-46.25,10.94-80.04,16.41-101.34-14.44,19.17-23.36,31.26-26.78,36.27l-43.91,65.07c9.44.34,22.93.51,40.45.51,4.32,0,8.93-.17,13.83-.51Z"/>
+            <path class="cls-1" d="M400.59,13.33l-2.91,9.23c-12.9.8-21.46,2.39-25.68,4.79-2.74,1.6-5.02,3.99-6.85,7.18-2.16,4.1-8.48,25.86-18.95,65.28-3.41,12.99-12.12,48.48-26.11,106.47,7.97,2.62,18.06,3.76,30.25,3.42l-2.73,8.2c-3.65.11-10.94-.34-21.88-1.37-7.86-.68-17.03-1.03-27.51-1.03-14.47,0-27.74,1.08-39.82,3.25l2.05-9.06c12.53-1.94,22.05-4.44,28.54-7.52,1.59-.8,2.85-1.76,3.76-2.91,1.71-2.05,3.56-6.18,5.55-12.39,1.99-6.21,8.8-31.59,20.42-76.14,3.42-12.87,10.37-41.02,20.85-84.42-7.86-.23-17.49.85-28.88,3.25l3.25-9.4c4.79-1.25,9.68-2.14,14.7-2.65,5.01-.51,16.35-1,34.01-1.45,16.52-.45,29.17-1.37,37.94-2.73Z"/>
+            </svg>
+            <span class="nav-label">AI機能</span>
+        </a>
+    </nav>
+    <!-- 6. その他 -->
+    <div class="more-menu-wrapper">
+        <div class="more-popup-menu" id="morePopupMenu">
+            <a href="#settings" class="popup-item">
+                <svg class="popup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span>設定</span>
+            </a>
+            <a href="#activity" class="popup-item">
+                <svg class="popup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                <span>アクティビティ</span>
+            </a>
+            <button type="button" class="popup-item" id="reportProblemBtn">
+                <svg class="popup-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span>問題を報告する</span>
+            </button>
+            <div class="popup-divider"></div>
+            <button type="button" class="popup-item logout-btn">
+                <svg class="popup-icon logout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                <span>ログアウト</span>
+            </button>
+        </div>
+
+        <!-- トリガーとなる「その他」ボタン -->
+        <button type="button" class="nav-item" id="menu">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            <span class="nav-label">その他</span>
+        </button>
+
+    </div>
+</aside>
+
+<!-- ==============================================================
+   メインエリア
+   ============================================================== -->
+<main class="main-content">
+        <!-- トップヘッダー -->
+        <header class="top-header">
+            <!-- 左側のMODEXロゴ文字 -->
+             <a href="#" class="header-logo-link">
+            <h1 class="header-logo">MODEX</h1>
+            </a>
+            <!-- 右側のプロフィールアイコン -->
+            <div class="header-right">
+                <button type="button" class="profile-open">
+                    <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <img src="" alt="User Profile" class="avatar-img" id="userAvatarImg">
+                </button>
+                <div class="drawer-overlay" id="drawerOverlay"></div> <!-- 背景をクリックしたら閉じる -->
+                <div class="profile-drawer" id="profileDrawer">
+                    <div class="drawer-box drawer-profile">
+                        <div class="avatar-wrapper">
+                            <svg class="avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+
+                            <img src="" alt="User Profile" class="avatar-img" id="userAvatarImg">
+                        </div>
+                        <div class="profile-info">
+                            <div class="name-header">
+                                <h3 class="user-name">MODEX User</h3>
+                            </div>
+                            <p class="user-email">user@ezamle.com</p>
+                        </div>
+                    </div>
+                    <div class="drawer-box drawer-stats">
+                        <h4 class="box-title">Your Closet Stats</h4>
+                        <div class="stats-container">
+                            <div class="stat-item">
+                                <div class="stat-circle">
+                                    <span class="stat-number">24</span>
+                                </div>
+                                <span class="stat-label">items</span>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-circle">
+                                    <span class="stat-number">6</span>
+                                </div>
+                                <span class="stat-label">favorites</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="drawer-box drawer-menu">
+                        <a href="#settings" class="drawer-menu-item">
+                            <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                            <span class="menu-text">Account Settings</span>
+                        </a>
+                        <a href="#password" class="drawer-menu-item">
+                            <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <span class="menu-text">Change Password</span>
+                        </a>
+                        <button type="button" class="drawer-menu-item logout-btn">
+                            <svg class="menu-icon logout-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                            <span class="menu-text">Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- メインの内容 -->
+        <div class="content-body">
+            aasdf
+        </div>
+</main>
+
+<!-- ==============================================================
+   服の追加画面
+   ============================================================== -->
+
+<div class="add-item-modal-overlay">
+    <div class="add-item-modal-card">
+        <div class="modal-header">
+            <h3>新しいアイテムを追加</h3>
+        </div>
+        <div class="selection-grid">
+            <button type="button" class="selection-card" id="cameraTriggerBtn">
+                <input type="file" id="cameraFileInput" accept="image/*" capture="environment" style="display: none;">
+
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
+                        <circle cx="12" cy="13" r="3"></circle>
+                    </svg>
+                </div>
+                <div class="card-text">
+                    <h1>カメラで撮影</h1>
+                    <h3>今すぐ撮影して追加</h3>
+                </div>
+            </button>
+            <button type="button" class="selection-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                </div>
+                <div class="card-text">
+                    <h2>アルバム・ファイルから選択</h2>
+                    <h3>写真・ファイルから選択</h3>
+                </div>
+            </button>
+            <button type="button" class="selection-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                </div>
+                <div class="card-text">
+                    <h2>ウェブ検索</h2>
+                    <h3>通販サイトで検索</h3>
+                </div>
+            </button>
+            <button type="button" class="selection-card" id="aiTriggerBtn">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z"></path>
+                        <path d="M19 4l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3z"></path>
+                    </svg>
+                </div>
+                <div class="card-text">
+                    <h2>AI自動追加</h2>
+                    <h3>テキストから画像生成</h3>
+                </div>
+            </button>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn-cancel">キャンセル</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==============================================================
+   服の追加画面の詳細
+   ============================================================== -->
+
+<div class="item-detail-modal-overlay">
+    <div class="item-detail-modal-card">
+    
+        <!-- ヘッダー -->
+        <div class="detail-modal-header">
+            <h2 class="modal-title" id="modalTitle">アイテムを追加</h2>
+        </div>
+
+        <!-- メイン -->
+        <div class="detail-modal-body">
+            <!-- 左側 -->
+            <div class="item-image-preview">
+                <img src="https://via.placeholder.com/300x400" alt="選択したアイテム" id="previewImage">
+            </div>
+
+            <!-- 右側 -->
+            <div class="item-form-content">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>詳細 (オプション)<br><span class="label-main">アイテム名</span></label>
+                        <input type="text">
+                    </div>
+                    <div class="form-group">
+                        <label><span class="label-main">基本情報を入力</span><br>ブランド</label>
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <!-- カテゴリー選択・入力エリア -->
+                    <div class="form-group">
+                        <label>カテゴリー <span class="label-sub">(例: トップス)</span></label>
+                        
+                        <!-- プルダウンでサクッと選べるようにする -->
+                        <select id="categorySelect" class="form-control" style="margin-bottom: 6px;">
+                            <option value="トップス">トップス</option>
+                            <option value="ボトムス">ボトムス</option>
+                            <option value="アウター">アウター</option>
+                        </select>
+                        
+                        <!-- その他の自由入力用（必要に応じて使い分けられる形） -->
+                        <input type="text" id="categoryInput" class="form-control" placeholder="その他のカテゴリーを入力">
+                    </div>
+
+                    <div class="form-group">
+                        <label>カラー <span class="label-sub">(例: ホワイト)</span></label>
+                        <div class="color-picker-wrapper">
+                            <div class="color-palette" id="colorPalette">
+                            <!-- 各カラーチップ（クリックで色を選択できるようにする） -->
+                            <span class="color-dot" style="background:#ffffff; border:1px solid #999;" data-color="ホワイト"></span>
+                            <span class="color-dot" style="background: yellow;" data-color="ベージュ"></span>
+                            <span class="color-dot" style="background: pink;" data-color="ピンク"></span>
+                            <span class="color-dot" style="background: red;" data-color="レッド"></span>
+                            <span class="color-dot" style="background: green;" data-color="グリーン"></span>
+                            <span class="color-dot" style="background: blue;" data-color="ブルー"></span>
+                            <span class="color-dot" style="background: purple;" data-color="パープル"></span>
+                            </div>
+                            <!-- 選択された色の名前を表示するテキスト -->
+                            <div class="color-input-container" style="display: flex; align-items: center; gap: 10px; margin-top: 8px;">
+                                <!-- 青色枠：その他の色を自由入力 -->
+                                <input type="text" id="customColorInput" placeholder="カスタムカラーを入力" class="form-control" style="flex: 1;">
+                                
+                                <!-- 赤色枠：選択・入力された色の名前を表示 -->
+                                <div class="selected-color-box" style="min-width: 80px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px; text-align: center; background: #fff;">
+                                    <span id="selectedColorName">ホワイト</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>季節 <span class="label-sub">(例: 春、秋)</span></label>
+                        <div class="season-picker" id="seasonPicker" style="display: flex; gap: 8px;">
+                            <button type="button" class="season-btn" data-season="春">春</button>
+                            <button type="button" class="season-btn" data-season="夏">夏</button>
+                            <button type="button" class="season-btn" data-season="秋">秋</button>
+                            <button type="button" class="season-btn" data-season="冬">冬</button>
+                            <!-- または「春夏」「秋冬」などの組み合わせボタンも同様に扱えます -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>お気に入り登録:</label>
+                        <button type="button" class="favorite-toggle-btn" id="favoriteBtn">
+                            <!-- 最初は fill="none" にして、線の色をグレーなどに設定しておきます -->
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2" id="heartSvg">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- フッター -->
+        <div class="detail-modal-footer">
+                <button type="button" class="submit-btn" id="addToClosetBtn">
+                    クローゼットに <span id="targetCategoryName">トップス</span> に追加
+                </button>
+            <button type="button" id="modalCancelBtn" class="cancel-btn">キャンセル</button>
+        </div>
+    </div>
+</div>
+
+<!-- ==============================================================
+   AI自動追加の画面
+   ============================================================== -->
+<div class="ai-modal-overlay" id="aiModalOverlay">
+    <div class="ai-modal-content">
+        <div class="ai-modal-header">
+            <h3 class="ai-modal-title">✨ AI自動画像生成</h3>
+            <button type="button" id="aiCloseBtn" class="ai-close-btn">✕</button>
+        </div>
+
+        <div class="form-group">
+            <label class="ai-field-label">作りたい服のキーワード</label>
+            <input type="text" id="aiPromptInput" class="ai-prompt-input" placeholder="例: 白のオーバーサイズパーカー">
+            
+            <!-- ▼ ここに問題報告風のエラーメッセージ用のタグを追加（最初は非表示） -->
+            <p id="aiErrorMessage" style="color: #ef4444; font-size: 12px; margin-top: 4px; display: none;"></p>
+
+            <button type="button" id="generateBtn" class="ai-generate-btn">画像を生成する</button>
+        </div>
+
+        <!-- 生成された画像の選択候補（最初は非表示） -->
+        <div id="aiResultArea" class="ai-result-area">
+            <p class="ai-result-text">生成された画像を選んでください:</p>
+            <div class="ai-image-candidates">
+                <img src="https://via.placeholder.com/100x100?text=Generated+1" class="selectable-ai-img" data-img-url="https://via.placeholder.com/300x300?text=Generated+1">
+                <img src="https://via.placeholder.com/100x100?text=Generated+2" class="selectable-ai-img" data-img-url="https://via.placeholder.com/300x300?text=Generated+2">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==============================================================
+   問題報告の画面
+   ============================================================== -->
+<div class="modal-overlay" id="reportModal">
+    <div class="modal-card">
+        
+        <!-- ▼ 1. 入力フォーム用のラップ（id="reportFormView"） -->
+        <div id="reportFormView">
+            <!-- ヘッダーエリア -->
+            <div class="modal-header">
+                <button type="button" class="modal-icon-btn modal-close-trigger" aria-label="戻る">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                </button>
+                <h2 class="modal-title">報告の詳細</h2>
+                <button type="button" class="modal-icon-btn modal-close-trigger" aria-label="閉じる">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <!-- コンテンツエリア -->
+            <div class="modal-body">
+                <!-- 不具合テキストエリア -->
+                <div class="input-group">
+                    <textarea class="modal-textarea" id="reportTextarea" rows="4" placeholder="不具合の内容について説明してください"></textarea>
+                    <p class="error-message" id="reportError">不具合の内容を入力してください。</p>
+                    <p class="input-hint">画像ファイルをここに直接貼り付けて、スクリーンショットとして追加することもできます。</p>
+                </div>
+
+                <!-- エリア選択（ドロップダウン） -->
+                <div class="select-wrapper">
+                    <select class="modal-select">
+                        <option value="" disabled selected>エリアを選択</option>
+                        <option value="home">ホーム</option>
+                        <option value="closet">クローゼット</option>
+                        <option value="feature">追加機能</option>
+                        <option value="coordinate">コーディネート</option>
+                        <option value="ai">AI機能</option>
+                        <option value="account">アカウント設定</option>
+                        <option value="other">その他</option>
+                    </select>
+                    <svg class="select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </div>
+
+                <!-- 添付ファイル選択 -->
+                <div class="attachment-section">
+                    <h3 class="attachment-title">添付ファイル</h3>
+                    <button type="button" class="attachment-option">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                        <span>画面をキャプチャ</span>
+                    </button>
+                    <button type="button" class="attachment-option">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        <span>スクリーンショットまたは動画をアップロード</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- フッター（送信ボタン） -->
+            <div class="modal-footer">
+                <button type="button" class="submit-btn" id="submitReportBtn">報告を送信</button>
+            </div>
+        </div>
+        <!-- ▲ 入力フォームここまで -->
+
+        <!-- ▼ 2. 送信完了画面用のラップ（初期は非表示: style="display: none;"） -->
+        <div class="success-view" id="reportSuccessView" style="display: none;">
+            <div class="success-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>
+            <h3 class="success-title">ご報告ありがとうございます</h3>
+            <p class="success-desc">いただいた内容は開発チームに送信されました。</p>
+            <button type="button" class="submit-btn modal-close-trigger">閉じる</button>
+        </div>
+
+    </div>
+</div>
+
+<!-- ==============================================================
+   ログアウトの確認画面
+   ============================================================== -->
+<div class="modal-overlay" id="logoutModal">
+    <div class="modal-card logout-modal-card">
+        <div class="logout-modal-body">
+            <!-- 警告アイコン（必要に応じて変更可能） -->
+            <div class="logout-icon-wrapper">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+            </div>
+            <h3 class="logout-title">本当にログアウトしますか？</h3>
+            <p class="logout-desc">アカウントからサインアウトします。</p>
+            
+            <!-- アクションボタン（キャンセル ＆ ログアウト実行） -->
+            <div class="logout-actions">
+                <button type="button" class="logout-btn-cancel logout-close-trigger">キャンセル</button>
+                <button type="button" class="logout-btn-submit" id="confirmLogoutBtn">ログアウト</button>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="file" id="hiddenImageInput" accept="image/*" style="display: none;">
+<script src="js/common.js"></script>
+<script src="js/closet.js"></script>
+</body>
+</html>
