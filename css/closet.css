@@ -31,6 +31,13 @@
     color: #4b5563;
 }
 
+.your-toolbar-class { /* 実際のクラス名に書き換えてください */
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;     /* 🔑 画面が狭くなっても絶対に下の行に折り返さない */
+    white-space: nowrap;   /* 🔑 文字を勝手に改行させない */
+}
+
 .closet-grid {
     grid-row: 2 / 4; 
     display: grid;
