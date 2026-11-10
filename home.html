@@ -7,7 +7,7 @@
     <!-- リセットCSS -->
     <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
     <link rel="stylesheet" href="css/home-styale.css">
-    <link rel="stylesheet" href="css/closet.css">
+    <link rel="stylesheet" href="css/modal.css">
 </head>
 <body>
 <!-- 左側のサイドナビゲーションバー -->
@@ -34,10 +34,10 @@
         </a>
 
         <!-- 3. プラス（十字） -->
-        <a href="#" class="nav-item" id="main-menu">
+        <button type="button" class="nav-item" id="main-menu">
             <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
             <span class="nav-label">追加</span>
-        </a>
+        </button>
 
         <!-- 4. ハンガー -->
         <a href="#" class="nav-item" id="main-menu">
@@ -169,6 +169,206 @@
         <div class="content-body">
         </div>
 </main>
+
+<div class="add-item-modal-overlay">
+    <div class="add-item-modal-card">
+        <div class="modal-header">
+            <h3>新しいアイテムを追加</h3>
+        </div>
+        <div class="selection-grid">
+            <button type="button" class="selection-card" id="cameraTriggerBtn">
+                <input type="file" id="cameraFileInput" accept="image/*" capture="environment" style="display: none;">
+
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
+                        <circle cx="12" cy="13" r="3"></circle>
+                    </svg>
+                </div>
+                <div class="card-text">
+                    <h1>カメラで撮影</h1>
+                    <h3>今すぐ撮影して追加</h3>
+                </div>
+            </button>
+            <button type="button" class="selection-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                </div>
+                <div class="card-text">
+                    <h2>アルバム・ファイルから選択</h2>
+                    <h3>写真・ファイルから選択</h3>
+                </div>
+            </button>
+            <button type="button" class="selection-card">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                </div>
+                <div class="card-text">
+                    <h2>ウェブ検索</h2>
+                    <h3>通販サイトで検索</h3>
+                </div>
+            </button>
+            <button type="button" class="selection-card" id="aiTriggerBtn">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z"></path>
+                        <path d="M19 4l1 3 3 1-3 1-1 3-1-3-3-1 3-1 1-3z"></path>
+                    </svg>
+                </div>
+                <div class="card-text">
+                    <h2>AI自動追加</h2>
+                    <h3>テキストから画像生成</h3>
+                </div>
+            </button>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn-cancel">キャンセル</button>
+        </div>
+    </div>
+</div>
+
+<div class="item-detail-modal-overlay">
+    <div class="item-detail-modal-card">
+    
+        <!-- ヘッダー -->
+        <div class="detail-modal-header">
+            <h2 class="modal-title" id="modalTitle">アイテムを追加</h2>
+        </div>
+
+        <!-- メイン -->
+        <div class="detail-modal-body">
+            <!-- 左側 -->
+            <div class="item-image-preview">
+                <img src="https://via.placeholder.com/300x400" alt="選択したアイテム" id="previewImage">
+            </div>
+
+            <!-- 右側 -->
+            <div class="item-form-content">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>詳細 (オプション)<br><span class="label-main">アイテム名</span></label>
+                        <input type="text">
+                    </div>
+                    <div class="form-group">
+                        <label><span class="label-main">基本情報を入力</span><br>ブランド</label>
+                        <input type="text">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <!-- カテゴリー選択・入力エリア -->
+                    <div class="form-group">
+                        <label>カテゴリー <span class="label-sub">(例: トップス)</span></label>
+                        
+                        <!-- プルダウンでサクッと選べるようにする -->
+                        <select id="categorySelect" class="form-control" style="margin-bottom: 6px;">
+                            <option value="トップス">トップス</option>
+                            <option value="ボトムス">ボトムス</option>
+                            <option value="アウター">アウター</option>
+                        </select>
+                        
+                        <!-- その他の自由入力用（必要に応じて使い分けられる形） -->
+                        <input type="text" id="categoryInput" class="form-control" placeholder="その他のカテゴリーを入力">
+                    </div>
+
+                    <div class="form-group">
+                        <label>カラー <span class="label-sub">(例: ホワイト)</span></label>
+                        <div class="color-picker-wrapper">
+                            <div class="color-palette" id="colorPalette">
+                            <!-- 各カラーチップ（クリックで色を選択できるようにする） -->
+                            <span class="color-dot" style="background:#ffffff; border:1px solid #999;" data-color="ホワイト"></span>
+                            <span class="color-dot" style="background: yellow;" data-color="ベージュ"></span>
+                            <span class="color-dot" style="background: pink;" data-color="ピンク"></span>
+                            <span class="color-dot" style="background: red;" data-color="レッド"></span>
+                            <span class="color-dot" style="background: green;" data-color="グリーン"></span>
+                            <span class="color-dot" style="background: blue;" data-color="ブルー"></span>
+                            <span class="color-dot" style="background: purple;" data-color="パープル"></span>
+                            </div>
+                            <!-- 選択された色の名前を表示するテキスト -->
+                            <div class="color-input-container" style="display: flex; align-items: center; gap: 10px; margin-top: 8px;">
+                                <!-- 青色枠：その他の色を自由入力 -->
+                                <input type="text" id="customColorInput" placeholder="カスタムカラーを入力" class="form-control" style="flex: 1;">
+                                
+                                <!-- 赤色枠：選択・入力された色の名前を表示 -->
+                                <div class="selected-color-box" style="min-width: 80px; padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px; text-align: center; background: #fff;">
+                                    <span id="selectedColorName">ホワイト</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>季節 <span class="label-sub">(例: 春、秋)</span></label>
+                        <div class="season-picker" id="seasonPicker" style="display: flex; gap: 8px;">
+                            <button type="button" class="season-btn" data-season="春">春</button>
+                            <button type="button" class="season-btn" data-season="夏">夏</button>
+                            <button type="button" class="season-btn" data-season="秋">秋</button>
+                            <button type="button" class="season-btn" data-season="冬">冬</button>
+                            <!-- または「春夏」「秋冬」などの組み合わせボタンも同様に扱えます -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>お気に入り登録:</label>
+                        <button type="button" class="favorite-toggle-btn" id="favoriteBtn">
+                            <!-- 最初は fill="none" にして、線の色をグレーなどに設定しておきます -->
+                            <svg viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2" id="heartSvg">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- フッター -->
+        <div class="detail-modal-footer">
+                <button type="button" class="submit-btn" id="addToClosetBtn">
+                    クローゼットに <span id="targetCategoryName">トップス</span> に追加
+                </button>
+            <button type="button" id="modalCancelBtn" class="cancel-btn">キャンセル</button>
+        </div>
+    </div>
+</div>
+
+<!-- AI自動追加用のモーダル（ドロアー） -->
+<div class="ai-modal-overlay" id="aiModalOverlay">
+    <div class="ai-modal-content">
+        <div class="ai-modal-header">
+            <h3 class="ai-modal-title">✨ AI自動画像生成</h3>
+            <button type="button" id="aiCloseBtn" class="ai-close-btn">✕</button>
+        </div>
+
+        <div class="form-group">
+            <label class="ai-field-label">作りたい服のキーワード</label>
+            <input type="text" id="aiPromptInput" class="ai-prompt-input" placeholder="例: 白のオーバーサイズパーカー">
+            
+            <!-- ▼ ここに問題報告風のエラーメッセージ用のタグを追加（最初は非表示） -->
+            <p id="aiErrorMessage" style="color: #ef4444; font-size: 12px; margin-top: 4px; display: none;"></p>
+
+            <button type="button" id="generateBtn" class="ai-generate-btn">画像を生成する</button>
+        </div>
+
+        <!-- 生成された画像の選択候補（最初は非表示） -->
+        <div id="aiResultArea" class="ai-result-area">
+            <p class="ai-result-text">生成された画像を選んでください:</p>
+            <div class="ai-image-candidates">
+                <img src="https://via.placeholder.com/100x100?text=Generated+1" class="selectable-ai-img" data-img-url="https://via.placeholder.com/300x300?text=Generated+1">
+                <img src="https://via.placeholder.com/100x100?text=Generated+2" class="selectable-ai-img" data-img-url="https://via.placeholder.com/300x300?text=Generated+2">
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- 問題報告モーダルのオーバーレイ（背景暗転＋中央配置） -->
 <div class="modal-overlay" id="reportModal">
     <div class="modal-card">
@@ -263,7 +463,7 @@
         </div>
     </div>
 </div>
-
+<input type="file" id="hiddenImageInput" accept="image/*" style="display: none;">
 <script src="js/common.js"></script>
 <script src="js/closet.js"></script>
 </body>
