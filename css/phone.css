@@ -61,3 +61,151 @@
         font-size: 11px;
     }
 }
+
+/* =========================================
+   MODEX 新しいアイテム追加画面 スマホ対応
+   既存CSSは変更せず、ここから追加
+========================================= */
+
+@media screen and (max-width: 600px) {
+
+    /* モーダル全体 */
+    .add-item-modal-overlay {
+        padding: 12px;
+        box-sizing: border-box;
+    }
+
+    /* 白いモーダル画面 */
+    .add-item-modal-card {
+        width: calc(100vw - 32px);
+        max-width: 420px;
+        max-height: 90vh;
+        max-height: 90dvh;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    /* タイトル */
+    .add-item-modal-card .modal-header {
+        width: 100%;
+        margin-bottom: 16px;
+    }
+
+    .add-item-modal-card .modal-header h3 {
+        font-size: 18px;
+    }
+
+    /* 4つの選択肢の配置 */
+    .add-item-modal-card .selection-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: auto;
+        width: 100%;
+        gap: 12px;
+    }
+
+    /* 選択肢それぞれ */
+    .add-item-modal-card .selection-card {
+        width: 100%;
+        min-width: 0;
+        min-height: 90px;
+        height: auto;
+
+        grid-column: auto;
+        grid-row: auto;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+
+        gap: 15px;
+        padding: 15px;
+
+        box-sizing: border-box;
+        text-align: left;
+    }
+
+    /* アイコン */
+    .add-item-modal-card .card-icon {
+        flex: 0 0 38px;
+        width: 38px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .add-item-modal-card .card-icon svg {
+        width: 30px;
+        height: 30px;
+        max-width: 100%;
+    }
+
+    /* 文字部分 */
+    .add-item-modal-card .card-text {
+        flex: 1;
+        min-width: 0;
+        text-align: left;
+    }
+
+    .add-item-modal-card .card-text h1,
+    .add-item-modal-card .card-text h2 {
+        font-size: 15px;
+        margin: 0 0 5px;
+        overflow-wrap: anywhere;
+    }
+
+    .add-item-modal-card .card-text h3 {
+        font-size: 12px;
+        margin: 0;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+    }
+
+    /* キャンセルボタン */
+    .add-item-modal-card .modal-footer {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 16px;
+    }
+
+    .add-item-modal-card .btn-cancel {
+        max-width: 100%;
+    }
+}
+
+/* 小さいスマートフォン */
+@media screen and (max-width: 360px) {
+
+    .add-item-modal-card {
+        padding: 15px;
+    }
+
+    .add-item-modal-card .selection-card {
+        min-height: 80px;
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .add-item-modal-card .card-text h1,
+    .add-item-modal-card .card-text h2 {
+        font-size: 14px;
+    }
+
+    .add-item-modal-card .card-text h3 {
+        font-size: 11px;
+    }
+
+    .add-item-modal-card .card-icon {
+        flex-basis: 32px;
+        width: 32px;
+    }
+
+    .add-item-modal-card .card-icon svg {
+        width: 26px;
+        height: 26px;
+    }
+}
