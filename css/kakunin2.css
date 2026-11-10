@@ -75,6 +75,10 @@ h2 {
     padding-top: 5px;
 }
 
+.confirm-item a:hover {
+    text-decoration: underline;
+}
+
 /* 項目名 */
 .item-title {
     font-size: 14px;
@@ -119,7 +123,10 @@ h2 {
     font-size: 18px;
     padding: 0 5px;
     margin-left: 70px;
+}
 
+.eye-button:hover {
+    text-decoration: underline;
 }
 
 /* 破線 */
@@ -140,10 +147,15 @@ h2 {
 
 /* ボタン共通 */
 .button-area a {
-    color: #222;
+    color: #000;
     text-decoration: none;
     font-size: 15px;
     white-space: nowrap;
+}
+
+/* 訪問済みのリンク */
+.button-area a:visited {
+    color: #000;
 }
 
 /* 戻るボタン */
@@ -156,6 +168,12 @@ h2 {
     text-align: right;
 }
 
+/* カーソルを合わせたとき */
+.button-area a:hover {
+    color: #222;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
 /* スマートフォン対応 */
 @media screen and (max-width: 600px) {
 
