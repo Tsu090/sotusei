@@ -1,0 +1,63 @@
+/* スマートフォン対応 */
+@media screen and (max-width: 600px) {
+
+    .container {
+        width: 90%;
+        padding-top: 20px;
+    }
+
+    .logo {
+        margin-bottom: 20px;
+    }
+
+    .logo img {
+        width: 120px;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 25px;
+    }
+
+    .description {
+        font-size: 12px;
+        margin-bottom: 55px;
+    }
+
+    .item-title {
+        font-size: 16px;
+    }
+
+    .item-content {
+        font-size: 14px;
+    }
+
+    .item-content a {
+        font-size: 13px;
+    }
+
+    .password {
+        font-size: 17px;
+    }
+
+    .button-area {
+        margin-top: 40px;
+        gap: 5px;
+    }
+
+    .button-area a {
+        font-size: 12px;
+    }
+}
+
+/* 小さいスマートフォン */
+@media screen and (max-width: 360px) {
+
+    .button-area a {
+        font-size: 10px;
+    }
+
+    .description {
+        font-size: 11px;
+    }
+}
