@@ -209,3 +209,85 @@
         height: 26px;
     }
 }
+
+
+/* =========================================
+   スマートフォン表示：サイドバーを画面下部へ移動
+========================================= */
+@media screen and (max-width: 600px) {
+
+    /* サイドバーを画面下部に固定 */
+    .sidebar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        top: auto;
+        width: 100%;
+        height: 60px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    /* ロゴを非表示 */
+    .sidebar-logo {
+        display: none;
+    }
+
+    /* メニューを横並びにする */
+    .sidebar-nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        gap: 0;
+    }
+
+    /* 各メニュー */
+    .sidebar-nav .nav-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+        width: auto;
+        height: 100%;
+        padding: 5px 0;
+    }
+
+    /* メニューアイコン */
+    .sidebar-nav .nav-icon {
+        width: 22px;
+        height: 22px;
+    }
+
+    /* メニュー文字 */
+    .sidebar-nav .nav-label {
+        display: none;
+    }
+
+    /* その他メニュー */
+    .more-menu-wrapper {
+        display: none;
+    }
+
+    /* メイン画面が下部メニューに隠れないようにする */
+    .main-content {
+        padding-bottom: 60px;
+    }
+}
+
+/* スマホ表示：ヘッダーロゴの位置調整 */
+@media screen and (max-width: 600px) {
+
+    .header-logo {
+        position: relative;
+        left: -12px;
+        top: 10px;
+    }
+
+}
