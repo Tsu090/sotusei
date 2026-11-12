@@ -485,7 +485,15 @@
 
     /* 季節選択 */
     .item-detail-modal-card .season-picker {
-        flex-wrap: wrap;
+        display: grid !important;
+        grid-template-columns: repeat(2, max-content);
+        gap: 8px;
+        justify-content: start;
+    }
+
+    .item-detail-modal-card .season-btn {
+        min-width: 44px;
+        text-align: center;
     }
 
     /* 下部ボタン */
