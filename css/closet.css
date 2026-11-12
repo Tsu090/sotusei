@@ -61,6 +61,42 @@
     white-space: nowrap;   /* 🔑 文字を勝手に改行させない */
 }
 
+/* 「服を追加する」ボタン全体のスタイル */
+.add-item-trigger {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 文字と丸ボタンの間隔 */
+    transition: opacity 0.2s ease;
+    padding-left: 20px;
+}
+
+.add-item-trigger:hover {
+    opacity: 0.7;
+}
+
+/* 「服を追加する」のテキスト部分 */
+.add-item-text {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1c1917;
+    font-family: inherit;
+}
+
+/* 丸いプラスアイコン部分 */
+.add-item-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #1c1917;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .closet-grid {
     grid-row: 2 / 4; 
     display: grid;
@@ -154,40 +190,4 @@
 /* 非表示にするためのクラス */
 .item-card.hidden {
     display: none !important;
-}
-
-/* 「服を追加する」ボタン全体のスタイル */
-.add-item-trigger {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px; /* 文字と丸ボタンの間隔 */
-    transition: opacity 0.2s ease;
-    padding-left: 20px;
-}
-
-.add-item-trigger:hover {
-    opacity: 0.7;
-}
-
-/* 「服を追加する」のテキスト部分 */
-.add-item-text {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #1c1917;
-    font-family: inherit;
-}
-
-/* 丸いプラスアイコン部分 */
-.add-item-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background-color: #1c1917;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
