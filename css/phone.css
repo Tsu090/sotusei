@@ -524,3 +524,26 @@
         gap: 7px;
     }
 }
+
+
+
+
+/* =========================================
+   スマホ専用：季節ボタンを2列に配置
+========================================= */
+
+@media screen and (max-width: 600px) {
+
+    .season-picker {
+        display: grid !important;
+        grid-template-columns: repeat(2, max-content) !important;
+        gap: 8px !important;
+        justify-content: start;
+    }
+
+    .season-picker .season-btn {
+        min-width: 44px;
+        text-align: center;
+    }
+
+}
