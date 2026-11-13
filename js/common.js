@@ -609,3 +609,35 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+/* ==========================================
+ * 【新規追加】共通カテゴリフィルター関数
+ * ========================================== */
+function initCategoryFilter(selectId, cardSelector, defaultFilter = 'all') {
+    const filterElement = document.getElementById(selectId);
+    if (!filterElement) return;
+
+    // 初期値をセレクトボックスに反映
+    filterElement.value = defaultFilter;
+
+    const applyFilter = () => {
+        const filterType = filterElement.value;
+        const cards = document.querySelectorAll(cardSelector);
+
+        cards.forEach(card => {
+            const isFavorite = card.getAttribute('data-favorite') === 'true';
+            const category = card.getAttribute('data-category');
+
+            if (filterType === 'all') {
+                card.classList.remove('hidden');
+            } else if (filterType === 'favorite') {
+                card.classList.toggle('hidden', !isFavorite);
+            } else {
+                card.classList.toggle('hidden', category !== filterType);
+            }
+        });
+    };
+
+    filterElement.addEventListener('change', applyFilter);
+    applyFilter(); // 読み込み時に一度適用
+}
