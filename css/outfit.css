@@ -206,3 +206,301 @@
 .coord-card.hidden {
     display: none !important;
 }
+
+/* ==========================================
+ * 1. 非表示用クラス（フィルター機能用）
+ * ========================================== */
+.hidden {
+    display: none !important;
+}
+
+
+/* ==========================================
+ * 2. モーダル全体（背景の半透明な黒い幕）
+ * ========================================== */
+.coord-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* 背景を少し暗くする */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    box-sizing: border-box;
+
+    /* 普段は非表示にしておく */
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+/* 「is-open」クラスがついたらふわっと表示 */
+.coord-drawer.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* ==========================================
+ * 3. 画面中央の白いポップアップボックス本体（約1.5倍に拡大）
+ * ========================================== */
+.coord-drawer-content {
+    width: 95%;
+    max-width: 650px;
+    max-height: 90vh;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column; /* プレビューと服一覧を「縦に」積み重ねる */
+    overflow: hidden;
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.coord-drawer.is-open .coord-drawer-content {
+    transform: scale(1);
+}
+
+
+/* ==========================================
+ * 4. 上部のプレビュー ＆ 設定エリア
+ * ========================================== */
+.coord-canvas-section {
+    padding: 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #eee;
+}
+
+/* ==========================================
+ * 💡 コーデのプレビューボード全体を「縦長」にする
+ * ========================================== */
+.coord-preview-board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(9, 1fr);
+    gap: 8px;
+    width: 280px;
+    height: 380px;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+    padding: 14px;
+    border-radius: 16px;
+    border: 1px solid #e1e4e8;
+    box-sizing: border-box;
+}
+
+/* ==========================================
+ * 💡 各アイテムスロットの枠線を無くすスタイル
+ * ========================================== */
+.coord-item-slot {
+    background-color: #ffffff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* スロットに入った画像を綺麗に収める */
+.coord-item-slot img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block;
+}
+
+/* アイコン（絵文字）が表示されるときの中央寄せ */
+.coord-item-slot:not(:has(img)) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #888;
+}
+
+/* ==========================================
+ * 各アイテムの配置（縦長ボード用のレイアウト）
+ * ========================================== */
+ .coord-item-slot.item-outer {
+    grid-column: 1 / 2;
+    grid-row: 1 / 4;
+}
+
+.coord-item-slot.item-top {
+    grid-column: 1 / 2;
+    grid-row: 4 / 7;
+}
+
+.coord-item-slot.item-bottom {
+    grid-column: 1 / 2;
+    grid-row: 7 / 10;
+}
+
+.coord-item-slot.item-accessory {
+    grid-column: 2 / 3;
+    grid-row: 2 / 5;
+}
+
+.coord-item-slot.item-shoes {
+    grid-column: 2 / 3;
+    grid-row: 6 / 9;
+}
+
+/* 保存ボタンとお気に入りトグルバー */
+.coord-settings-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+}
+
+.save-btn {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.favorite-toggle-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #555;
+}
+
+
+/* ==========================================
+ * 5. 下部の服選びドロアーエリア
+ * ========================================== */
+.item-drawer {
+    padding: 16px 20px;
+    background-color: #fafafa;
+    display: flex;
+    flex-direction: column;
+}
+
+.drawer-handle {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 8px;
+}
+
+.handle-bar {
+    width: 36px;
+    height: 4px;
+    background-color: #ddd;
+    border-radius: 2px;
+}
+
+.drawer-header {
+    margin-bottom: 10px;
+}
+
+.drawer-header select {
+    padding: 7px 14px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    outline: none;
+}
+
+
+/* ==========================================
+ * 6. 服一覧（横スクロール ＆ 大きめカード）
+ * ========================================== */
+.drawer-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;   /* 横スクロール有効（ホイール対応JSと連携） */
+    overflow-y: hidden; /* 縦スクロール禁止 */
+    padding-bottom: 12px;
+    white-space: nowrap;
+}
+
+.drawer-grid .item-card {
+    flex: 0 0 120px; /* カードの幅を120pxに設定 */
+    position: relative;
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #eee;
+    aspect-ratio: 1 / 1;
+}
+
+.drawer-grid .item-card .image-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.drawer-grid .item-card .image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* カード右上のハート（お気に入り）ボタン */
+.drawer-grid .item-card .favorite-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: rgba(255, 255, 255, 0.85);
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #999;
+}
+
+/* お気に入り登録時のハート色 */
+.drawer-grid .item-card.favorited .favorite-btn {
+    color: #ff4757;
+}
+.drawer-grid .item-card.favorited .favorite-btn svg {
+    fill: #ff4757;
+}
+
+/* ==========================================
+ * 💡 スロット内に服の画像が入ったときの崩れ防止
+ * ========================================== */
+.coord-item-slot {
+    background-color: #ffffff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    overflow: hidden; /* 💡 はみ出しを絶対に許さない */
+    position: relative;
+}
+
+.coord-item-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   /* 枠に合わせて画像を綺麗に切り抜いて収める */
+    border-radius: 6px;  /* スロットの角に合わせて丸みをつける */
+    display: block;
+}
+
+/* アイコン（👕や👖など）が入っているときは中央に文字として表示する */
+.coord-item-slot:not(:has(img)) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}

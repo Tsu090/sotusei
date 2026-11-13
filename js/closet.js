@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (favoriteButtons.length > 0) {
         favoriteButtons.forEach(button => {
             button.addEventListener('click', (e) => {
-                e.stopPropagation(); // カード全体のクリック（モーダル起動）との競合を防ぐ
+                e.stopPropagation();
                 const card = button.closest('.item-card');
                 if (!card) return;
 
@@ -42,61 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     /* ==========================================
-     * 3. メインのタイトルフィルター処理（修正版）
+     * 3 & 4. フィルター処理（共通関数で1行ずつにする！）
      * ========================================== */
-    const closetFilter = document.getElementById('closetFilter');
+    // メインフィルター（初期値：すべて）
+    initCategoryFilter('closetFilter', '#closetGrid .item-card', 'all');
 
-    if (closetFilter) {
-        closetFilter.addEventListener('change', (e) => {
-            const filterType = e.target.value;
-            
-            // 💡 ここがポイント：#closetGrid の中にある .item-card だけを対象にする
-            const itemCards = document.querySelectorAll('#closetGrid .item-card');
+    // お気に入りフィルター（初期値：お気に入り）
+    initCategoryFilter('favoritesFilter', '#favoritesGrid .item-card', 'favorite');
 
-            itemCards.forEach(card => {
-                const isFavorite = card.getAttribute('data-favorite') === 'true';
-                const category = card.getAttribute('data-category');
-
-                if (filterType === 'all') {
-                    card.classList.remove('hidden');
-                } else if (filterType === 'favorite') {
-                    card.classList.toggle('hidden', !isFavorite);
-                } else {
-                    card.classList.toggle('hidden', category !== filterType);
-                }
-            });
-        });
-    }
-
-
-    /* ==========================================
-     * 4. サブフィルター（お気に入りセクション用）
-     * ========================================== */
-    const favoritesFilter = document.getElementById('favoritesFilter');
-    const favoriteCards = document.querySelectorAll('#favoritesGrid .item-card');
-
-    function applyFavoritesFilter() {
-        if (!favoritesFilter) return;
-        const filterType = favoritesFilter.value;
-
-        favoriteCards.forEach(card => {
-            const isFavorite = card.getAttribute('data-favorite') === 'true';
-            const category = card.getAttribute('data-category');
-
-            if (filterType === 'all') {
-                card.classList.remove('hidden');
-            } else if (filterType === 'favorite') {
-                card.classList.toggle('hidden', !isFavorite);
-            } else {
-                card.classList.toggle('hidden', category !== filterType);
-            }
-        });
-    }
-
-    if (favoritesFilter && favoriteCards.length > 0) {
-        favoritesFilter.addEventListener('change', applyFavoritesFilter);
-        applyFavoritesFilter(); // 初期状態の適用
-    }
+    // 👇 これから作る「コーデ編集ドロアー」のフィルターも、ここへ1行追加するだけでOK！
+    // initCategoryFilter('drawerCategoryFilter', '#drawerGrid .item-card', 'all');
 
 
     /* ==========================================

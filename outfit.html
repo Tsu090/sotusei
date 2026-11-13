@@ -187,7 +187,7 @@
                             </select>
                         </div>
                         <span class="item-count your-toolbar-class">8 items</span>
-                        <button class=" your-toolbar-class" id="" aria-label="コーデを追加する">
+                        <button class="your-toolbar-class" id="openDrawerBtn" aria-label="コーデを追加する">
                             <span class="add-item-text">コーデを追加する</span>
                             <span class="add-item-icon">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -228,10 +228,10 @@
                     </div>
 
                     <!-- 秋コーデ -->
-                    <div class="coord-card favorited" data-favorite="true" data-season="autumn">
+                    <div class="coord-card favorited" data-favorite="true" data-season="fall">
                         <div class="image-wrapper">
-                            <img src="https://via.placeholder.com/300x400/4a4a4a/ffffff?text=Autumn+Coord" alt="秋のコーディネート">
-                            <span class="season-badge">Autumn</span>
+                            <img src="https://via.placeholder.com/300x400/4a4a4a/ffffff?text=Fall+Coord" alt="秋のコーディネート">
+                            <span class="season-badge">Fall</span>
                         </div>
                         <button class="favorite-btn" aria-label="お気に入りに追加">
                             <svg class="heart-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
@@ -279,10 +279,10 @@
                     </div>
 
                     <!-- 秋コーデ -->
-                    <div class="coord-card favorited" data-favorite="true" data-season="autumn">
+                    <div class="coord-card favorited" data-favorite="true" data-season="fall">
                         <div class="image-wrapper">
-                            <img src="https://via.placeholder.com/300x400/4a4a4a/ffffff?text=Autumn+Coord" alt="秋のコーディネート">
-                            <span class="season-badge">Autumn</span>
+                            <img src="https://via.placeholder.com/300x400/4a4a4a/ffffff?text=Fall+Coord" alt="秋のコーディネート">
+                            <span class="season-badge">fall</span>
                         </div>
                         <button class="favorite-btn" aria-label="お気に入りに追加">
                             <svg class="heart-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
@@ -330,10 +330,10 @@
                     </div>
 
                     <!-- 秋コーデ -->
-                    <div class="coord-card favorited" data-favorite="true" data-season="autumn">
+                    <div class="coord-card favorited" data-favorite="true" data-season="fall">
                         <div class="image-wrapper">
-                            <img src="https://via.placeholder.com/300x400/4a4a4a/ffffff?text=Autumn+Coord" alt="秋のコーディネート">
-                            <span class="season-badge">Autumn</span>
+                            <img src="https://via.placeholder.com/300x400/4a4a4a/ffffff?text=fall+Coord" alt="秋のコーディネート">
+                            <span class="season-badge">Fall</span>
                         </div>
                         <button class="favorite-btn" aria-label="お気に入りに追加">
                             <svg class="heart-icon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
@@ -571,8 +571,64 @@
 <!-- ==============================================================
    コーデ追加の画面
    ============================================================== -->
+<div class="coord-drawer">
+    <div class="coord-drawer-content">
+        
+        <!-- 上部のエリア：1つの大きな「コーデ作成キャンバス」 -->
+        <div class="coord-canvas-section">
+            <div class="coord-preview-board">
+                <!-- 
+                  ここに選んだアイテムが自動で入ります。
+                  CSSのグリッドでそれぞれの位置（トップス、アウター、ボトムスなど）が指定されます。
+                -->
+                <div class="coord-item-slot item-top" title="トップス">👕</div>
+                <div class="coord-item-slot item-outer" title="アウター">🧥</div>
+                <div class="coord-item-slot item-bottom" title="ボトムス">👖</div>
+                <div class="coord-item-slot item-shoes" title="シューズ">👟</div>
+                <div class="coord-item-slot item-accessory" title="アクセサリー">💍</div>
+            </div>
+            
+            <div class="coord-settings-bar">
+                <button class="save-btn">保存をする</button>
+                <div class="favorite-toggle-group">
+                    <span>お気に入りに追加</span>
+                    <label class="switch">
+                        <input type="checkbox" id="coordFavoriteToggle">
+                        <span class="slider round">❤️</span>
+                    </label>
+                </div>
+            </div>
+        </div>
 
+        <!-- 下部のエリア（服選びドロアー・変更なし） -->
+        <div class="item-drawer" id="itemDrawer">
+            <div class="drawer-handle" id="drawerHandle">
+                <span class="handle-bar"></span>
+            </div>
+            <div class="drawer-header">
+                <select id="drawerCategoryFilter" aria-label="カテゴリーフィルター">
+                    <option value="all">すべての服</option>
+                    <option value="favorite">お気に入り</option>
+                    <option value="tops">トップス</option>
+                    <option value="bottoms">ボトムス</option>
+                </select>
+            </div>
+            <div id="drawerGrid" class="drawer-grid my-coord-drawer-grid">
+                <!-- 服カードのサンプル -->
+                <div class="item-card favorited" data-favorite="true" data-category="tops">
+                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/1a1a1a/ffffff?text=Coat+1" alt="アイテム"></div>
+                </div>
+                <div class="item-card" data-favorite="false" data-category="tops">
+                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/1a1a1a/ffffff?text=Coat+1" alt="アイテム"></div>
+                </div>
+                <div class="item-card" data-favorite="false" data-category="bottoms">
+                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/1a1a1a/ffffff?text=Pants+2" alt="アイテム"></div>
+                </div>
+            </div>
+        </div>
 
+    </div>
+</div>
 
 <!-- ==============================================================
    問題報告の画面
