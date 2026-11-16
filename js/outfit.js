@@ -262,3 +262,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+// DOMが読み込まれた後に実行
+document.addEventListener('DOMContentLoaded', () => {
+    const closeBtn = document.querySelector('.coord-close-btn');
+    const coordDrawer = document.querySelector('.coord-drawer'); // または .coord-canvas-section を包んでいる親要素
+    
+    if (closeBtn && coordDrawer) {
+        closeBtn.addEventListener('click', () => {
+            // パターンA: 'is-open' などのクラスを外して閉じる場合（スライド式などの場合）
+            coordDrawer.classList.remove('is-open');
+            
+            // パターンB: スタイルを直接 'display: none' にして消す場合
+            // coordDrawer.style.display = 'none';
+        });
+    }
+});

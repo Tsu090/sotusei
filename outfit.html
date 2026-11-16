@@ -177,7 +177,7 @@
                     <h3>作成したコーデを管理できます</h3>
                     <div class="section-header-action">
                         <div class="outfit-title-filter">
-                            <select aria-label="コーデのフィルター">
+                            <select name="コーデのフィルター">
                                 <option value="all">すべてのコーデ</option>
                                 <option value="favorite">お気に入り</option>
                                 <option value="spring">春</option>
@@ -187,7 +187,7 @@
                             </select>
                         </div>
                         <span class="item-count your-toolbar-class">8 items</span>
-                        <button class="your-toolbar-class" id="openDrawerBtn" aria-label="コーデを追加する">
+                        <button class="add-item-trigger your-toolbar-class" id="openDrawerBtn" aria-label="コーデを追加する">
                             <span class="add-item-text">コーデを追加する</span>
                             <span class="add-item-icon">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -576,27 +576,25 @@
         
         <!-- 上部のエリア：1つの大きな「コーデ作成キャンバス」 -->
         <div class="coord-canvas-section">
+
+            <button class="coord-close-btn" type="button">✕</button>
+
+            <button class="save-btn">保存をする</button>
+            
             <div class="coord-preview-board">
-                <!-- 
-                  ここに選んだアイテムが自動で入ります。
-                  CSSのグリッドでそれぞれの位置（トップス、アウター、ボトムスなど）が指定されます。
-                -->
-                <div class="coord-item-slot item-top" title="トップス">👕</div>
-                <div class="coord-item-slot item-outer" title="アウター">🧥</div>
-                <div class="coord-item-slot item-bottom" title="ボトムス">👖</div>
-                <div class="coord-item-slot item-shoes" title="シューズ">👟</div>
-                <div class="coord-item-slot item-accessory" title="アクセサリー">💍</div>
+                <div class="coord-item-slot item-top" title="トップス"></div>
+                <div class="coord-item-slot item-outer" title="アウター"></div>
+                <div class="coord-item-slot item-bottom" title="ボトムス"></div>
+                <div class="coord-item-slot item-shoes" title="シューズ"></div>
+                <div class="coord-item-slot item-accessory" title="アクセサリー"></div>
             </div>
             
-            <div class="coord-settings-bar">
-                <button class="save-btn">保存をする</button>
-                <div class="favorite-toggle-group">
-                    <span>お気に入りに追加</span>
-                    <label class="switch">
-                        <input type="checkbox" id="coordFavoriteToggle">
-                        <span class="slider round">❤️</span>
-                    </label>
-                </div>
+            <div class="favorite-toggle-group">
+                <span>お気に入りに追加</span>
+                <label class="switch">
+                    <input type="checkbox" id="coordFavoriteToggle">
+                    <span class="slider round">❤️</span>
+                </label>
             </div>
         </div>
 
