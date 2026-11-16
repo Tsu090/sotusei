@@ -1,5 +1,26 @@
-document.addEventListener('DOMContentLoaded', () => {
+// document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+        // ======================================
+    // ログイン状態の確認
+    // ======================================
+    const checkLogin = async () => {
 
+        const { data, error } =
+            await supabaseClient.auth.getSession();
+
+        // ログインしていない場合
+        if (error || !data.session) {
+            window.location.replace('login.html');
+        }
+    };
+
+    // ページを開いたときに確認
+    await checkLogin();
+
+    // ブラウザの戻る操作などでページが復元された場合も確認
+    window.addEventListener('pageshow', () => {
+        checkLogin();
+    });
     /* ==========================================
      * ① プロフィールドロワーの開閉管理
      * ========================================== */
@@ -74,13 +95,49 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // ★中央モーダル内の「本当にログアウトする」ボタンが押されたとき
+        // if (confirmLogoutBtn) {
+        //     confirmLogoutBtn.addEventListener('click', () => {
+        //         console.log('ログアウトしました');
+        //         window.location.href = 'login.html';
+        //         closeLogoutModal();
+        //     });
+        // }
+
+        // 中央モーダル内のログアウトボタン
         if (confirmLogoutBtn) {
-            confirmLogoutBtn.addEventListener('click', () => {
-                console.log('ログアウトしました');
-                window.location.href = 'login.html';
-                closeLogoutModal();
+            confirmLogoutBtn.addEventListener('click', async () => {
+
+                // 二重クリック防止
+                confirmLogoutBtn.disabled = true;
+
+                try {
+
+                    // Supabaseからログアウト
+                    const { error } = await supabaseClient.auth.signOut();
+
+                    if (error) {
+                        throw error;
+                    }
+
+                    console.log('Supabaseからログアウトしました');
+
+                    // モーダルを閉じる
+                    closeLogoutModal();
+
+                    // ログイン画面へ移動
+                    window.location.replace('login.html');
+
+                } catch (error) {
+
+                    console.error('ログアウトエラー:', error);
+
+                    alert('ログアウトに失敗しました。もう一度お試しください。');
+
+                    confirmLogoutBtn.disabled = false;
+                }
             });
         }
+
     }
 
 });
