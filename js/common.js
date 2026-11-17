@@ -1,26 +1,41 @@
-// document.addEventListener('DOMContentLoaded', () => {
-document.addEventListener('DOMContentLoaded', async () => {
-        // ======================================
-    // ログイン状態の確認
-    // ======================================
-    const checkLogin = async () => {
 
+/* ==========================================
+ * ログイン状態の確認
+ * ========================================== */
+
+async function checkLogin() {
+    try {
         const { data, error } =
             await supabaseClient.auth.getSession();
 
-        // ログインしていない場合
         if (error || !data.session) {
-            window.location.replace('login.html');
+            return false;
         }
-    };
 
-    // ページを開いたときに確認
-    await checkLogin();
+        return true;
 
-    // ブラウザの戻る操作などでページが復元された場合も確認
-    window.addEventListener('pageshow', () => {
-        checkLogin();
-    });
+    } catch (error) {
+        console.error("ログイン確認エラー:", error);
+        return false;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+
+    // ログインしていなければログイン画面へ移動
+    const isLoggedIn = await checkLogin();
+
+    if (!isLoggedIn) {
+        window.location.replace('login.html');
+        return;
+    }
+
+    // ======================================
+    // ここから下は既存のcommon.jsの処理
+    // ======================================
+
+    /* ① プロフィールドロワーの開閉管理 */
+
     /* ==========================================
      * ① プロフィールドロワーの開閉管理
      * ========================================== */
@@ -698,3 +713,20 @@ function initCategoryFilter(selectId, cardSelector, defaultFilter = 'all') {
     filterElement.addEventListener('change', applyFilter);
     applyFilter(); // 読み込み時に一度適用
 }
+
+/* ==========================================
+ * ブラウザの戻る操作へのログイン確認
+ * ========================================== */
+
+window.addEventListener('pageshow', async (event) => {
+
+    // ブラウザのキャッシュから復元された場合
+    if (event.persisted) {
+
+        const isLoggedIn = await checkLogin();
+
+        if (!isLoggedIn) {
+            window.location.replace('login.html');
+        }
+    }
+});
