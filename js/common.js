@@ -1,18 +1,18 @@
 /* ==========================================
  * 1. ログイン状態の確認
  * ========================================== */
-async function checkLogin() {
-    try {
-        const { data, error } = await supabaseClient.auth.getSession();
-        if (error || !data.session) {
-            return false;
-        }
-        return true;
-    } catch (error) {
-        console.error("ログイン確認エラー:", error);
-        return false;
-    }
-}
+// async function checkLogin() {
+//     try {
+//         const { data, error } = await supabaseClient.auth.getSession();
+//         if (error || !data.session) {
+//             return false;
+//         }
+//         return true;
+//     } catch (error) {
+//         console.error("ログイン確認エラー:", error);
+//         return false;
+//     }
+// }
 
 // ブラウザの戻る操作等でキャッシュから復元された場合のログイン確認
 window.addEventListener('pageshow', async (event) => {
