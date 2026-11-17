@@ -1,4 +1,40 @@
-document.addEventListener('DOMContentLoaded', () => {
+
+/* ==========================================
+ * ログイン状態の確認
+ * ========================================== */
+
+async function checkLogin() {
+    try {
+        const { data, error } =
+            await supabaseClient.auth.getSession();
+
+        if (error || !data.session) {
+            return false;
+        }
+
+        return true;
+
+    } catch (error) {
+        console.error("ログイン確認エラー:", error);
+        return false;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+
+    // ログインしていなければログイン画面へ移動
+    const isLoggedIn = await checkLogin();
+
+    if (!isLoggedIn) {
+        window.location.replace('login.html');
+        return;
+    }
+
+    // ======================================
+    // ここから下は既存のcommon.jsの処理
+    // ======================================
+
+    /* ① プロフィールドロワーの開閉管理 */
 
     /* ==========================================
      * ① プロフィールドロワーの開閉管理
@@ -74,13 +110,49 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // ★中央モーダル内の「本当にログアウトする」ボタンが押されたとき
+        // if (confirmLogoutBtn) {
+        //     confirmLogoutBtn.addEventListener('click', () => {
+        //         console.log('ログアウトしました');
+        //         window.location.href = 'login.html';
+        //         closeLogoutModal();
+        //     });
+        // }
+
+        // 中央モーダル内のログアウトボタン
         if (confirmLogoutBtn) {
-            confirmLogoutBtn.addEventListener('click', () => {
-                console.log('ログアウトしました');
-                window.location.href = 'login.html';
-                closeLogoutModal();
+            confirmLogoutBtn.addEventListener('click', async () => {
+
+                // 二重クリック防止
+                confirmLogoutBtn.disabled = true;
+
+                try {
+
+                    // Supabaseからログアウト
+                    const { error } = await supabaseClient.auth.signOut();
+
+                    if (error) {
+                        throw error;
+                    }
+
+                    console.log('Supabaseからログアウトしました');
+
+                    // モーダルを閉じる
+                    closeLogoutModal();
+
+                    // ログイン画面へ移動
+                    window.location.replace('login.html');
+
+                } catch (error) {
+
+                    console.error('ログアウトエラー:', error);
+
+                    alert('ログアウトに失敗しました。もう一度お試しください。');
+
+                    confirmLogoutBtn.disabled = false;
+                }
             });
         }
+
     }
 
 });
@@ -897,6 +969,23 @@ document.addEventListener('DOMContentLoaded', () => {
         batchCancelBtn.addEventListener('click', () => {
             exitSelectMode(); // 選択モードを終了してすべてリセットする
         });
+    }
+});
+
+/* ==========================================
+ * ブラウザの戻る操作へのログイン確認
+ * ========================================== */
+
+window.addEventListener('pageshow', async (event) => {
+
+    // ブラウザのキャッシュから復元された場合
+    if (event.persisted) {
+
+        const isLoggedIn = await checkLogin();
+
+        if (!isLoggedIn) {
+            window.location.replace('login.html');
+        }
     }
 
 });

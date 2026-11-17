@@ -5,8 +5,8 @@ document.getElementById("registerForm").addEventListener("submit", function(even
     event.preventDefault();
 
     // 入力内容を取得
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
     const passwordConfirm = document.getElementById("password-confirm").value;
 
@@ -16,12 +16,18 @@ document.getElementById("registerForm").addEventListener("submit", function(even
         return;
     }
 
-    // 入力内容を一時保存（画面遷移用）
+    // パスワードの文字数確認
+    if (password.length < 6) {
+        alert("パスワードは6文字以上にしてください。");
+        return;
+    }
+
+    // 入力内容を一時保存
     sessionStorage.setItem("name", name);
     sessionStorage.setItem("email", email);
     sessionStorage.setItem("password", password);
 
-    // 確認画面へ移動
-    location.href = "kakunin.html";
+    // 確認ページへ移動
+    window.location.href = "kakunin.html";
 
 });
