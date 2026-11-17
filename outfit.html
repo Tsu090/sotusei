@@ -196,6 +196,15 @@
                                 </svg>
                             </span>
                         </button>
+                        <button class="add-item-trigger your-toolbar-class" id="manualSelectBtn" aria-label="選択する">
+                            <span class="add-item-text">選択</span>
+                            <span class="add-item-icon">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <!-- チェックマークのアイコン（SVG） -->
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </span>
+                        </button>
                     </div>
                 </div>
 
@@ -613,14 +622,54 @@
             </div>
             <div id="drawerGrid" class="drawer-grid my-coord-drawer-grid">
                 <!-- 服カードのサンプル -->
-                <div class="item-card favorited" data-favorite="true" data-category="tops">
-                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/1a1a1a/ffffff?text=Coat+1" alt="アイテム"></div>
-                </div>
+                <!-- Tops（トップス） -->
                 <div class="item-card" data-favorite="false" data-category="tops">
-                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/1a1a1a/ffffff?text=Coat+1" alt="アイテム"></div>
+                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/e74c3c/ffffff?text=Red+Tee" alt="アイテム"></div>
+                    <button type="button" class="favorite-btn">♥</button>
+                </div>
+                <div class="item-card favorited" data-favorite="true" data-category="tops">
+                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/3498db/ffffff?text=Blue+Shirt" alt="アイテム"></div>
+                    <button type="button" class="favorite-btn">♥</button>
+                </div>
+
+                <!-- Outer（アウター） -->
+                <div class="item-card" data-favorite="false" data-category="outer">
+                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/e67e22/ffffff?text=Brown+Jacket" alt="アイテム"></div>
+                    <button type="button" class="favorite-btn">♥</button>
+                </div>
+                <div class="item-card" data-favorite="false" data-category="outer">
+                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/2c3e50/ffffff?text=Black+Coat" alt="アイテム"></div>
+                    <button type="button" class="favorite-btn">♥</button>
+                </div>
+
+                <!-- Bottoms（ボトムス） -->
+                <div class="item-card favorited" data-favorite="true" data-category="bottoms">
+                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/2980b9/ffffff?text=Denim+Pants" alt="アイテム"></div>
+                    <button type="button" class="favorite-btn">♥</button>
                 </div>
                 <div class="item-card" data-favorite="false" data-category="bottoms">
-                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/1a1a1a/ffffff?text=Pants+2" alt="アイテム"></div>
+                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/8e44ad/ffffff?text=Purple+Skirt" alt="アイテム"></div>
+                    <button type="button" class="favorite-btn">♥</button>
+                </div>
+
+                <!-- Shoes（シューズ） -->
+                <div class="item-card" data-favorite="false" data-category="shoes">
+                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/f1c40f/ffffff?text=Yellow+Sneakers" alt="アイテム"></div>
+                    <button type="button" class="favorite-btn">♥</button>
+                </div>
+                <div class="item-card favorited" data-favorite="true" data-category="shoes">
+                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/7f8c8d/ffffff?text=Leather+Boots" alt="アイテム"></div>
+                    <button type="button" class="favorite-btn">♥</button>
+                </div>
+
+                <!-- Accessory（アクセサリー） -->
+                <div class="item-card" data-favorite="false" data-category="accessory">
+                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/16a085/ffffff?text=Green+Bag" alt="アイテム"></div>
+                    <button type="button" class="favorite-btn">♥</button>
+                </div>
+                <div class="item-card" data-favorite="false" data-category="accessory">
+                    <div class="image-wrapper"><img src="https://via.placeholder.com/300x300/d35400/ffffff?text=Orange+Scarf" alt="Items"></div>
+                    <button type="button" class="favorite-btn">♥</button>
                 </div>
             </div>
         </div>
@@ -726,6 +775,21 @@
         </div>
     </div>
 </div>
+
+<!-- カーソル位置に現れるカスタム右クリックメニュー -->
+<div id="customContextMenu" class="custom-context-menu">
+    <button type="button" class="menu-item edit-btn">編集</button>
+    <button type="button" class="menu-item delete-btn">削除</button>
+</div>
+
+<!-- ▼ 選択モード中だけ画面下部に現れる一括操作バー -->
+<div class="batch-action-bar" id="batchActionBar">
+    <div class="batch-buttons">
+        <button type="button" class="batch-delete-btn" id="batchDeleteBtn">一括削除</button>
+        <button type="button" class="batch-cancel-btn" id="batchCancelBtn">キャンセル</button>
+    </div>
+</div>
+
 <input type="file" id="hiddenImageInput" accept="image/*" style="display: none;">
 <script src="js/common.js"></script>
 <script src="js/outfit.js"></script>

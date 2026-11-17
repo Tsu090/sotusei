@@ -714,6 +714,264 @@ function initCategoryFilter(selectId, cardSelector, defaultFilter = 'all') {
     applyFilter(); // 読み込み時に一度適用
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+
+    /* ==========================================
+     * 1. 共通変数・状態管理
+     * ========================================== */
+    let isSelectMode = false; // 現在選択モードかどうか
+    let pressTimer = null;    // 長押し用のタイマー
+    let targetCard = null;    // 現在右クリックや長押しでターゲットにされているカード
+
+    const customContextMenu = document.getElementById('customContextMenu');
+    const manualSelectBtn = document.getElementById('manualSelectBtn');
+
+
+    /* ==========================================
+     * 2. 「選択」ボタンをクリックしたときの切り替え処理
+     * ========================================== */
+    if (manualSelectBtn) {
+        manualSelectBtn.addEventListener('click', () => {
+            if (!isSelectMode) {
+                isSelectMode = true;
+                document.body.classList.add('is-select-mode');
+                console.log('🗑️ 選択モードに入りました。カードを選んでください。');
+            } else {
+                exitSelectMode();
+                console.log('✖️ 選択モードを解除しました。');
+            }
+        });
+    }
+
+
+    /* ==========================================
+     * 3. スマホ用：長押し検知 (touchstart)
+     * ========================================== */
+    document.addEventListener('touchstart', (e) => {
+        const card = e.target.closest('.coord-card, .drawer-grid .item-card, .item-card');
+        if (!card) return;
+        
+        // ロゴなどが押された場合は除外
+        if (e.target.closest('.brand-logo')) return; 
+
+        if (isSelectMode) return;
+        
+        const touch = e.touches[0];
+        pressTimer = setTimeout(() => {
+            targetCard = card;
+            card.classList.add('is-selected');
+            showContextMenu(touch.clientX, touch.clientY);
+        }, 600); // 0.6秒長押し
+    }, { passive: true });
+
+    document.addEventListener('touchmove', () => clearTimeout(pressTimer), { passive: true });
+    document.addEventListener('touchend', () => clearTimeout(pressTimer));
+    document.addEventListener('touchcancel', () => clearTimeout(pressTimer));
+
+
+    /* ==========================================
+     * 4. PC用：右クリック検知 (contextmenu)
+     * ========================================== */
+    document.addEventListener('contextmenu', (e) => {
+        const card = e.target.closest('.coord-card, .drawer-grid .item-card, .item-card');
+        if (!card) {
+            hideContextMenu();
+            return;
+        }
+
+        // ロゴなどが右クリックされた場合は除外
+        if (e.target.closest('.brand-logo')) return; 
+
+        e.preventDefault(); // ブラウザ標準の右クリックメニューをブロック
+        targetCard = card;
+        card.classList.add('is-selected');
+
+        // カーソル位置の右下にカスタムメニューを表示
+        showContextMenu(e.clientX, e.clientY);
+    });
+
+
+    /* ==========================================
+     * 5. 【超重要】クリック時の挙動（選択モード中のガード＆通常時の編集画面オープン）
+     * ========================================== */
+    document.addEventListener('click', (e) => {
+        const card = e.target.closest('.coord-card, .drawer-grid .item-card, .item-card');
+        
+        // メニューの外側をクリックした場合はメニューを閉じる
+        if (customContextMenu && !customContextMenu.contains(e.target) && !card) {
+            hideContextMenu();
+        }
+
+        if (!card) return;
+        if (e.target.closest('.favorite-btn')) return;
+
+        // 【最重要】選択モード中の場合：
+        // 編集画面を開くなどの通常処理を一切させず、チェックのON/OFF（選択）だけを行う！
+        if (isSelectMode) {
+            e.preventDefault();
+            e.stopPropagation();
+            card.classList.toggle('is-selected');
+            return; // ここで処理をストップして編集画面に行かせない
+        }
+
+        // --- 以下は「通常時（選択モードではない時）」にカードを押したときの処理 ---
+        // （もしコーデカードをクリックして編集画面を開く処理をここに持たせる場合）
+        if (card.classList.contains('coord-card')) {
+            const coordDrawer = document.querySelector('.coord-drawer');
+            if (coordDrawer) {
+                const topsImg = card.querySelector('.slot-top img, [data-category="tops"] img')?.src;
+                const outerImg = card.querySelector('.slot-outer img, [data-category="outer"] img')?.src;
+                const bottomsImg = card.querySelector('.slot-bottom img, [data-category="bottoms"] img')?.src;
+                const shoesImg = card.querySelector('.slot-shoes img, [data-category="shoes"] img')?.src;
+                const accessoryImg = card.querySelector('.slot-accessory img, [data-category="accessory"] img')?.src;
+
+                document.querySelectorAll('.coord-item-slot').forEach(slot => {
+                    slot.innerHTML = ''; 
+                    slot.classList.remove('has-item');
+                });
+
+                if (topsImg) { const s = document.querySelector('.coord-item-slot.item-top'); if(s){ s.innerHTML = `<img src="${topsImg}">`; s.classList.add('has-item'); } }
+                if (outerImg) { const s = document.querySelector('.coord-item-slot.item-outer'); if(s){ s.innerHTML = `<img src="${outerImg}">`; s.classList.add('has-item'); } }
+                if (bottomsImg) { const s = document.querySelector('.coord-item-slot.item-bottom'); if(s){ s.innerHTML = `<img src="${bottomsImg}">`; s.classList.add('has-item'); } }
+                if (shoesImg) { const s = document.querySelector('.coord-item-slot.item-shoes'); if(s){ s.innerHTML = `<img src="${shoesImg}">`; s.classList.add('has-item'); } }
+                if (accessoryImg) { const s = document.querySelector('.coord-item-slot.item-accessory'); if(s){ s.innerHTML = `<img src="${accessoryImg}">`; s.classList.add('has-item'); } }
+
+                coordDrawer.classList.add('is-open');
+            }
+        }
+    }, true); // 第3引数に true (Captureフェーズ) を指定することで、他のクリックイベントより先に確実にガードします！
+
+
+    /* ==========================================
+     * 6. カスタムメニューの表示・非表示の制御
+     * ========================================== */
+    function showContextMenu(x, y) {
+        if (!customContextMenu) return;
+
+        let posX = x + 5;
+        let posY = y + 5;
+
+        const maxX = window.innerWidth - 150;
+        const maxY = window.innerHeight - 100;
+        if (posX > maxX) posX = maxX;
+        if (posY > maxY) posY = maxY;
+
+        customContextMenu.style.left = `${posX}px`;
+        customContextMenu.style.top = `${posY}px`;
+        customContextMenu.classList.add('is-active');
+    }
+
+    function hideContextMenu() {
+        if (!customContextMenu) return;
+        customContextMenu.classList.remove('is-active');
+        targetCard = null;
+    }
+
+    function exitSelectMode() {
+        isSelectMode = false;
+        document.body.classList.remove('is-select-mode');
+        document.querySelectorAll('.is-selected').forEach(card => {
+            card.classList.remove('is-selected');
+        });
+        hideContextMenu();
+    }
+
+
+    /* ==========================================
+     * 7. カスタムメニュー内の「編集」「削除」ボタンの処理
+     * ========================================== */
+    if (customContextMenu) {
+        const editBtn = customContextMenu.querySelector('.edit-btn');
+        const deleteBtn = customContextMenu.querySelector('.delete-btn');
+
+        if (deleteBtn) {
+            deleteBtn.addEventListener('click', () => {
+                if (targetCard) {
+                    targetCard.remove();
+                    console.log('🗑️ カードを削除しました');
+                }
+                hideContextMenu();
+            });
+        }
+
+        if (editBtn) {
+            editBtn.addEventListener('click', () => {
+                if (!targetCard) {
+                    hideContextMenu();
+                    return;
+                }
+
+                if (targetCard.classList.contains('coord-card')) {
+                    const coordDrawer = document.querySelector('.coord-drawer');
+                    if (coordDrawer) {
+                        const topsImg = targetCard.querySelector('.slot-top img, [data-category="tops"] img')?.src;
+                        const outerImg = targetCard.querySelector('.slot-outer img, [data-category="outer"] img')?.src;
+                        const bottomsImg = targetCard.querySelector('.slot-bottom img, [data-category="bottoms"] img')?.src;
+                        const shoesImg = targetCard.querySelector('.slot-shoes img, [data-category="shoes"] img')?.src;
+                        const accessoryImg = targetCard.querySelector('.slot-accessory img, [data-category="accessory"] img')?.src;
+
+                        document.querySelectorAll('.coord-item-slot').forEach(slot => {
+                            slot.innerHTML = ''; 
+                            slot.classList.remove('has-item');
+                        });
+
+                        if (topsImg) { const s = document.querySelector('.coord-item-slot.item-top'); if(s){ s.innerHTML = `<img src="${topsImg}">`; s.classList.add('has-item'); } }
+                        if (outerImg) { const s = document.querySelector('.coord-item-slot.item-outer'); if(s){ s.innerHTML = `<img src="${outerImg}">`; s.classList.add('has-item'); } }
+                        if (bottomsImg) { const s = document.querySelector('.coord-item-slot.item-bottom'); if(s){ s.innerHTML = `<img src="${bottomsImg}">`; s.classList.add('has-item'); } }
+                        if (shoesImg) { const s = document.querySelector('.coord-item-slot.item-shoes'); if(s){ s.innerHTML = `<img src="${shoesImg}">`; s.classList.add('has-item'); } }
+                        if (accessoryImg) { const s = document.querySelector('.coord-item-slot.item-accessory'); if(s){ s.innerHTML = `<img src="${accessoryImg}">`; s.classList.add('has-item'); } }
+
+                        coordDrawer.classList.add('is-open');
+                    }
+                } 
+                else if (targetCard.classList.contains('item-card')) {
+                    const itemModal = document.querySelector('.item-detail-modal-overlay');
+                    if (itemModal) {
+                        const itemImg = targetCard.querySelector('.image-wrapper img, img')?.src;
+                        const previewImage = itemModal.querySelector('#previewImage');
+                        if (previewImage && itemImg) {
+                            previewImage.src = itemImg;
+                        }
+
+                        const modalTitle = itemModal.querySelector('#modalTitle');
+                        if (modalTitle) {
+                            modalTitle.textContent = 'アイテムを編集';
+                        }
+
+                        itemModal.classList.add('is-active');
+                    }
+                }
+
+                hideContextMenu();
+            });
+        }
+    }
+
+// --- 一括削除ボタンの処理（確認なしで即削除） ---
+    if (batchDeleteBtn) {
+        batchDeleteBtn.addEventListener('click', () => {
+            const selectedCards = document.querySelectorAll('.coord-card.is-selected, .drawer-grid .item-card.is-selected, .item-card.is-selected');
+            
+            if (selectedCards.length === 0) {
+                alert('削除するアイテムが選択されていません');
+                return;
+            }
+
+            // 確認なしですぐに削除を実行
+            selectedCards.forEach(card => card.remove());
+            console.log(`🗑️ ${selectedCards.length}件のアイテムを一括削除しました`);
+            exitSelectMode(); 
+        });
+    }
+
+    // --- キャンセルボタンの処理 ---
+    if (batchCancelBtn) {
+        batchCancelBtn.addEventListener('click', () => {
+            exitSelectMode(); // 選択モードを終了してすべてリセットする
+        });
+    }
+});
+
 /* ==========================================
  * ブラウザの戻る操作へのログイン確認
  * ========================================== */
@@ -729,4 +987,5 @@ window.addEventListener('pageshow', async (event) => {
             window.location.replace('login.html');
         }
     }
+
 });

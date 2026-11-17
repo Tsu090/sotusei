@@ -191,3 +191,101 @@
 .item-card.hidden {
     display: none !important;
 }
+
+/* ==========================================
+ * 📌 選択モード中のカード選択スタイル (.is-selected)
+ * ========================================== */
+
+/* 1. カード自体の見た目を変化させる */
+.coord-card.is-selected,
+.drawer-grid .item-card.is-selected,
+.item-card.is-selected {
+    transform: scale(0.96); /* 少しだけ縮小させて選ばれた感を出す */
+    opacity: 0.85;
+    outline: 3px solid #e74c3c; /* 鮮やかなアクセントカラーの枠線をつける (お好みで色変更OK) */
+    outline-offset: 2px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+/* 2. カードの右上等に「チェックマーク（✓）」のバッジを自動で浮かび上がらせる */
+.coord-card.is-selected::after,
+.drawer-grid .item-card.is-selected::after,
+.item-card.is-selected::after {
+    content: "✓";
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 28px;
+    height: 28px;
+    background-color: #e74c3c; /* チェックの背景色 */
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+/* 一括操作バーの基本スタイル（初期状態は画面下に隠す） */
+.batch-action-bar {
+    position: fixed;
+    bottom: -80px;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    z-index: 9999;
+    transition: bottom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 選択モード（bodyにクラスがついたとき）に下からスライドイン */
+body.is-select-mode .batch-action-bar {
+    bottom: 0;
+}
+
+.batch-info {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333333;
+}
+
+.batch-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.batch-delete-btn {
+    background: #e74c3c;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.batch-delete-btn:hover {
+    opacity: 0.85;
+}
+
+.batch-cancel-btn {
+    background: #f1f1f1;
+    color: #333333;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
