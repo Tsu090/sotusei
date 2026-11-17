@@ -719,6 +719,9 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ==========================================
      * 1. 共通変数・状態管理
      * ========================================== */
+    // 存在しないページでもエラーにならないように、安全に取得する
+    let batchDeleteBtn = document.getElementById('batchDeleteBtn');
+    let batchCancelBtn = document.getElementById('batchCancelBtn');
     let isSelectMode = false; // 現在選択モードかどうか
     let pressTimer = null;    // 長押し用のタイマー
     let targetCard = null;    // 現在右クリックや長押しでターゲットにされているカード
