@@ -1,0 +1,33 @@
+.content-body {
+    height: calc(100vh - 80px);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.ai-section {
+    height: 100%;
+    display: grid;
+    box-sizing: border-box;
+}
+
+/* ヘッダー全体：上から下に縦並びにする */
+.section-header {
+    display: flex;
+    flex-direction: column; /* 縦に並べる */
+    align-items: flex-start;  /* 左揃え */
+    gap: 4px;                 /* 各要素の上下間隔 */
+    margin-bottom: 24px;
+}
+
+.section-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.section-header h3 {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #777;
+    font-weight: normal;
+}
