@@ -31,11 +31,11 @@ window.addEventListener('pageshow', async (event) => {
 document.addEventListener('DOMContentLoaded', async () => {
 
     // ログインしていなければログイン画面へ移動
-    const isLoggedIn = await checkLogin();
-    if (!isLoggedIn) {
-        window.location.replace('login.html');
-        return;
-    }
+    // const isLoggedIn = await checkLogin();
+    // if (!isLoggedIn) {
+    //     window.location.replace('login.html');
+    //     return;
+    // }
 
     /* ------------------------------------------
      * A. プロフィールドロワーの開閉管理
