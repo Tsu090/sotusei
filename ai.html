@@ -18,7 +18,7 @@
 <aside class="sidebar">
     <!-- ロゴ部分 -->
     <div class="sidebar-logo">
-        <a href="#">
+        <a href="index.html">
             <img src="image/文字なしロゴ.png" alt="MODEX" class="logo-img">
         </a>
     </div>
@@ -108,7 +108,7 @@
         <!-- トップヘッダー -->
         <header class="top-header">
             <!-- 左側のMODEXロゴ文字 -->
-             <a href="#" class="header-logo-link">
+             <a href="index.html" class="header-logo-link">
             <h1 class="header-logo">MODEX</h1>
             </a>
             <!-- 右側のプロフィールアイコン -->
@@ -176,6 +176,38 @@
                     <h1>AIコーデ</h1>
                     <h3>天気やシーンに合わせたコーデを提案します</h3>
                 </div>
+<!-- ▼ 天気ウィジェット（元の「東京都 📍 >」のデザイン） -->
+<div class="weather-widget" style="display: flex; align-items: center; gap: 12px; font-size: 14px; color: #333;">
+    <!-- 天気アイコン（SVG） -->
+    <div id="weatherIconContainer" style="display: inline-flex; align-items: center; width: 24px; height: 24px;"></div>
+    
+    <span id="weatherText">今日の天気に合わせる</span>
+    <span id="weatherTemp" style="font-weight: bold;">--°C</span>
+    
+    <!-- クリックするとモーダルが開くトリガー -->
+    <div id="openLocationModalBtn" style="display: flex; align-items: center; gap: 4px; margin-left: 12px; color: #666; cursor: pointer;" title="地域を変更する">
+        <span>📍</span>
+        <span id="locationName">東京都</span>
+        <span style="font-size: 12px;">›</span>
+    </div>
+</div>
+
+<!-- ▼ 地域変更用モーダル（ポップアップ） -->
+<div class="location-modal-overlay" id="locationModal">
+    <div class="location-modal-content">
+        <h3 style="margin-top: 0; font-size: 16px; color: #1c1917; margin-bottom: 8px;">地域の変更</h3>
+        <p style="font-size: 13px; color: #666; margin-bottom: 16px;">天気を調べたい市町村名を入力してください。</p>
+        
+        <!-- 入力フィールド -->
+        <input type="text" id="modalCityInput" placeholder="例: 岐阜市、大阪市、新宿区など" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; box-sizing: border-box; font-size: 14px; outline: none; margin-bottom: 20px;">
+        
+        <!-- ボタンエリア -->
+        <div style="display: flex; justify-content: flex-end; gap: 8px;">
+            <button type="button" id="modalCancelBtn" style="padding: 8px 16px; background: #f3f4f6; color: #4b5563; border: none; border-radius: 6px; font-size: 13px; cursor: pointer;">キャンセル</button>
+            <button type="button" id="modalSubmitBtn" style="padding: 8px 20px; background: #3b82f6; color: #fff; border: none; border-radius: 6px; font-size: 13px; cursor: pointer;">変更する</button>
+        </div>
+    </div>
+</div>
             </section>
         </div>
 </main>
