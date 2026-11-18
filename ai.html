@@ -172,42 +172,85 @@
         <!-- メインの内容 -->
         <div class="content-body">
             <section class="ai-section">
+                <!-- 元からある見出しの文字はそのまま維持 -->
                 <div class="section-header">
                     <h1>AIコーデ</h1>
                     <h3>天気やシーンに合わせたコーデを提案します</h3>
                 </div>
-<!-- ▼ 天気ウィジェット（元の「東京都 📍 >」のデザイン） -->
-<div class="weather-widget" style="display: flex; align-items: center; gap: 12px; font-size: 14px; color: #333;">
-    <!-- 天気アイコン（SVG） -->
-    <div id="weatherIconContainer" style="display: inline-flex; align-items: center; width: 24px; height: 24px;"></div>
-    
-    <span id="weatherText">今日の天気に合わせる</span>
-    <span id="weatherTemp" style="font-weight: bold;">--°C</span>
-    
-    <!-- クリックするとモーダルが開くトリガー -->
-    <div id="openLocationModalBtn" style="display: flex; align-items: center; gap: 4px; margin-left: 12px; color: #666; cursor: pointer;" title="地域を変更する">
-        <span>📍</span>
-        <span id="locationName">東京都</span>
-        <span style="font-size: 12px;">›</span>
-    </div>
-</div>
+                <!-- ▼ 天気 ＆ シチュエーションの横並びバー -->
+                <div class="ai-coordinate-container">
+                    <div class="weather-situation-bar">
+                        
+                        <!-- 左側：天気ウィジェット -->
+                        <div class="weather-widget-part">
+                            <!-- SVG天気アイコンが入るコンテナ -->
+                            <div id="weatherIconContainer" class="weather-icon-container"></div>
+                            
+                            <span id="weatherText">今日の天気に合わせる</span>
+                            <span id="weatherTemp">--°C</span>
+                            <!-- 地域変更トリガー（東京都 📍 >） -->
+                            <div id="openLocationModalBtn" class="location-trigger" title="地域を変更する">
+                                <span>📍</span>
+                                <span id="locationName">東京都</span>
+                                <span class="chevron"></span>
+                            </div>
+                        </div>
 
-<!-- ▼ 地域変更用モーダル（ポップアップ） -->
-<div class="location-modal-overlay" id="locationModal">
-    <div class="location-modal-content">
-        <h3 style="margin-top: 0; font-size: 16px; color: #1c1917; margin-bottom: 8px;">地域の変更</h3>
-        <p style="font-size: 13px; color: #666; margin-bottom: 16px;">天気を調べたい市町村名を入力してください。</p>
-        
-        <!-- 入力フィールド -->
-        <input type="text" id="modalCityInput" placeholder="例: 岐阜市、大阪市、新宿区など" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; box-sizing: border-box; font-size: 14px; outline: none; margin-bottom: 20px;">
-        
-        <!-- ボタンエリア -->
-        <div style="display: flex; justify-content: flex-end; gap: 8px;">
-            <button type="button" id="modalCancelBtn" style="padding: 8px 16px; background: #f3f4f6; color: #4b5563; border: none; border-radius: 6px; font-size: 13px; cursor: pointer;">キャンセル</button>
-            <button type="button" id="modalSubmitBtn" style="padding: 8px 20px; background: #3b82f6; color: #fff; border: none; border-radius: 6px; font-size: 13px; cursor: pointer;">変更する</button>
-        </div>
-    </div>
-</div>
+                            <!-- 縦の区切り線 -->
+                        <div class="bar-divider"></div>
+
+                        <!-- 右側：シチュエーション選択エリア -->
+                        <div class="situation-part">
+                            <label for="situationSelect">シチュエーション:</label>
+                            <select id="situationSelect" class="situation-select">
+                                <option value="casual">カジュアル</option>
+                                <option value="business">きれいめ・オフィスカジュアル</option>
+                                <option value="date">デート</option>
+                                <option value="active">スポーツ・アクティブ</option>
+                                <option value="relax">お出かけ・リラックス</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ▼ 地域変更用モーダル（都道府県専用・案内付き） -->
+                <div class="location-modal-overlay" id="locationModal">
+                    <div class="location-modal-content">
+                        <h3 class="modal-title-text">地域の変更</h3>
+                        <p class="modal-desc-text">天気を調べたい都道府県名を入力してください。</p>
+                        
+                        <!-- 入力フィールド -->
+                        <input type="text" id="modalCityInput" class="modal-input-field" placeholder="北海道、東京、大阪府">
+                        
+                        <!-- ボタンエリア -->
+                        <div class="modal-buttons">
+                            <button type="button" id="modalCancelBtn" class="modal-btn-cancel">キャンセル</button>
+                            <button type="button" id="modalSubmitBtn" class="modal-btn-submit">変更する</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- ▼ 60% : 40% で分けるAIコーデのメインボックス -->
+                <div class="ai-main-content-grid">
+                    
+                    <!-- 左側ボックス（約60%：おすすめコーデやアイテム画像など） -->
+                    <div class="ai-pane ai-pane-left">
+                        <h3 class="pane-title">おすすめのコーデ</h3>
+                        <!-- ここにコーデの画像やアイテム一覧が入ります -->
+                        <div style="background: #f4f4f5; height: 240px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #71717a; font-size: 14px;">
+                            [ 左側 60%：コーデプレビュー領域 ]
+                        </div>
+                    </div>
+
+                    <!-- 右側ボックス（約40%：AIのアドバイスやポイントなど） -->
+                    <div class="ai-pane ai-pane-right">
+                        <h3 class="pane-title">💡 AIのアドバイス</h3>
+                        <!-- ここにアドバイスやポイントが入ります -->
+                        <div style="background: #f4f4f5; height: 240px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #71717a; font-size: 14px; text-align: center; padding: 16px;">
+                            [ 右側 40%：AIコメント・ポイント領域 ]
+                        </div>
+                    </div>
+
+                </div>
             </section>
         </div>
 </main>
