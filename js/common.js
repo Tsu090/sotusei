@@ -14,6 +14,52 @@ async function checkLogin() {
     }
 }
 
+// async function checkLogin() {
+//     try {
+//         const { data, error } =
+//             await supabaseClient.auth.getSession();
+
+//         console.log("セッション情報:", data.session);
+//         console.log("取得エラー:", error);
+
+//         if (error || !data.session) {
+//             console.log("ログインしていないと判定されました");
+//             return false;
+//         }
+
+//         console.log("ログイン確認成功！");
+//         return true;
+
+//     } catch (error) {
+//         console.error("ログイン確認エラー:", error);
+//         return false;
+//     }
+// }
+
+// async function checkLogin() {
+//     try {
+//         // セッションの取得を少し確実に待つ
+//         const { data: { session }, error } = await supabaseClient.auth.getSession();
+
+//         if (error) {
+//             console.error("セッション取得エラー:", error);
+//             return false;
+//         }
+
+//         if (!session) {
+//             console.log("ログインしていません");
+//             return false;
+//         }
+
+//         console.log("ログイン確認成功！");
+//         return true;
+
+//     } catch (error) {
+//         console.error("ログイン確認エラー:", error);
+//         return false;
+//     }
+// }
+
 // ブラウザの戻る操作等でキャッシュから復元された場合のログイン確認
 window.addEventListener('pageshow', async (event) => {
     if (event.persisted) {
@@ -31,11 +77,11 @@ window.addEventListener('pageshow', async (event) => {
 document.addEventListener('DOMContentLoaded', async () => {
 
     // ログインしていなければログイン画面へ移動
-    const isLoggedIn = await checkLogin();
-    if (!isLoggedIn) {
-        window.location.replace('login.html');
-        return;
-    }
+    // const isLoggedIn = await checkLogin();
+    // if (!isLoggedIn) {
+    //     window.location.replace('login.html');
+    //     return;
+    // }
 
     /* ------------------------------------------
      * A. プロフィールドロワーの開閉管理
