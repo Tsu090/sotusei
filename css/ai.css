@@ -1,4 +1,4 @@
-/* .content-body {
+.content-body {
     height: calc(100vh - 80px);
     box-sizing: border-box;
     display: flex;
@@ -6,61 +6,19 @@
 }
 
 .ai-section {
-    height: 100%;
     display: grid;
+    grid-template-rows: 10% 10% 60% 20%;
     box-sizing: border-box;
-} */
+    height: 100%;
+}
 
 /* ヘッダー全体：上から下に縦並びにする */
-/* .section-header {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
-    margin-bottom: 24px;
-    height: 100%;
-}
-
-.section-header h1 {
-    margin: 0;
-    font-size: 1.5rem;
-}
-
-.section-header h3 {
-    margin: 0;
-    font-size: 0.85rem;
-    color: #777;
-    font-weight: normal;
-} */
-
-/* ==============================================================
-   AIコーデ：天気 ＆ シチュエーションバー
-   ============================================================== */
-/* .ai-coordinate-container {
-    width: 98%;
-}
-.weather-situation-bar {
-    display: flex;
-    align-items: center;
-    background: #FCFAF4;
-    border: 1px solid #e7e5e4;
-    border-radius: 8px;
-    padding: 12px 16px;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-top: 16px;
-    justify-content: space-around;
-} */
-
-/* ==============================================================
-   AIコーデの見出し部分（上下の隙間をスッキリ詰める）
-   ============================================================== */
 .section-header {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
-    margin-bottom: 12px; /* ★ここを狭くして「AIコーデ」の文字と天気カードの隙間を詰める */
+    margin-bottom: 24px;
 }
 
 .section-header h1 {
@@ -76,19 +34,11 @@
 }
 
 /* ==============================================================
-   AIコーデ：天気 ＆ シチュエーションを囲む白いカード部分（1枚目の形を再現）
+   AIコーデ：天気 ＆ シチュエーションバー
    ============================================================== */
 .ai-coordinate-container {
-    background: #ffffff;           /* 白い背景を復活 */
-    padding: 16px 20px;            /* 内側の余白 */
-    border-radius: 12px;           /* 角丸 */
-    border: 1px solid #e7e5e4;     /* 綺麗な枠線 */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04); /* ふんわりした影 */
-    max-width: 960px;              /* 最大幅 */
-    box-sizing: border-box;
-    margin-bottom: 20px;           /* 下の60%:40%ボックスとの間隔 */
+    width: 98%;
 }
-
 .weather-situation-bar {
     display: flex;
     align-items: center;
@@ -199,7 +149,7 @@
 
 /* 1. モーダル全体の背景（暗幕） */
 .location-modal-overlay {
-    display: none; /* 普段は非表示 */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -320,17 +270,16 @@
 
 .ai-main-content-grid {
     display: grid;
-    /* 左右を約 60% (1.5fr) と 40% (1fr) の比率で分割 */
-    grid-template-columns: 1.5fr 1fr;
     gap: 20px;
-    margin-top: 20px;
-    max-width: 960px;
+    grid-template-columns: 60% 35%;
     box-sizing: border-box;
+    overflow: hidden;
+    margin: 20px 20px 0 0;
 }
 
 /* 左右共通のペイン（ボックス）のスタイル */
 .ai-pane {
-    background: #ffffff;
+    background: #FCFAF4;
     border: 1px solid #e7e5e4;
     border-radius: 12px;
     padding: 20px;
@@ -350,4 +299,109 @@
     .ai-main-content-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* ==============================================================
+   他のおすすめコーデ（カルーセルセクション）
+   ============================================================== */
+.other-coords-section {
+    background: #ffffff;
+    border: 1px solid #e7e5e4;
+    border-radius: 12px;
+    padding: 10px 20px 20px 20px;
+    margin-top: 20px;
+    max-width: 960px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.other-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.other-header h3 {
+    font-size: 15px;
+    font-weight: bold;
+    color: #1c1917;
+}
+
+.view-all-link {
+    font-size: 13px;
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+.view-all-link:hover {
+    text-decoration: underline;
+}
+
+/* カルーセル全体を囲むラッパー */
+.other-carousel-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+}
+
+/* 左右の矢印ボタン */
+.carousel-arrow {
+    background: #ffffff;
+    border: 1px solid #d7d3d0;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #44403c;
+    transition: background 0.2s ease;
+}
+
+.carousel-arrow:hover {
+    background: #f3f4f6;
+}
+
+/* スクロールするアイテム一覧エリア */
+.carousel-items {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 4px;
+    flex: 1;
+    scrollbar-width: none;
+}
+
+.carousel-items::-webkit-scrollbar {
+    display: none; /* Chrome/Safari用：スクロールバー非表示 */
+}
+
+/* ミニコーデカードの個別スタイル */
+.mini-coord-card {
+    background: #fafaf9;
+    border: 1px solid #e7e5e4;
+    border-radius: 8px;
+    margin-top: 10px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.mini-coord-card:hover {
+    transform: translateY(-2px);
+    border-color: #3b82f6;
+}
+
+.mini-coord-card img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
 }
