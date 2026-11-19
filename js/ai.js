@@ -178,3 +178,21 @@ function updateWeatherSVG(code) {
     if (iconContainer) iconContainer.innerHTML = svgContent;
     if (textEl) textEl.textContent = `今日の天気に合わせる（${text}）`;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const carousel = document.getElementById('otherCoordsCarousel');
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+
+    if (carousel && prevBtn && nextBtn) {
+        // 右ボタンが押されたら右へスクロール
+        nextBtn.addEventListener('click', () => {
+            carousel.scrollBy({ left: 200, behavior: 'smooth' });
+        });
+
+        // 左ボタンが押されたら左へスクロール
+        prevBtn.addEventListener('click', () => {
+            carousel.scrollBy({ left: -200, behavior: 'smooth' });
+        });
+    }
+});
