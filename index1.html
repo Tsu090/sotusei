@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MODEX - アカウント設定</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ヘッダーナビゲーション -->
+  <header class="header">
+    <div class="header-container">
+      <div class="header-left">
+        <span class="logo">MODEX</span>
+        <nav class="nav-links">
+          <a href="#" class="nav-item">ホーム</a>
+          <a href="#" class="nav-item">クローゼット</a>
+          <a href="#" class="nav-item">追加</a>
+          <a href="#" class="nav-item">コーディネート</a>
+          <a href="#" class="nav-item">AI機能</a>
+        </nav>
+      </div>
+      <div class="header-right">
+        <a href="#" class="nav-item active">設定</a>
+        <a href="#" class="nav-item">ログアウト</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="main-container">
+    <div class="page-header">
+      <h1 class="page-title">アカウント設定</h1>
+      <p class="page-subtitle">プロフィール情報やセキュリティ設定を管理します。</p>
+    </div>
+
+    <div class="sections-wrapper">
+
+      <!-- 1. プロフィール設定 -->
+      <section class="card">
+        <h2 class="card-title">プロフィール情報</h2>
+        
+        <div class="avatar-group">
+          <div class="avatar-circle">M</div>
+          <div>
+            <button type="button" class="btn btn-outline">アイコンを変更</button>
+            <p class="help-text">JPG, PNG形式（最大2MB）</p>
+          </div>
+        </div>
+
+        <form class="form-group-wrapper">
+          <div class="form-group">
+            <label class="form-label" for="username">ユーザー名</label>
+            <input type="text" id="username" value="MODEX User" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">メールアドレス</label>
+            <input type="email" id="email" value="user@ezamle.com" class="form-input">
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">変更を保存</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- 2. パスワード変更 -->
+      <section class="card">
+        <h2 class="card-title">パスワード変更</h2>
+        <form class="form-group-wrapper">
+          <div class="form-group">
+            <label class="form-label" for="current-password">現在のパスワード</label>
+            <input type="password" id="current-password" placeholder="••••••••" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="new-password">新しいパスワード</label>
+            <input type="password" id="new-password" placeholder="8文字以上の英数字" class="form-input">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="confirm-password">新しいパスワード（確認用）</label>
+            <input type="password" id="confirm-password" placeholder="もう一度入力してください" class="form-input">
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">パスワードを更新</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- 3. アプリ・通知設定 -->
+      <section class="card">
+        <h2 class="card-title">アプリ設定</h2>
+        <div class="toggle-list">
+          <div class="toggle-item">
+            <div class="toggle-info">
+              <p class="toggle-title">AIコーディネート提案の通知</p>
+              <p class="toggle-desc">天気や季節に合わせたおすすめコーデを通知します</p>
+            </div>
+            <input type="checkbox" checked class="checkbox-input">
+          </div>
+          <hr class="divider">
+          <div class="toggle-item">
+            <div class="toggle-info">
+              <p class="toggle-title">クローゼットの公開設定</p>
+              <p class="toggle-desc">他のユーザーに自分のアイテムやコーデを公開します</p>
+            </div>
+            <input type="checkbox" class="checkbox-input">
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. アカウント管理（危険な操作） -->
+      <section class="card card-danger">
+        <h2 class="card-title text-danger">アカウントの削除</h2>
+        <p class="danger-desc">
+          アカウントを削除すると、登録したアイテム（24件）やコーディネートデータがすべて完全に削除され、元に戻すことはできません。
+        </p>
+        <button type="button" class="btn btn-danger">アカウントを削除する</button>
+      </section>
+
+    </div>
+  </main>
+
+</body>
+</html>
