@@ -1,0 +1,286 @@
+/* ベース設定・リセット */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f9fafb;
+  color: #1f2937;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+}
+
+/* ヘッダーナビゲーション */
+.header {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 16px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #111827;
+}
+
+.nav-links {
+  display: none;
+  gap: 24px;
+}
+
+/* PC画面幅ではナビゲーションメニューを表示 */
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
+  }
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-item {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4b5563;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-item:hover {
+  color: #000000;
+}
+
+.nav-item.active {
+  color: #000000;
+  font-weight: 600;
+}
+
+/* メインレイアウト */
+.main-container {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.page-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.sections-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* カードスタイル */
+.card {
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.card-danger {
+  border-color: #fecaca;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+.text-danger {
+  color: #dc2626;
+  margin-bottom: 8px;
+}
+
+/* プロフィールアイコン周辺 */
+.avatar-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.avatar-circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.help-text {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+/* フォーム要素 */
+.form-group-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1f2937;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #000000;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.form-actions {
+  padding-top: 8px;
+}
+
+/* ボタン共通・バリエーション */
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: #000000;
+  color: #ffffff;
+  padding: 8px 20px;
+}
+
+.btn-primary:hover {
+  background-color: #1f2937;
+}
+
+.btn-outline {
+  background-color: #ffffff;
+  color: #374151;
+  border-color: #d1d5db;
+}
+
+.btn-outline:hover {
+  background-color: #f9fafb;
+}
+
+.btn-danger {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+.btn-danger:hover {
+  background-color: #fee2e2;
+}
+
+/* アプリ・通知設定のトグルリスト */
+.toggle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.toggle-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.toggle-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.toggle-desc {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.checkbox-input {
+  width: 16px;
+  height: 16px;
+  accent-color: #000000;
+  cursor: pointer;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #f3f4f6;
+}
+
+/* 危険な操作の説明文 */
+.danger-desc {
+  font-size: 14px;
+  color: #4b5563;
+  margin-bottom: 16px;
+}
