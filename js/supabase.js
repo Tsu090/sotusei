@@ -1,4 +1,3 @@
-
 // ======================================
 // Supabase 接続設定
 // ======================================
@@ -16,5 +15,8 @@ const supabaseClient = createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
 );
+
+// 他のJavaScriptファイルから参照できるようにする
+window.supabaseClient = supabaseClient;
 
 console.log('Supabaseの初期化が完了しました！');
