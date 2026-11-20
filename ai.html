@@ -270,12 +270,43 @@
                         </div>
                     </div>
 
-                    <!-- 右側ボックス（約40%：AIのアドバイスやポイントなど） -->
+                    <!-- 右側ボックス（約40%：AIのアドバイスコメント・ポイント） -->
                     <div class="ai-pane ai-pane-right">
-                        <h3 class="pane-title">💡 AIのアドバイス</h3>
-                        <!-- ここにアドバイスやポイントが入ります -->
-                        <div style="background: #f4f4f5; height: 240px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #71717a; font-size: 14px; text-align: center; padding: 16px;">
-                            [ 右側 40%：AIコメント・ポイント領域 ]
+                        <!-- 上部：AIのアドバイスコメント -->
+                        <div class="advice-top-section">
+                            <h3 class="pane-title advice-title">
+                                <span class="bulb-icon">💡</span>
+                                <span>AIのアドバイスコメント</span>
+                            </h3>
+                            <p class="advice-comment-text" id="aiAdviceComment">
+                                今日は暖かいため、白シャツにデニムでさわやかにまとめています。
+                            </p>
+                        </div>
+
+                        <!-- 中央の区切り線 -->
+                        <hr class="advice-divider">
+
+                        <!-- 下部：このコーデのポイント（箇条書き） -->
+                        <div class="advice-points-section">
+                            <h4 class="points-subtitle">このコーデのポイント</h4>
+                            <ul class="advice-points-list" id="aiAdvicePoints">
+                                <li class="advice-point-item">
+                                    <span class="check-badge">✓</span>
+                                    <span>春らしい軽やかな印象に</span>
+                                </li>
+                                <li class="advice-point-item">
+                                    <span class="check-badge">✓</span>
+                                    <span>シンプルなアイテムでバランスよく</span>
+                                </li>
+                                <li class="advice-point-item">
+                                    <span class="check-badge">✓</span>
+                                    <span>動きやすくて快適</span>
+                                </li>
+                                <li class="advice-point-item">
+                                    <span class="check-badge">✓</span>
+                                    <span>カジュアルながらも清潔感のあるスタイル</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

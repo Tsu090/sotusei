@@ -547,3 +547,79 @@
     }
 
 }
+
+/* =========================================
+   スマホ専用：クローゼットグリッド間隔＆下部メニュー重なり対策
+========================================= */
+@media screen and (max-width: 600px) {
+
+    /* 全体スクロールを許可し、下部バー分の余白をしっかり確保 */
+    html,
+    body {
+        height: auto !important;
+        min-height: 100dvh;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        overscroll-behavior: auto;
+    }
+
+    .main-content {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 100dvh !important;
+        margin-left: 0 !important;
+        padding-bottom: 96px !important; /* 下部メニューバー(60px)＋余裕分 */
+        overflow: visible !important;
+        box-sizing: border-box;
+    }
+
+    .content-body {
+        height: auto !important;
+        padding: 12px 14px 32px !important;
+        overflow: visible !important;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 18px; /* 1つ目と2つ目のクローゼットブロックの間隔 */
+    }
+
+    /* 各セクションを縦並びにして余計な行の空きをなくす */
+    .closet-section {
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px;
+    }
+
+    /* フィルター行が2段になる場合も間隔を詰める */
+    .closet-section .section-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px 10px;
+        height: auto;
+    }
+
+    /* 服のグリッド：縦2段の間隔を狭くしてすっきり並べる */
+    .closet-grid {
+        grid-row: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+        grid-template-rows: repeat(2, 84px) !important;
+        grid-auto-columns: 84px !important;
+        row-gap: 8px !important;    /* 上段・下段の縦の間隔 */
+        column-gap: 8px !important; /* 左右の間隔 */
+        padding-bottom: 6px;
+    }
+
+    .closet-grid .item-card {
+        width: 84px;
+        height: 84px;
+        aspect-ratio: 1 / 1;
+    }
+
+    .favorite-btn {
+        width: 24px;
+        height: 24px;
+    }
+}
