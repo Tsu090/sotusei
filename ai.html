@@ -201,7 +201,7 @@
 
                         <!-- 右側：シチュエーション選択エリア -->
                         <div class="situation-part">
-                            <label for="situationSelect">シチュエーション:</label>
+                            <label for="situationSelect" id="situationText">シチュエーション:</label>
                             <select id="situationSelect" class="situation-select">
                                 <option value="casual">カジュアル</option>
                                 <option value="business">きれいめ・オフィスカジュアル</option>
@@ -234,10 +234,39 @@
                     
                     <!-- 左側ボックス（約60%：おすすめコーデやアイテム画像など） -->
                     <div class="ai-pane ai-pane-left">
-                        <h3 class="pane-title">おすすめのコーデ</h3>
-                        <!-- ここにコーデの画像やアイテム一覧が入ります -->
-                        <div style="background: #f4f4f5; height: 240px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #71717a; font-size: 14px;">
-                            [ 左側 60%：コーデプレビュー領域 ]
+                        <div class="pane-header-row">
+                            <h3 class="pane-title">おすすめのコーデ</h3>
+                            <div class="coord-pager">
+                                <button type="button" class="pager-btn" id="coordPrevBtn" aria-label="前のコーデ">&lt;</button>
+                                <span class="pager-count" id="coordPageCount">1/5</span>
+                                <button type="button" class="pager-btn" id="coordNextBtn" aria-label="次のコーデ">&gt;</button>
+                            </div>
+                        </div>
+
+                        <!-- ▼ 60% : 40% で画像を並べる -->
+                        <div class="coord-sub-grid">
+                            <img src="https://via.placeholder.com/420x320?text=AI+Coordinate" alt="AI提案コーデ" class="coord-media-img">
+                            <img src="https://via.placeholder.com/280x320?text=Try-On" alt="着てみた画像" class="coord-media-img">
+                        </div>
+
+                        <!-- ▼ 下部のアクションボタン（「文章で提案」「保存」） -->
+                        <div class="coord-action-buttons">
+                            <button type="button" class="btn-text-suggest" id="textSuggestBtn">
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="4" y="3" width="16" height="18" rx="2"></rect>
+                                    <line x1="8" y1="8" x2="16" y2="8"></line>
+                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                    <line x1="8" y1="16" x2="12" y2="16"></line>
+                                </svg>
+                                <span>文章で提案</span>
+                            </button>
+
+                            <button type="button" class="btn-save-coord" id="saveCoordBtn">
+                                <svg class="btn-icon heart-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                </svg>
+                                <span>保存</span>
+                            </button>
                         </div>
                     </div>
 
@@ -454,6 +483,59 @@
                 </button>
             <button type="button" id="modalCancelBtn" class="cancel-btn">キャンセル</button>
         </div>
+    </div>
+</div>
+
+<!-- ==============================================================
+   文章で提案ドロワー画面
+   ============================================================== -->
+<div class="text-suggest-overlay" id="textSuggestOverlay">
+    <div class="text-suggest-drawer" id="textSuggestDrawer">
+        
+        <!-- 上部エリア（コーデ画面風のレイアウト） -->
+        <div class="suggest-drawer-top">
+            <!-- 左上の閉じるボタン（×） -->
+            <button type="button" class="suggest-drawer-close" id="closeTextSuggestBtn" aria-label="閉じる">✕</button>
+
+            <!-- 中央：左右分割のプレビューエリア（左：コーデの内容 / 右：実際に着た画像） -->
+            <div class="suggest-preview-split">
+                <!-- 左側：コーデの内容 -->
+                <div class="suggest-coord-box">
+                    <div class="suggest-coord-items" id="suggestCoordItems"></div>
+                </div>
+
+                <!-- 右側：実際に着たような画像 -->
+                <div class="suggest-tryon-box" id="suggestTryOnBox"></div>
+            </div>
+
+            <!-- 下部アクション行（左：保存をする / 右：お気に入りに追加） -->
+            <div class="suggest-top-actions">
+                <button type="button" class="btn-suggest-save" id="suggestSaveBtn">保存をする</button>
+
+                <label class="suggest-fav-label">
+                    <span>お気に入りに追加</span>
+                    <input type="checkbox" id="suggestFavCheckbox" class="suggest-fav-checkbox">
+                    <svg class="suggest-fav-heart" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                </label>
+            </div>
+        </div>
+
+        <!-- 下部エリア（文章入力 ＆ AI提案エリア） -->
+        <div class="suggest-drawer-bottom">
+            <h3 class="suggest-bottom-title">文章でコーデを提案してもらう</h3>
+
+            <div class="suggest-input-area">
+                <textarea id="suggestPromptInput" class="suggest-textarea" rows="3" placeholder="例：週末にカフェ巡りをするので、黒のコートを使った大人っぽいカジュアルコーデにしてほしい"></textarea>
+                <!-- ▼ エラーメッセージ用（最初は非表示） -->
+                <p id="suggestErrorMessage" class="suggest-error-message" style="display: none;"></p>
+                <div class="suggest-submit-row">
+                    <button type="button" class="btn-generate-suggest" id="submitTextSuggestBtn">この内容で提案する</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 
