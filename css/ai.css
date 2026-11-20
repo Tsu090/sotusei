@@ -806,3 +806,91 @@
     font-size: 12px;
     font-weight: 500;
 }
+
+/* ==============================================================
+   右側ボックス：AIのアドバイスコメント ＆ このコーデのポイント
+   ============================================================== */
+.ai-pane-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
+}
+
+.advice-top-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.advice-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.bulb-icon {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.advice-comment-text {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #44403c;
+}
+
+/* 中央の区切り線 */
+.advice-divider {
+    border: none;
+    border-top: 1px solid #e7e5e4;
+    margin: 18px 0;
+    width: 100%;
+}
+
+/* 下部：このコーデのポイント */
+.advice-points-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.points-subtitle {
+    margin: 0;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #1c1917;
+}
+
+.advice-points-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.advice-point-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: #44403c;
+    line-height: 1.4;
+}
+
+/* 丸いチェックマークバッジ */
+.check-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #e7e5e4;
+    color: #57534e;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+}

@@ -15,6 +15,14 @@ img {
     pointer-events: none;            /* 画像自体へのマウス反応を無効化し、親のカードにクリックを委ねる */
 }
 
+/* リンク（aタグ）と画像（imgタグ）のドラッグを禁止する */
+a,
+img {
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 /* サイドバー全体の設定 */
 .sidebar {
     width: 72px;
