@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             confirmLogoutBtn.addEventListener('click', async () => {
                 confirmLogoutBtn.disabled = true;
                 try {
-                    const { error } = await supabaseClient.auth.signOut();
+                    const { error } = await window.supabaseClient.auth.signOut();
                     if (error) throw error;
                     closeLogoutModal();
                     window.location.replace('login.html');
