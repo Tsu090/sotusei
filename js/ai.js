@@ -153,7 +153,7 @@ function getWeather(lat, lon) {
         });
 }
 
-// SVGアイコンを切り替える関数
+// 天気コード（WMO）に応じてSVGと天気テキストを切り替える関数
 function updateWeatherSVG(code) {
     const iconContainer = document.getElementById('weatherIconContainer');
     const textEl = document.getElementById('weatherText');
@@ -161,16 +161,35 @@ function updateWeatherSVG(code) {
     let text = '晴れ';
 
     if (code === 0) {
+        // 快晴・晴れ
         text = '晴れ';
-        // style="color: ..." で色だけを残し、幅・高さはCSSに任せる
         svgContent = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #f59e0b;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
-    } else if (code >= 1 && code <= 3) {
+    } else if (code === 1 || code === 2) {
+        // 晴れ時々くもり（太陽＋雲）
+        text = '晴れ時々くもり';
+        svgContent = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #f59e0b;"><path d="M12 2v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="M20 12h2"></path><path d="m19.07 4.93-1.41 1.41"></path><path d="M15.947 12.65a4 4 0 0 0-5.925-4.128"></path><path d="M13 22H7a5 5 0 1 1 4.9-6H13a3 3 0 0 1 0 6Z" style="color: #64748b;"></path></svg>`;
+    } else if (code === 3) {
+        // くもり
         text = 'くもり';
         svgContent = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #64748b;"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>`;
-    } else if (code >= 51 && code <= 67) {
-        text = '雨';
+    } else if (code === 45 || code === 48) {
+        // 霧・もや
+        text = '霧';
+        svgContent = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #94a3b8;"><path d="M4 14h16"></path><path d="M4 18h16"></path><path d="M6 10h12"></path><path d="M8 6h8"></path></svg>`;
+    } else if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) {
+        // 雨・霧雨・にわか雨
+        text = code >= 63 ? '強い雨' : '雨';
         svgContent = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #3b82f6;"><line x1="16" y1="13" x2="16" y2="21"></line><line x1="8" y1="13" x2="8" y2="21"></line><line x1="12" y1="15" x2="12" y2="23"></line><path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25"></path></svg>`;
+    } else if ((code >= 71 && code <= 77) || code === 85 || code === 86) {
+        // 雪・みぞれ・雪のにわか雨
+        text = '雪';
+        svgContent = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #0ea5e9;"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"></path><line x1="8" y1="16" x2="8.01" y2="16"></line><line x1="16" y1="16" x2="16.01" y2="16"></line><line x1="12" y1="19" x2="12.01" y2="19"></line><line x1="12" y1="14" x2="12.01" y2="14"></line></svg>`;
+    } else if (code >= 95) {
+        // 雷雨
+        text = '雷雨';
+        svgContent = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #eab308;"><path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9"></path><polyline points="13 11 9 17 15 17 11 23"></polyline></svg>`;
     } else {
+        // その他フォールバック
         text = '晴れ';
         svgContent = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #f59e0b;"><circle cx="12" cy="12" r="5"></circle></svg>`;
     }
@@ -193,6 +212,174 @@ document.addEventListener('DOMContentLoaded', () => {
         // 左ボタンが押されたら左へスクロール
         prevBtn.addEventListener('click', () => {
             carousel.scrollBy({ left: -200, behavior: 'smooth' });
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const openBtn = document.getElementById('textSuggestBtn');
+    const closeBtn = document.getElementById('closeTextSuggestBtn');
+    const saveBtn = document.getElementById('suggestSaveBtn');
+    const overlay = document.getElementById('textSuggestOverlay');
+    const submitBtn = document.getElementById('submitTextSuggestBtn');
+    const promptInput = document.getElementById('suggestPromptInput');
+    const errorMsg = document.getElementById('suggestErrorMessage');
+    const coordItems = document.getElementById('suggestCoordItems');
+    const tryOnBox = document.getElementById('suggestTryOnBox');
+
+    const sampleCoords = [
+        {
+            items: [
+                { label: 'Black Coat', className: 'item-coat' },
+                { label: 'Red Tee', className: 'item-tops' },
+                { label: 'Purple Skirt', className: 'item-bottoms' },
+                { label: 'Leather Boots', className: 'item-shoes' }
+            ],
+            tryOnUrl: 'https://placehold.co/320x420/27313d/ffffff?text=Try-On+Look+1'
+        },
+        {
+            items: [
+                { label: 'Beige Trench', className: 'item-coat' },
+                { label: 'White Shirt', className: 'item-tops' },
+                { label: 'Navy Pants', className: 'item-bottoms' },
+                { label: 'Loafers', className: 'item-shoes' }
+            ],
+            tryOnUrl: 'https://placehold.co/320x420/44403c/ffffff?text=Try-On+Look+2'
+        }
+    ];
+
+    let currentIndex = 0;
+    let hasSuggested = false; // 提案済みかどうかの状態
+
+    // 保存ボタンの有効・無効を切り替える関数
+    function updateSaveButtonState(enabled) {
+        hasSuggested = enabled;
+        if (saveBtn) {
+            saveBtn.disabled = !enabled;
+        }
+    }
+
+    // エラー表示を消す関数
+    function clearSuggestError() {
+        if (promptInput) {
+            promptInput.classList.remove('is-error');
+        }
+        if (errorMsg) {
+            errorMsg.textContent = '';
+            errorMsg.style.display = 'none';
+        }
+    }
+
+    // エラーを表示する関数
+    function showSuggestError(message) {
+        if (promptInput) {
+            promptInput.classList.add('is-error');
+            promptInput.focus();
+        }
+        if (errorMsg) {
+            errorMsg.textContent = message;
+            errorMsg.style.display = 'block';
+        }
+    }
+
+    // ドロワー内のプレビューを初期状態（空）に戻す
+    function resetDrawerState() {
+        if (coordItems) coordItems.innerHTML = '';
+        if (tryOnBox) tryOnBox.innerHTML = '';
+        if (promptInput) promptInput.value = '';
+        clearSuggestError();
+        updateSaveButtonState(false); // 最初は「保存をする」を押せない状態にする
+    }
+
+    function renderSuggestedCoord(coordData) {
+        if (coordItems) {
+            coordItems.innerHTML = '';
+            coordData.items.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = `suggest-item-card ${item.className}`;
+                card.textContent = item.label;
+                coordItems.appendChild(card);
+            });
+        }
+
+        if (tryOnBox) {
+            tryOnBox.innerHTML = '';
+            if (coordData.tryOnUrl) {
+                const img = document.createElement('img');
+                img.src = coordData.tryOnUrl;
+                img.alt = '実際に着ている写真';
+                img.className = 'suggest-tryon-img';
+                tryOnBox.appendChild(img);
+            }
+        }
+    }
+
+    // ドロワーを開くとき
+    if (openBtn && overlay) {
+        openBtn.addEventListener('click', () => {
+            resetDrawerState();
+            overlay.classList.add('is-active');
+        });
+    }
+
+    // 閉じるボタン
+    if (closeBtn && overlay) {
+        closeBtn.addEventListener('click', () => {
+            overlay.classList.remove('is-active');
+        });
+    }
+
+    // 背景クリックで閉じる
+    if (overlay) {
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                overlay.classList.remove('is-active');
+            }
+        });
+    }
+
+    // 文字を入力し始めたらエラー表示を消す
+    if (promptInput) {
+        promptInput.addEventListener('input', () => {
+            if (promptInput.value.trim() !== '') {
+                clearSuggestError();
+            }
+        });
+    }
+
+    // 「この内容で提案する」を押したときの処理
+    if (submitBtn) {
+        submitBtn.addEventListener('click', () => {
+            const text = promptInput ? promptInput.value.trim() : '';
+
+            // 空欄チェック
+            if (text === '') {
+                showSuggestError('提案してほしいコーデの内容やイメージを入力してください。');
+                return;
+            }
+
+            clearSuggestError();
+
+            let chosen;
+            if (text.includes('きれい') || text.includes('オフィス') || text.includes('デート')) {
+                chosen = sampleCoords[1];
+            } else {
+                chosen = sampleCoords[currentIndex % sampleCoords.length];
+                currentIndex += 1;
+            }
+
+            renderSuggestedCoord(chosen);
+            updateSaveButtonState(true); // 提案が完了したので「保存をする」を有効化
+        });
+    }
+
+    // 「保存をする」を押したときの処理
+    if (saveBtn && overlay) {
+        saveBtn.addEventListener('click', () => {
+            if (!hasSuggested) return;
+
+            // TODO: 必要になったらここに保存処理（Supabase登録やメイン画面への反映など）を追加
+            overlay.classList.remove('is-active');
         });
     }
 });
