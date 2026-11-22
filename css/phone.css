@@ -48,34 +48,172 @@
     .button-area a {
         font-size: 12px;
     }
-}
 
-/* 小さいスマートフォン */
-@media screen and (max-width: 360px) {
-
-    .button-area a {
-        font-size: 10px;
+    /* 画面スクロール許可＆下部バー分の余白確保 */
+    html,
+    body {
+        width: 100%;
+        height: auto !important;
+        min-height: 100dvh;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        overscroll-behavior: auto;
     }
 
-    .description {
-        font-size: 11px;
+    /* サイドバーを画面下部に固定 */
+    .sidebar {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        top: auto !important;
+        width: 100% !important;
+        height: 60px !important;
+        min-height: 60px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        display: flex;
+        flex-direction: row !important;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0 !important;
+        z-index: 1000;
     }
-}
 
-/* =========================================
-   MODEX 新しいアイテム追加画面 スマホ対応
-   既存CSSは変更せず、ここから追加
-========================================= */
+    .sidebar-logo,
+    .more-menu-wrapper,
+    .sidebar-nav .nav-label {
+        display: none !important;
+    }
 
-@media screen and (max-width: 600px) {
+    .sidebar-nav {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-around;
+        align-items: center;
+        width: 100% !important;
+        height: 60px !important;
+        min-height: 60px !important;
+        gap: 0 !important;
+        flex-shrink: 0 !important;
+    }
 
-    /* モーダル全体 */
+    .sidebar-nav .nav-item {
+        flex: 1 1 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: auto;
+        min-width: 0;
+        height: 60px !important;
+        padding: 5px 0 !important;
+        margin: 0 !important;
+    }
+
+    .sidebar-nav .nav-icon {
+        width: 22px;
+        height: 22px;
+        flex-shrink: 0;
+    }
+
+    /* ヘッダーロゴの位置調整 */
+    .header-logo {
+        position: relative;
+        left: -12px;
+        top: 10px;
+    }
+
+    /* メイン画面 */
+    .main-content {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 100dvh !important;
+        margin-left: 0 !important;
+        padding-bottom: 104px !important;
+        overflow: visible !important;
+        box-sizing: border-box;
+    }
+
+    /* コンテンツ部分 */
+    .content-body {
+        height: auto !important;
+        padding: 14px 14px 32px !important;
+        overflow: visible !important;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    /* クローゼット各セクション */
+    .closet-section {
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px;
+    }
+
+    .closet-section .section-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px 10px;
+        height: auto;
+    }
+
+    /* 「8 items」の後ろで改行させて、「服を追加する」と「選択」を下の段に揃える */
+    .closet-section .section-header .item-count {
+        margin-right: 100%;
+    }
+
+    .closet-section .section-header .add-item-trigger {
+        padding-left: 0;
+        gap: 6px;
+    }
+
+    /* 服のグリッド（画像を大きめに表示） */
+    .closet-grid {
+        grid-row: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+        grid-template-rows: repeat(2, 108px) !important;
+        grid-auto-columns: 108px !important;
+        row-gap: 8px !important;
+        column-gap: 8px !important;
+        padding-bottom: 6px;
+    }
+
+    .closet-grid .item-card {
+        width: 108px;
+        height: 108px;
+        aspect-ratio: 1 / 1;
+    }
+
+    .favorite-btn {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* 汎用モーダル */
+    .modal-overlay {
+        padding: 16px !important;
+        box-sizing: border-box;
+    }
+
+    .modal-card {
+        width: 100%;
+        max-width: 540px;
+        margin: auto;
+        border-radius: 18px;
+    }
+
+    /* 新しいアイテム追加モーダル */
     .add-item-modal-overlay {
         padding: 12px;
         box-sizing: border-box;
     }
 
-    /* 白いモーダル画面 */
     .add-item-modal-card {
         width: calc(100vw - 32px);
         max-width: 420px;
@@ -87,7 +225,6 @@
         overflow-x: hidden;
     }
 
-    /* タイトル */
     .add-item-modal-card .modal-header {
         width: 100%;
         margin-bottom: 16px;
@@ -97,7 +234,6 @@
         font-size: 18px;
     }
 
-    /* 4つの選択肢の配置 */
     .add-item-modal-card .selection-grid {
         display: grid;
         grid-template-columns: minmax(0, 1fr);
@@ -106,29 +242,23 @@
         gap: 12px;
     }
 
-    /* 選択肢それぞれ */
     .add-item-modal-card .selection-card {
         width: 100%;
         min-width: 0;
         min-height: 90px;
         height: auto;
-
         grid-column: auto;
         grid-row: auto;
-
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
         align-items: center;
-
         gap: 15px;
         padding: 15px;
-
         box-sizing: border-box;
         text-align: left;
     }
 
-    /* アイコン */
     .add-item-modal-card .card-icon {
         flex: 0 0 38px;
         width: 38px;
@@ -143,7 +273,6 @@
         max-width: 100%;
     }
 
-    /* 文字部分 */
     .add-item-modal-card .card-text {
         flex: 1;
         min-width: 0;
@@ -164,7 +293,6 @@
         overflow-wrap: anywhere;
     }
 
-    /* キャンセルボタン */
     .add-item-modal-card .modal-footer {
         width: 100%;
         display: flex;
@@ -175,10 +303,145 @@
     .add-item-modal-card .btn-cancel {
         max-width: 100%;
     }
+
+    /* アイテム追加・編集モーダル */
+    .item-detail-modal-overlay {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        padding: 12px;
+        box-sizing: border-box;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .item-detail-modal-overlay.is-active {
+        display: flex;
+    }
+
+    .item-detail-modal-card {
+        width: calc(100vw - 40px);
+        max-width: 420px;
+        min-width: 0;
+        max-height: 85dvh;
+        padding: 18px;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    .item-detail-modal-card .detail-modal-header {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .item-detail-modal-card .detail-modal-body {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-width: 0;
+        gap: 18px;
+    }
+
+    .item-detail-modal-card .item-image-preview {
+        width: 100%;
+        height: 160px;
+        min-width: 0;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .item-detail-modal-card .item-image-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .item-detail-modal-card .item-form-content {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .item-detail-modal-card .form-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        width: 100%;
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .item-detail-modal-card .form-group {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .item-detail-modal-card .form-group input,
+    .item-detail-modal-card .form-group select {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+
+    .item-detail-modal-card .color-palette {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        max-width: 100%;
+    }
+
+    .item-detail-modal-card .color-input-container {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        gap: 6px;
+    }
+
+    .item-detail-modal-card .color-input-container input {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .item-detail-modal-card .selected-color-box {
+        min-width: 0 !important;
+    }
+
+    .season-picker {
+        display: grid !important;
+        grid-template-columns: repeat(2, max-content) !important;
+        gap: 8px !important;
+        justify-content: start;
+    }
+
+    .season-picker .season-btn {
+        min-width: 44px;
+        text-align: center;
+    }
+
+    .item-detail-modal-card .detail-modal-footer {
+        width: 100%;
+        margin-top: 18px;
+    }
+
+    .item-detail-modal-card .submit-btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
 }
 
 /* 小さいスマートフォン */
 @media screen and (max-width: 360px) {
+
+    .button-area a {
+        font-size: 10px;
+    }
+
+    .description {
+        font-size: 11px;
+    }
 
     .add-item-modal-card {
         padding: 15px;
@@ -208,308 +471,6 @@
         width: 26px;
         height: 26px;
     }
-}
-
-
-/* =========================================
-   スマートフォン表示：サイドバーを画面下部へ移動
-========================================= */
-@media screen and (max-width: 600px) {
-
-    /* サイドバーを画面下部に固定 */
-    .sidebar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        top: auto;
-        width: 100%;
-        height: 60px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
-
-    /* ロゴを非表示 */
-    .sidebar-logo {
-        display: none;
-    }
-
-    /* メニューを横並びにする */
-    .sidebar-nav {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        gap: 0;
-    }
-
-    /* 各メニュー */
-    .sidebar-nav .nav-item {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        flex: 1;
-        width: auto;
-        height: 100%;
-        padding: 5px 0;
-    }
-
-    /* メニューアイコン */
-    .sidebar-nav .nav-icon {
-        width: 22px;
-        height: 22px;
-    }
-
-    /* メニュー文字 */
-    .sidebar-nav .nav-label {
-        display: none;
-    }
-
-    /* その他メニュー */
-    .more-menu-wrapper {
-        display: none;
-    }
-
-    /* メイン画面が下部メニューに隠れないようにする */
-    .main-content {
-        padding-bottom: 60px;
-    }
-}
-
-/* スマホ表示：ヘッダーロゴの位置調整 */
-@media screen and (max-width: 600px) {
-
-    .header-logo {
-        position: relative;
-        left: -12px;
-        top: 10px;
-    }
-
-}
-
-/* =========================================
-   スマホ表示：画面スクロールを完全に禁止
-========================================= */
-@media screen and (max-width: 600px) {
-
-    html,
-    body {
-        width: 100%;
-        height: 100%;
-        overflow: hidden !important;
-        overscroll-behavior: none;
-    }
-
-    /* メイン画面 */
-    .main-content {
-        height: 100vh;
-        height: 100dvh;
-        min-height: 0 !important;
-        overflow: hidden !important;
-        box-sizing: border-box;
-    }
-
-    /* コンテンツ部分 */
-    .content-body {
-        overflow: hidden !important;
-    }
-
-    /* 下部メニュー */
-    .sidebar {
-        position: fixed !important;
-        bottom: 0 !important;
-        flex-shrink: 0 !important;
-    }
-}
-
-
-
-
-@media screen and (max-width: 600px) {
-    .content-body {
-        padding: 20px 16px 80px !important;
-        box-sizing: border-box;
-    }
-}
-@media screen and (max-width: 600px) {
-    .modal-overlay {
-        padding: 16px !important;
-        box-sizing: border-box;
-    }
-
-    .modal-card {
-        width: 100%;
-        max-width: 540px;
-        margin: auto;
-        border-radius: 18px;
-    }
-}
-
-
-/* =========================================
-   アイテム追加・編集モーダルのスマホ表示修正
-========================================= */
-
-@media screen and (max-width: 600px) {
-
-   
-/* =========================================
-   アイテム追加・編集モーダルのスマホ表示修正
-========================================= */
-
-@media screen and (max-width: 600px) {
-
-    /* 背景全体：最初は非表示 */
-    .item-detail-modal-overlay {
-        position: fixed;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        padding: 12px;
-        box-sizing: border-box;
-
-        display: none; /* 最初は必ず非表示 */
-
-        justify-content: center;
-        align-items: center;
-        overflow: hidden;
-    }
-
-    /* is-activeが付いたときだけ表示 */
-    .item-detail-modal-overlay.is-active {
-        display: flex;
-    }
-
-}
-
-
-    /* 白いモーダル本体 */
-    .item-detail-modal-card {
-        width: calc(100vw - 40px);
-        max-width: 420px;
-        min-width: 0;
-        max-height: 85dvh;
-        padding: 18px;
-        box-sizing: border-box;
-        overflow-x: hidden;
-        overflow-y: auto;
-    }
-
-    /* タイトル */
-    .item-detail-modal-card .detail-modal-header {
-        width: 100%;
-        margin-bottom: 15px;
-    }
-
-    /* 画像と入力フォームを縦並びにする */
-    .item-detail-modal-card .detail-modal-body {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        min-width: 0;
-        gap: 18px;
-    }
-
-    /* 商品画像 */
-    .item-detail-modal-card .item-image-preview {
-        width: 100%;
-        height: 160px;
-        min-width: 0;
-        max-width: 100%;
-        margin: 0 auto;
-    }
-
-    .item-detail-modal-card .item-image-preview img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-    }
-
-    /* 入力フォーム全体 */
-    .item-detail-modal-card .item-form-content {
-        width: 100%;
-        min-width: 0;
-    }
-
-    /* 入力項目 */
-    .item-detail-modal-card .form-row {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-        width: 100%;
-        gap: 10px;
-        margin-bottom: 14px;
-    }
-
-    .item-detail-modal-card .form-group {
-        width: 100%;
-        min-width: 0;
-    }
-
-    /* 入力欄 */
-    .item-detail-modal-card .form-group input,
-    .item-detail-modal-card .form-group select {
-        width: 100%;
-        max-width: 100%;
-        min-width: 0;
-        box-sizing: border-box;
-    }
-
-    /* カラーパレット */
-    .item-detail-modal-card .color-palette {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 7px;
-        max-width: 100%;
-    }
-
-    .item-detail-modal-card .color-input-container {
-        display: flex;
-        flex-wrap: wrap;
-        width: 100%;
-        gap: 6px;
-    }
-
-    .item-detail-modal-card .color-input-container input {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .item-detail-modal-card .selected-color-box {
-        min-width: 0 !important;
-    }
-
-    /* 季節選択 */
-    .item-detail-modal-card .season-picker {
-        display: grid !important;
-        grid-template-columns: repeat(2, max-content);
-        gap: 8px;
-        justify-content: start;
-    }
-
-    .item-detail-modal-card .season-btn {
-        min-width: 44px;
-        text-align: center;
-    }
-
-    /* 下部ボタン */
-    .item-detail-modal-card .detail-modal-footer {
-        width: 100%;
-        margin-top: 18px;
-    }
-
-    .item-detail-modal-card .submit-btn {
-        width: 100%;
-        box-sizing: border-box;
-    }
-}
-
-/* 小さいスマートフォン */
-@media screen and (max-width: 360px) {
 
     .item-detail-modal-card {
         width: calc(100vw - 24px);
@@ -522,104 +483,5 @@
 
     .item-detail-modal-card .form-row {
         gap: 7px;
-    }
-}
-
-
-
-
-/* =========================================
-   スマホ専用：季節ボタンを2列に配置
-========================================= */
-
-@media screen and (max-width: 600px) {
-
-    .season-picker {
-        display: grid !important;
-        grid-template-columns: repeat(2, max-content) !important;
-        gap: 8px !important;
-        justify-content: start;
-    }
-
-    .season-picker .season-btn {
-        min-width: 44px;
-        text-align: center;
-    }
-
-}
-
-/* =========================================
-   スマホ専用：クローゼットグリッド間隔＆下部メニュー重なり対策
-========================================= */
-@media screen and (max-width: 600px) {
-
-    /* 全体スクロールを許可し、下部バー分の余白をしっかり確保 */
-    html,
-    body {
-        height: auto !important;
-        min-height: 100dvh;
-        overflow-x: hidden !important;
-        overflow-y: auto !important;
-        overscroll-behavior: auto;
-    }
-
-    .main-content {
-        width: 100% !important;
-        height: auto !important;
-        min-height: 100dvh !important;
-        margin-left: 0 !important;
-        padding-bottom: 96px !important; /* 下部メニューバー(60px)＋余裕分 */
-        overflow: visible !important;
-        box-sizing: border-box;
-    }
-
-    .content-body {
-        height: auto !important;
-        padding: 12px 14px 32px !important;
-        overflow: visible !important;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column;
-        gap: 18px; /* 1つ目と2つ目のクローゼットブロックの間隔 */
-    }
-
-    /* 各セクションを縦並びにして余計な行の空きをなくす */
-    .closet-section {
-        height: auto !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 8px;
-    }
-
-    /* フィルター行が2段になる場合も間隔を詰める */
-    .closet-section .section-header {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        gap: 6px 10px;
-        height: auto;
-    }
-
-    /* 服のグリッド：縦2段の間隔を狭くしてすっきり並べる */
-    .closet-grid {
-        grid-row: auto !important;
-        height: auto !important;
-        min-height: 0 !important;
-        grid-template-rows: repeat(2, 84px) !important;
-        grid-auto-columns: 84px !important;
-        row-gap: 8px !important;    /* 上段・下段の縦の間隔 */
-        column-gap: 8px !important; /* 左右の間隔 */
-        padding-bottom: 6px;
-    }
-
-    .closet-grid .item-card {
-        width: 84px;
-        height: 84px;
-        aspect-ratio: 1 / 1;
-    }
-
-    .favorite-btn {
-        width: 24px;
-        height: 24px;
     }
 }
