@@ -74,10 +74,26 @@
         box-sizing: border-box !important;
         display: flex;
         flex-direction: row !important;
-        justify-content: center;
+        justify-content: stretch !important;
         align-items: center;
         flex-shrink: 0 !important;
+        overflow: visible !important;
         z-index: 1000;
+    }
+
+    /* 「＋」の後ろだけをちょっとだけ上にふくらませる */
+    .sidebar::before {
+        content: "";
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 72px;
+        height: 36px;
+        border-radius: 36px 36px 0 0;
+        background-color: inherit;
+        z-index: -1;
+        pointer-events: none;
     }
 
     .sidebar-logo,
@@ -87,25 +103,31 @@
     }
 
     .sidebar-nav {
+        position: relative;
+        z-index: 1;
         display: flex !important;
         flex-direction: row !important;
-        justify-content: space-around;
-        align-items: center;
+        justify-content: space-evenly !important;
+        align-items: center !important;
         width: 100% !important;
         height: 60px !important;
         min-height: 60px !important;
         gap: 0 !important;
+        padding: 0 4px !important;
+        box-sizing: border-box !important;
         flex-shrink: 0 !important;
     }
 
     .sidebar-nav .nav-item {
-        flex: 1 1 0;
+        position: relative;
+        z-index: 1;
+        flex: 1 1 0 !important;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         width: auto;
-        min-width: 0;
+        min-width: 0 !important;
         height: 60px !important;
         padding: 5px 0 !important;
         margin: 0 !important;
@@ -115,6 +137,26 @@
         width: 22px;
         height: 22px;
         flex-shrink: 0;
+    }
+
+    /* 中央の「＋」ボタン */
+    .sidebar-nav #main-menu {
+        flex: 0 0 52px !important;
+        width: 52px !important;
+        height: 52px !important;
+        min-width: 52px !important;
+        border-radius: 50% !important;
+        background-color: #2d5b71 !important;
+        color: #ffffff !important;
+        padding: 0 !important;
+        margin: 0 6px 14px 6px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
+    .sidebar-nav #main-menu .nav-icon {
+        width: 24px;
+        height: 24px;
+        stroke: #ffffff;
     }
 
     /* ヘッダーロゴの位置調整 */
@@ -158,16 +200,25 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: 6px 10px;
+        gap: 8px 12px;
         height: auto;
     }
 
-    /* 「8 items」の後ろで改行させて、「服を追加する」と「選択」を下の段に揃える */
+    /* 「8 items」のあとで改行し、「服を追加する」と「選択」を下の段に並べる */
+    .closet-section .section-header::after {
+        content: "";
+        flex-basis: 100%;
+        height: 0;
+        order: 1;
+    }
+
+    .closet-section .section-header .closet-title-filter,
     .closet-section .section-header .item-count {
-        margin-right: 100%;
+        order: 0;
     }
 
     .closet-section .section-header .add-item-trigger {
+        order: 2;
         padding-left: 0;
         gap: 6px;
     }
