@@ -1,9 +1,68 @@
 /* スマートフォン対応 */
 @media screen and (max-width: 600px) {
 
+    html,
+    body {
+        width: 100%;
+        height: 100vh !important;
+        height: 100dvh !important;
+        overflow: hidden !important;
+        overscroll-behavior: none;
+    }
+
+    .main-content {
+        height: 100vh !important;
+        height: 100dvh !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
+        padding-bottom: 84px !important;
+    }
+
+    .content-body {
+        height: 100% !important;
+        overflow: hidden !important;
+    }
+
+    /* 服のグリッドの中だけ横スクロールできるようにする例 */
+    .closet-grid {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
     .container {
         width: 90%;
         padding-top: 20px;
+    }
+
+    .top-header {
+        height: 60px !important;
+        min-height: 60px !important;
+        padding: 0 12px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* ロゴや右側アイコンも高さに合わせて微調整 */
+    .header-logo {
+        position: static !important;
+        margin: 0 !important;
+        font-size: 18px !important;
+        line-height: 1 !important;
+    }
+
+    .header-right .header-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* コンテンツ部分の余白・間隔を少し詰めてスペースを確保 */
+    .content-body {
+        padding: 8px 12px 76px !important;
+        gap: 10px !important;
+    }
+
+    .closet-section {
+        gap: 4px !important;
     }
 
     .logo {
@@ -214,11 +273,11 @@
 
     .closet-section .section-header .closet-title-filter,
     .closet-section .section-header .item-count {
-        order: 0;
+        order: 3;
     }
 
     .closet-section .section-header .add-item-trigger {
-        order: 2;
+        order: 1;
         padding-left: 0;
         gap: 6px;
     }
