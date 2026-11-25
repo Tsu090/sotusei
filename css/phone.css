@@ -505,60 +505,6 @@
         width: 100%;
         box-sizing: border-box;
     }
-}
-
-/* 小さいスマートフォン */
-@media screen and (max-width: 360px) {
-
-    .button-area a {
-        font-size: 10px;
-    }
-
-    .description {
-        font-size: 11px;
-    }
-
-    .add-item-modal-card {
-        padding: 15px;
-    }
-
-    .add-item-modal-card .selection-card {
-        min-height: 80px;
-        padding: 12px;
-        gap: 10px;
-    }
-
-    .add-item-modal-card .card-text h1,
-    .add-item-modal-card .card-text h2 {
-        font-size: 14px;
-    }
-
-    .add-item-modal-card .card-text h3 {
-        font-size: 11px;
-    }
-
-    .add-item-modal-card .card-icon {
-        flex-basis: 32px;
-        width: 32px;
-    }
-
-    .add-item-modal-card .card-icon svg {
-        width: 26px;
-        height: 26px;
-    }
-
-    .item-detail-modal-card {
-        width: calc(100vw - 24px);
-        padding: 14px;
-    }
-
-    .item-detail-modal-card .item-image-preview {
-        height: 130px;
-    }
-
-    .item-detail-modal-card .form-row {
-        gap: 7px;
-    }
 
     /* コーディネート一覧のヘッダー・グリッドをスマホ向けに調整 */
     .outfit-section {
@@ -642,4 +588,60 @@
         width: 92px !important;
         height: 92px !important;
     }
+}
+
+/* 小さいスマートフォン */
+@media screen and (max-width: 360px) {
+
+    .button-area a {
+        font-size: 10px;
+    }
+
+    .description {
+        font-size: 11px;
+    }
+
+    .add-item-modal-card {
+        padding: 15px;
+    }
+
+    .add-item-modal-card .selection-card {
+        min-height: 80px;
+        padding: 12px;
+        gap: 10px;
+    }
+
+    .add-item-modal-card .card-text h1,
+    .add-item-modal-card .card-text h2 {
+        font-size: 14px;
+    }
+
+    .add-item-modal-card .card-text h3 {
+        font-size: 11px;
+    }
+
+    .add-item-modal-card .card-icon {
+        flex-basis: 32px;
+        width: 32px;
+    }
+
+    .add-item-modal-card .card-icon svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    .item-detail-modal-card {
+        width: calc(100vw - 24px);
+        padding: 14px;
+    }
+
+    .item-detail-modal-card .item-image-preview {
+        height: 130px;
+    }
+
+    .item-detail-modal-card .form-row {
+        gap: 7px;
+    }
+
+    
 }
