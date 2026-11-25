@@ -506,11 +506,12 @@
         box-sizing: border-box;
     }
 
-/* コーディネート一覧：余白を詰めてカードを詰める */
+/* コーディネート一覧：下の余白を使ってカードを大きくする */
     .outfit-section {
         display: flex !important;
         flex-direction: column !important;
         width: 100%;
+        height: 100% !important;
         min-height: 0;
         gap: 4px !important;
     }
@@ -526,6 +527,7 @@
         gap: 4px 8px;
         margin-top: 2px;
         padding-top: 4px;
+        flex-shrink: 0;
     }
 
     .outfit-section .add-item-text {
@@ -538,65 +540,25 @@
         flex: 0 0 auto !important;
         min-height: 0;
         height: auto !important;
-        grid-template-rows: repeat(2, 92px) !important;
+        /* 2段の行高：画面幅の約48%（縦長比率） */
+        grid-template-rows: repeat(2, 48vw) !important;
         grid-auto-flow: column;
-        grid-auto-columns: 78px !important;
-        gap: 6px !important;
+        /* 列幅：画面幅の約36%（2列＋右に3列目が少し見えるサイズ） */
+        grid-auto-columns: 36vw !important;
+        row-gap: 14px !important;
+        column-gap: 14px !important;
         overflow-x: auto !important;
         overflow-y: hidden !important;
         -webkit-overflow-scrolling: touch;
-        padding-bottom: 4px;
+        padding: 4px 4px 8px 4px;
     }
 
     .outfit-grid .coord-card {
-        width: 78px !important;
-        height: 92px !important;
+        width: 36vw !important;
+        height: 48vw !important;
         min-width: 0;
         min-height: 0;
         aspect-ratio: auto !important;
-    }
-
-    /* コーデ追加ドロアー：余白を詰める */
-    .coord-drawer-content {
-        width: 94%;
-        height: auto;
-        max-height: 88dvh;
-    }
-
-    .coord-canvas-section {
-        flex-direction: column;
-        gap: 6px !important;
-        padding: 10px 12px 6px !important;
-    }
-
-    .coord-preview-board {
-        width: 150px;
-        height: 180px;
-        gap: 4px;
-        padding: 6px;
-    }
-
-    .save-btn,
-    .favorite-toggle-group {
-        align-self: center;
-    }
-
-    .drawer-grid {
-        flex: 0 0 auto !important;
-        height: auto !important;
-        grid-template-rows: repeat(2, 80px) !important;
-        grid-auto-flow: column;
-        grid-auto-columns: 80px !important;
-        gap: 6px !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-    }
-
-    .drawer-grid .item-card {
-        width: 80px !important;
-        height: 80px !important;
-        min-width: 0;
-        min-height: 0;
     }
 }
 
