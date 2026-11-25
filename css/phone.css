@@ -584,7 +584,7 @@
         aspect-ratio: auto !important;
     }
 
-    /* スマホ時：下の余白を詰めて上のボードを大きくする */
+/* スマホ時：ボードは動かさず、下部ドロアーだけ上に重なる */
     .coord-drawer-content {
         width: 94%;
         height: 88dvh;
@@ -592,54 +592,68 @@
         position: relative;
         display: flex;
         flex-direction: column;
-    }
-
-    .coord-canvas-section {
-        flex: 1 1 auto;
-        min-height: 0;
-        flex-direction: column;
-        justify-content: center;
-        gap: 6px !important;
-        padding: 8px 12px 4px !important;
-        transition: max-height 0.25s ease, padding 0.25s ease, opacity 0.2s ease;
+        justify-content: flex-end;
         overflow: hidden;
     }
 
-    /* ボードをさらに大きくする */
+    .coord-canvas-section {
+        position: relative;
+        z-index: 1;
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 6px !important;
+        padding: 10px 12px 12px !important;
+        overflow: hidden;
+    }
+
     .coord-preview-board {
         width: 250px !important;
         height: 300px !important;
         gap: 6px;
         padding: 8px;
+        flex-shrink: 0;
     }
 
-    /* 服一覧を上に引き上げた状態 */
+    /* 開いたときもボード側は動かさない */
     .coord-drawer-content.is-expanded .coord-canvas-section {
-        flex: 0 0 auto;
-        max-height: 68px;
-        padding-top: 8px !important;
-        padding-bottom: 4px !important;
+        max-height: none;
     }
 
     .coord-drawer-content.is-expanded .coord-preview-board {
-        display: none;
+        display: grid;
     }
 
+    /* 下部ドロアー：上に重なるシートとして扱う */
     .item-drawer {
+        position: relative;
+        z-index: 10;
         flex: 0 0 auto !important;
+        width: 100%;
         height: auto !important;
         min-height: 0;
-        padding: 4px 12px 10px !important;
-        transition: flex 0.25s ease, transform 0.15s ease;
+        padding: 4px 12px 12px !important;
+        background-color: #fafafa;
+        border-radius: 18px 18px 0 0;
+        box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.16);
+        transition: margin-top 0.25s ease, transform 0.15s ease;
         touch-action: pan-y;
     }
 
+    /* 開いたときは下部ドロアーだけが上にせり上がり、3段表示＋下の余白なし */
     .coord-drawer-content.is-expanded .item-drawer {
-        flex: 1 1 auto !important;
+        margin-top: -120px;
     }
 
     .drawer-handle {
+        width: 100%;
+        min-height: 28px;
         padding: 6px 0 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: grab;
         touch-action: none;
     }
@@ -656,10 +670,11 @@
         padding-bottom: 4px;
     }
 
-    /* 引き上げたときは服一覧の行数を増やして見やすくする */
     .coord-drawer-content.is-expanded .drawer-grid {
         grid-template-rows: repeat(3, 98px) !important;
-        overflow-y: auto !important;
+        height: auto !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
     }
 
     .drawer-grid .item-card {
