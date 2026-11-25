@@ -506,7 +506,7 @@
         box-sizing: border-box;
     }
 
-/* コーディネート一覧：下の余白を使ってカードを大きくする */
+    /* コーディネート一覧：下の余白を使ってカードを大きくする */
     .outfit-section {
         display: flex !important;
         flex-direction: column !important;
@@ -522,7 +522,7 @@
         flex-shrink: 0;
     }
 
-.outfit-section .section-header-action {
+    .outfit-section .section-header-action {
         display: flex !important;
         flex-wrap: wrap !important;
         align-items: center;
@@ -558,11 +558,6 @@
         font-size: 0.85rem;
     }
 
-    .outfit-section .add-item-text {
-        padding: 0 2px 0 0;
-        font-size: 0.85rem;
-    }
-
     .outfit-grid {
         grid-row: auto !important;
         flex: 0 0 auto !important;
@@ -589,25 +584,38 @@
         aspect-ratio: auto !important;
     }
 
-    /* スマホ時：ドロアーをシート風に扱えるよう準備 */
+    /* スマホ時：下の余白を詰めて上のボードを大きくする */
     .coord-drawer-content {
         width: 94%;
         height: 88dvh;
         max-height: 88dvh;
         position: relative;
+        display: flex;
+        flex-direction: column;
     }
 
     .coord-canvas-section {
+        flex: 1 1 auto;
+        min-height: 0;
         flex-direction: column;
+        justify-content: center;
         gap: 6px !important;
-        padding: 10px 12px 6px !important;
+        padding: 8px 12px 4px !important;
         transition: max-height 0.25s ease, padding 0.25s ease, opacity 0.2s ease;
-        max-height: 360px;
         overflow: hidden;
+    }
+
+    /* ボードをさらに大きくする */
+    .coord-preview-board {
+        width: 250px !important;
+        height: 300px !important;
+        gap: 6px;
+        padding: 8px;
     }
 
     /* 服一覧を上に引き上げた状態 */
     .coord-drawer-content.is-expanded .coord-canvas-section {
+        flex: 0 0 auto;
         max-height: 68px;
         padding-top: 8px !important;
         padding-bottom: 4px !important;
@@ -617,17 +625,17 @@
         display: none;
     }
 
-    .coord-preview-board {
-        width: 150px;
-        height: 170px;
-        gap: 4px;
-        padding: 6px;
-    }
-
     .item-drawer {
-        padding: 6px 12px 12px !important;
+        flex: 0 0 auto !important;
+        height: auto !important;
+        min-height: 0;
+        padding: 4px 12px 10px !important;
         transition: flex 0.25s ease, transform 0.15s ease;
         touch-action: pan-y;
+    }
+
+    .coord-drawer-content.is-expanded .item-drawer {
+        flex: 1 1 auto !important;
     }
 
     .drawer-handle {
@@ -645,9 +653,10 @@
         gap: 6px !important;
         overflow-x: auto !important;
         overflow-y: hidden !important;
+        padding-bottom: 4px;
     }
 
-    /* 引き上げたときは服一覧の行数を少し増やして見やすくする */
+    /* 引き上げたときは服一覧の行数を増やして見やすくする */
     .coord-drawer-content.is-expanded .drawer-grid {
         grid-template-rows: repeat(3, 98px) !important;
         overflow-y: auto !important;
@@ -713,6 +722,4 @@
     .item-detail-modal-card .form-row {
         gap: 7px;
     }
-
-    
 }
