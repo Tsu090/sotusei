@@ -110,29 +110,46 @@
              <a href="#" class="header-logo-link">
             <h1 class="header-logo">MODEX</h1>
             </a>
-            <!-- 右側のプロフィールアイコン -->
+           <!-- 右側のプロフィールアイコン -->
             <div class="header-right">
                 <button type="button" class="profile-open">
-                    <svg class="header-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                    <img src="" alt="User Profile" class="avatar-img" id="userAvatarImg">
+
+                    <svg class="header-icon" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+
+                    <img src="" alt="User Profile" class="avatar-img">
+
                 </button>
-                <div class="drawer-overlay" id="drawerOverlay"></div> <!-- 背景をクリックしたら閉じる -->
+
+                <div class="drawer-overlay" id="drawerOverlay"></div>
+
                 <div class="profile-drawer" id="profileDrawer">
+
                     <div class="drawer-box drawer-profile">
+
                         <div class="avatar-wrapper">
-                            <svg class="avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+
+                            <svg class="avatar-icon" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="1.5">
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
 
-                            <img src="" alt="User Profile" class="avatar-img" id="userAvatarImg">
+                            <img src="" alt="User Profile" class="avatar-img">
+
                         </div>
+
                         <div class="profile-info">
                             <div class="name-header">
-                                <h3 class="user-name">MODEX User</h3>
+                                <h3 class="user-name" data-user-name>MODEX User</h3>
                             </div>
-                            <p class="user-email">user@ezamle.com</p>
+
+                            <p class="user-email" data-user-email>user@ezamle.com</p>
                         </div>
+
                     </div>
                     <div class="drawer-box drawer-stats">
                         <h4 class="box-title">Your Closet Stats</h4>
@@ -152,7 +169,7 @@
                         </div>
                     </div>
                     <div class="drawer-box drawer-menu">
-                        <a href="#settings" class="drawer-menu-item">
+                        <a href="index1.html" class="drawer-menu-item">
                             <svg class="menu-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                             <span class="menu-text">Account Settings</span>
                         </a>
@@ -481,9 +498,6 @@
     </div>
 </div>
 <input type="file" id="hiddenImageInput" accept="image/*" style="display: none;">
-
-<!-- <script src="js/common.js"></script>
-<script src="js/closet.js"></script> -->
 
 <!-- Supabase SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
