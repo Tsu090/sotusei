@@ -112,12 +112,21 @@ img {
     color: #555;
 }
 
-.avatar-img {
+/* .avatar-img {      11/25林
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: none !important;
+} */
+
+
+/*林が追加*/
+.avatar-img {
+    display: none;
+    object-fit: cover;
+    border-radius: 50%;
 }
+
 
 .user-name {
     font-size: 16px;
@@ -867,4 +876,36 @@ img {
     .content-body {
         padding-left: 0 !important;
     }
+}
+
+
+
+/* ホーム画面右上のプロフィール画像 林追加*/
+.header-right .profile-open {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.header-right .profile-open .avatar-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* プロフィール欄の画像表示 */
+.avatar-wrapper .avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 50%;
+    flex-shrink: 0;
 }

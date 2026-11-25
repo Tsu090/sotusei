@@ -1,18 +1,18 @@
 /* ==========================================
  * 1. ログイン状態の確認
  * ========================================== */
-// async function checkLogin() {
-//     try {
-//         const { data, error } = await supabaseClient.auth.getSession();
-//         if (error || !data.session) {
-//             return false;
-//         }
-//         return true;
-//     } catch (error) {
-//         console.error("ログイン確認エラー:", error);
-//         return false;
-//     }
-// }
+async function checkLogin() {
+    try {
+        const { data, error } = await supabaseClient.auth.getSession();
+        if (error || !data.session) {
+            return false;
+        }
+        return true;
+    } catch (error) {
+        console.error("ログイン確認エラー:", error);
+        return false;
+    }
+}
 
 // async function checkLogin() {
 //     try {
@@ -782,3 +782,66 @@ function initCategoryFilter(selectId, cardSelector, defaultFilter = 'all') {
     filterElement.addEventListener('change', applyFilter);
     applyFilter();
 }
+
+// ======================================
+// ログインユーザー情報を表示    11/24追加
+// ======================================
+
+async function loadUserProfile() {
+
+    const { data, error } = await supabaseClient.auth.getUser();
+
+    if (error || !data.user) {
+        console.error("ユーザー情報取得エラー:", error);
+        return;
+    }
+
+    const user = data.user;
+
+    // ユーザー名
+    const userName =
+        user.user_metadata?.display_name || "MODEX User";
+
+    // メールアドレス
+    const userEmail = user.email || "";
+
+    // HTMLに反映
+    document.querySelectorAll("[data-user-name]")
+        .forEach(element => {
+            element.textContent = userName;
+        });
+
+    document.querySelectorAll("[data-user-email]")
+        .forEach(element => {
+            element.textContent = userEmail;
+        });
+}
+
+// 実行
+loadUserProfile();
+// ======================================
+// プロフィール画像をホーム画面に表示
+// ======================================
+
+async function loadUserAvatar() {
+
+    const { data, error } =
+        await supabaseClient.auth.getUser();
+
+    if (error || !data.user) {
+        console.error("画像取得エラー:", error);
+        return;
+    }
+
+    const avatarUrl = data.user.user_metadata?.avatar_url;
+
+    if (avatarUrl) {
+        document.querySelectorAll(".avatar-img")
+            .forEach(img => {
+                img.src = avatarUrl;
+                img.style.display = "block";
+            });
+    }
+}
+
+loadUserAvatar();
