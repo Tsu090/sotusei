@@ -559,4 +559,87 @@
     .item-detail-modal-card .form-row {
         gap: 7px;
     }
+
+    /* コーディネート一覧のヘッダー・グリッドをスマホ向けに調整 */
+    .outfit-section {
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100% !important;
+        min-height: 0;
+        gap: 8px;
+    }
+
+    .outfit-section .section-header {
+        margin-bottom: 8px;
+        gap: 2px;
+    }
+
+    .outfit-section .section-header-action {
+        flex-wrap: wrap;
+        gap: 6px 10px;
+        margin-top: 4px;
+        padding-top: 8px;
+    }
+
+    .outfit-section .add-item-text {
+        padding: 0 4px 0 0;
+        font-size: 0.85rem;
+    }
+
+    .outfit-grid {
+        grid-row: auto !important;
+        flex: 1 1 0;
+        min-height: 0;
+        height: auto !important;
+        grid-template-rows: repeat(2, 112px) !important;
+        grid-auto-flow: column;
+        grid-auto-columns: max-content;
+        gap: 8px !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 6px;
+    }
+
+    .outfit-grid .coord-card {
+        width: auto;
+        height: 100%;
+        aspect-ratio: 5 / 6;
+    }
+
+    /* コーデ追加ドロアーをスマホ画面に収める */
+    .coord-drawer-content {
+        width: 94%;
+        height: 88dvh;
+        max-height: 88dvh;
+    }
+
+    .coord-canvas-section {
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px 14px 12px;
+    }
+
+    .coord-preview-board {
+        width: 168px;
+        height: 220px;
+        gap: 4px;
+        padding: 8px;
+    }
+
+    .save-btn,
+    .favorite-toggle-group {
+        align-self: center;
+    }
+
+    .drawer-grid {
+        grid-template-rows: repeat(2, 92px) !important;
+        grid-auto-columns: 92px !important;
+        gap: 8px !important;
+    }
+
+    .drawer-grid .item-card {
+        width: 92px !important;
+        height: 92px !important;
+    }
 }
