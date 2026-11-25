@@ -272,51 +272,53 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /* ==========================================
-     * 12. スマホ向け：ハンドルドラッグで服一覧を上下に切り替え
+/* ==========================================
+     * 12. スマホ向け：ハンドル／ヘッダー操作で服一覧を上下に切り替え
      * ========================================== */
     const drawerContent = document.querySelector('.coord-drawer-content');
     const drawerHandle = document.getElementById('drawerHandle');
+    const drawerHeader = document.querySelector('.drawer-header');
+    const dragTargets = [drawerHandle, drawerHeader].filter(Boolean);
 
     let startY = 0;
     let currentDeltaY = 0;
     let isDraggingDrawer = false;
 
-    if (drawerHandle && drawerContent) {
-        drawerHandle.addEventListener('touchstart', (e) => {
-            if (window.innerWidth > 600) return;
+    dragTargets.forEach((target) => {
+        target.addEventListener('touchstart', (e) => {
+            if (window.innerWidth > 600 || !drawerContent) return;
             startY = e.touches[0].clientY;
             currentDeltaY = 0;
             isDraggingDrawer = true;
             drawerContent.style.transition = 'none';
         }, { passive: true });
 
-        drawerHandle.addEventListener('touchmove', (e) => {
-            if (!isDraggingDrawer || window.innerWidth > 600) return;
-            const touchY = e.touches[0].clientY;
-            currentDeltaY = touchY - startY;
-
-            // 上に引くときはマイナス方向、下に押すときはプラス方向
-            const clampedDelta = Math.max(-120, Math.min(120, currentDeltaY));
-            drawerContent.style.transform = `translateY(${clampedDelta * 0.25}px)`;
+        target.addEventListener('touchmove', (e) => {
+            if (!isDraggingDrawer || window.innerWidth > 600 || !drawerContent) return;
+            currentDeltaY = e.touches[0].clientY - startY;
+            const clampedDelta = Math.max(-100, Math.min(100, currentDeltaY));
+            drawerContent.style.transform = `translateY(${clampedDelta * 0.3}px)`;
         }, { passive: true });
 
         const finishDrawerDrag = () => {
-            if (!isDraggingDrawer) return;
+            if (!isDraggingDrawer || !drawerContent) return;
             isDraggingDrawer = false;
-            drawerContent.style.transition = '';
+            drawerContent.style.transition = 'transform 0.2s ease';
             drawerContent.style.transform = '';
 
-            // 40px以上上に引いたら展開、40px以上下に引いたら元に戻す
-            if (currentDeltaY < -40) {
+            // 25px以上上に引いたら展開、25px以上下に引いたら戻す
+            if (currentDeltaY < -25) {
                 drawerContent.classList.add('is-expanded');
-            } else if (currentDeltaY > 40) {
+            } else if (currentDeltaY > 25) {
                 drawerContent.classList.remove('is-expanded');
+            } else if (Math.abs(currentDeltaY) < 8) {
+                // ほぼタップだけの場合はトグル切り替え
+                drawerContent.classList.toggle('is-expanded');
             }
             currentDeltaY = 0;
         };
 
-        drawerHandle.addEventListener('touchend', finishDrawerDrag);
-        drawerHandle.addEventListener('touchcancel', finishDrawerDrag);
-    }
+        target.addEventListener('touchend', finishDrawerDrag);
+        target.addEventListener('touchcancel', finishDrawerDrag);
+    });
 });

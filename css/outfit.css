@@ -504,7 +504,30 @@
 .drawer-grid .item-card.favorited .favorite-btn svg {
     fill: #ff4757;
 }
+/* ドラッグ用ハンドルの見た目 */
+.drawer-handle {
+    width: 100%;
+    padding: 8px 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    flex-shrink: 0;
+}
 
+.handle-bar {
+    display: block;
+    width: 44px;
+    height: 5px;
+    border-radius: 999px;
+    background-color: #cbd5e1;
+    transition: background-color 0.2s ease, width 0.2s ease;
+}
+
+.drawer-handle:hover .handle-bar {
+    background-color: #94a3b8;
+    width: 52px;
+}
 /* ==========================================
  * 📌 選択モード中のカード選択スタイル (.is-selected)
  * ========================================== */
