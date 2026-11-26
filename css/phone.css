@@ -605,7 +605,7 @@
         display: flex !important;
         flex-direction: row !important;      /* 横並び＋折り返しで操作ボタンを下に1行でまとめる */
         flex-wrap: wrap !important;
-        justify-content: space-between !important;
+        justify-content: space-evenly !important;
         align-items: center !important;
         align-content: flex-start !important; /* 上の余白を詰めて上から配置 */
         gap: 10px 14px !important;
