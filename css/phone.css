@@ -1,6 +1,15 @@
 /* スマートフォン対応 */
 @media screen and (max-width: 600px) {
 
+    input[type="text"],
+    input[type="search"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
     /* 画面全体のスクロールを止めて固定画面にする */
     html,
     body {
