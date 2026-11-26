@@ -464,7 +464,6 @@ if (reportProblemBtn && reportModal) {
     }
 }
 
-
 /* ==========================================
  * 5. アイテム追加モーダル（選択カード・カメラ・アルバム・AI・詳細）
  * ========================================== */
@@ -486,38 +485,69 @@ document.addEventListener('DOMContentLoaded', () => {
             modalOverlay.classList.remove('is-active');
         }
     });
-});
 
-// ファイル選択（アルバム）用のインプット自動生成と処理
-let hiddenInput = document.getElementById('hiddenImageInput');
-if (!hiddenInput) {
-    hiddenInput = document.createElement('input');
-    hiddenInput.type = 'file';
-    hiddenInput.id = 'hiddenImageInput';
-    hiddenInput.accept = 'image/*';
-    hiddenInput.style.display = 'none';
-    document.body.appendChild(hiddenInput);
-}
+    // 画像ファイルを受け取って詳細モーダルを開く共通処理
+    const openDetailWithFile = (file) => {
+        if (!file) return;
 
-window.addEventListener('click', (e) => {
-    const albumCard = e.target.closest('.selection-card:nth-child(2)') || e.target.closest('[title="アルバム"]');
-    if (albumCard) {
-        hiddenInput.click();
-    }
-});
-
-hiddenInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
         const previewImage = document.getElementById('previewImage');
         if (previewImage) {
             previewImage.src = URL.createObjectURL(file);
         }
+
+        const addItemModal = document.querySelector('.add-item-modal-overlay');
+        if (addItemModal) {
+            addItemModal.classList.remove('is-active');
+        }
+
         const detailModal = document.querySelector('.item-detail-modal-overlay');
         const modalTitle = document.getElementById('modalTitle');
         if (modalTitle) modalTitle.textContent = "アイテムを追加";
         if (detailModal) detailModal.classList.add('is-active');
+    };
+
+    // 1. カメラで撮影（#cameraTriggerBtn / #cameraFileInput）
+    const cameraTriggerBtn = document.getElementById('cameraTriggerBtn');
+    const cameraFileInput = document.getElementById('cameraFileInput');
+
+    if (cameraTriggerBtn && cameraFileInput) {
+        cameraTriggerBtn.addEventListener('click', (e) => {
+            // input自身のクリックが二重発火しないようにする
+            if (e.target === cameraFileInput) return;
+            e.stopPropagation();
+            cameraFileInput.click();
+        });
+
+        cameraFileInput.addEventListener('change', (e) => {
+            const file = e.target.files?.[0];
+            openDetailWithFile(file);
+            e.target.value = ''; // 同じ画像を連続で選んでも反応するようにリセット
+        });
     }
+
+    // 2. ファイル選択（アルバム）用のインプット自動生成と処理
+    let hiddenInput = document.getElementById('hiddenImageInput');
+    if (!hiddenInput) {
+        hiddenInput = document.createElement('input');
+        hiddenInput.type = 'file';
+        hiddenInput.id = 'hiddenImageInput';
+        hiddenInput.accept = 'image/*';
+        hiddenInput.style.display = 'none';
+        document.body.appendChild(hiddenInput);
+    }
+
+    window.addEventListener('click', (e) => {
+        const albumCard = e.target.closest('.selection-card:nth-child(2)') || e.target.closest('[title="アルバム"]');
+        if (albumCard) {
+            hiddenInput.click();
+        }
+    });
+
+    hiddenInput.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
+        openDetailWithFile(file);
+        e.target.value = '';
+    });
 });
 
 
