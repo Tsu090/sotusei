@@ -807,14 +807,15 @@
     .situation-part {
         display: flex !important;
         align-items: center !important;
-        justify-content: space-between !important;
         gap: 8px !important;
         width: 100% !important;
     }
 
     .situation-select {
         flex: 1;
-        max-width: 200px;
+        max-width: 250px;
+        max-height: 35px;
+        padding: 3px 12px;
     }
 
     /* 他のおすすめコーデ一覧を非表示 */
