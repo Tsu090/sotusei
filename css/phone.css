@@ -10,6 +10,7 @@
     select {
         font-size: 16px !important;
     }
+
     /* 画面全体のスクロールを止めて固定画面にする */
     html,
     body {
@@ -593,7 +594,7 @@
         aspect-ratio: auto !important;
     }
 
-/* スマホ時：ボードは動かさず、下部ドロアーだけ上に重なる */
+    /* スマホ時：ボードは動かさず、下部ドロアーだけ上に重なる */
     .coord-drawer-content {
         width: 94%;
         height: 88dvh;
@@ -605,18 +606,18 @@
         overflow: hidden;
     }
 
-/* 上部のプレビュー＆操作エリア：上の空白を詰めてコンパクトにする */
+    /* 上部のプレビュー＆操作エリア：上の空白を詰めてコンパクトにする */
     .coord-canvas-section {
         position: relative;
         z-index: 1;
         flex: 1 1 auto;
         min-height: 0;
         display: flex !important;
-        flex-direction: row !important;      /* 横並び＋折り返しで操作ボタンを下に1行でまとめる */
+        flex-direction: row !important;
         flex-wrap: wrap !important;
         justify-content: space-evenly !important;
         align-items: center !important;
-        align-content: flex-start !important; /* 上の余白を詰めて上から配置 */
+        align-content: flex-start !important;
         gap: 10px 14px !important;
         padding: 12px 12px 8px !important;
         overflow: hidden;
@@ -636,7 +637,7 @@
         width: clamp(180px, min(62vw, 34dvh), 270px) !important;
         height: auto !important;
         aspect-ratio: 5 / 6 !important;
-        margin: 0 36px !important; /* 左右に余白を作って真ん中に寄せつつ、次の行へ折り返させる */
+        margin: 0 36px !important;
         gap: 6px;
         padding: 8px;
         flex-shrink: 0;
@@ -725,6 +726,159 @@
         min-width: 0;
         min-height: 0;
     }
+
+    /* ==============================================================
+       AIコーデ画面（ai.html / ai.css）スマートフォン対応
+       ============================================================== */
+    .content-body:has(.ai-section) {
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 24px !important;
+    }
+
+    .ai-section {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        height: auto !important;
+        min-width: 0 !important;
+        width: 100% !important;
+    }
+
+    .ai-section .section-header {
+        margin-bottom: 4px !important;
+    }
+
+    .ai-section .section-header h1 {
+        font-size: 1.25rem !important;
+        margin-bottom: 2px !important;
+    }
+
+    .ai-section .section-header h3 {
+        font-size: 0.8rem !important;
+        margin: 0 !important;
+    }
+
+    /* 天気 ＆ シチュエーションバー */
+    .ai-coordinate-container {
+        width: 100% !important;
+    }
+
+    .weather-situation-bar {
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        gap: 8px 10px !important;
+        padding: 10px 12px !important;
+    }
+
+    .weather-widget-part {
+        font-size: 13px !important;
+        gap: 6px !important;
+    }
+
+    .weather-icon-container {
+        width: 24px !important;
+        height: 24px !important;
+        margin-right: 4px !important;
+    }
+
+    #weatherTemp {
+        font-size: 17px !important;
+    }
+
+    .bar-divider {
+        display: none !important;
+    }
+
+    .location-trigger {
+        padding: 0 16px 0 0 !important;
+        font-size: 12px !important;
+    }
+
+    .situation-part {
+        width: 100% !important;
+        justify-content: space-between !important;
+    }
+
+    .situation-select {
+        flex: 1;
+        max-width: 200px;
+    }
+
+    /* 他のおすすめコーデ一覧を非表示 */
+    .other-coords-section {
+        display: none !important;
+    }
+
+    /* メイン領域：おすすめのコーデを大きく表示し、アドバイスは下にスクロール配置 */
+    .ai-main-content-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+        grid-template-columns: 1fr !important;
+        margin-right: 0 !important;
+        overflow: visible !important;
+    }
+
+    .ai-pane {
+        padding: 14px !important;
+    }
+
+    /* コーデ画像＆試着写真を縦に大きく表示 */
+    .coord-sub-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        flex: none !important;
+    }
+
+    .coord-media-img {
+        width: 100% !important;
+        height: 250px !important;
+        object-fit: cover;
+    }
+
+    /* 下部アクションボタン（文章で提案 / 保存） */
+    .coord-action-buttons {
+        justify-content: space-between !important;
+        gap: 8px !important;
+        margin-top: 12px !important;
+    }
+
+    .btn-text-suggest,
+    .btn-save-coord {
+        flex: 1 !important;
+        width: auto !important;
+        padding: 9px 10px !important;
+        font-size: 12px !important;
+    }
+
+    /* アドバイスコメント＆ポイントは下にスクロールで閲覧 */
+    .ai-pane-right {
+        overflow-y: visible !important;
+    }
+
+    /* 文章で提案ドロワー（スマホ向け調整） */
+    .suggest-drawer-top {
+        padding: 16px !important;
+    }
+
+    .suggest-preview-split {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        margin-top: 28px !important;
+    }
+
+    .suggest-coord-box,
+    .suggest-tryon-box {
+        height: 200px !important;
+        min-height: 200px !important;
+    }
+
+    .suggest-drawer-bottom {
+        padding: 16px !important;
+    }
 }
 
 /* 小さいスマートフォン */
@@ -778,5 +932,9 @@
 
     .item-detail-modal-card .form-row {
         gap: 7px;
+    }
+
+    .coord-media-img {
+        height: 210px !important;
     }
 }
