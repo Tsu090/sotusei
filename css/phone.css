@@ -879,6 +879,21 @@
     .suggest-drawer-bottom {
         padding: 16px !important;
     }
+
+    /* メイン画面：コーデ画像＆試着写真を縦長にして横並び */
+    .coord-sub-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+        flex: none !important;
+    }
+
+    .coord-media-img {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 3 / 4 !important;
+        object-fit: cover;
+    }
 }
 
 /* 小さいスマートフォン */
