@@ -624,8 +624,9 @@
     /* 1段目：ボードを一番上に配置（左右に✕ボタン分の余白を確保して中央に） */
     .coord-preview-board {
         order: 1;
-        width: 220px !important;
-        height: 265px !important;
+        width: clamp(180px, min(62vw, 34dvh), 270px) !important;
+        height: auto !important;
+        aspect-ratio: 5 / 6 !important;
         margin: 0 36px !important; /* 左右に余白を作って真ん中に寄せつつ、次の行へ折り返させる */
         gap: 6px;
         padding: 8px;
@@ -634,7 +635,7 @@
 
     /* 2段目（左）：お気に入りに追加 */
     .favorite-toggle-group {
-        order: 2;
+        order: 3;
         align-self: center !important;
         margin: 0 !important;
         font-size: 13px;
@@ -642,7 +643,7 @@
 
     /* 2段目（右）：保存をする */
     .save-btn {
-        order: 3;
+        order: 2;
         align-self: center !important;
         margin: 0 !important;
         padding: 7px 16px !important;
