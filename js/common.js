@@ -133,6 +133,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const card = e.target.closest('.coord-card, .drawer-grid .item-card, .item-card');
         if (!card) return;
         if (e.target.closest('.brand-logo')) return;
+        if (card.classList.contains('coord-card') || card.closest('.coord-drawer .item-drawer')) return;
         if (isSelectMode) return;
 
         const touch = e.touches[0];
@@ -143,10 +144,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         }, 600);
     }, { passive: true });
 
-    document.addEventListener('touchmove', () => clearTimeout(pressTimer), { passive: true });
-    document.addEventListener('touchend', () => clearTimeout(pressTimer));
-    document.addEventListener('touchcancel', () => clearTimeout(pressTimer));
-
     // PC用：右クリック検知 (contextmenu)
     document.addEventListener('contextmenu', (e) => {
         const card = e.target.closest('.coord-card, .drawer-grid .item-card, .item-card');
@@ -155,6 +152,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
         if (e.target.closest('.brand-logo')) return;
+        if (card.classList.contains('coord-card') || card.closest('.coord-drawer .item-drawer')) {
+            hideContextMenu();
+            return;
+        }
 
         e.preventDefault();
         targetCard = card;
@@ -306,7 +307,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function hideContextMenu() {
-        if (!customContextMenu) return;
+        if (targetCard) {
+            targetCard.classList.remove('is-selected');
+        }
+        if (!customContextMenu) {
+            targetCard = null;
+            return;
+        }
         customContextMenu.classList.remove('is-active');
         targetCard = null;
     }
