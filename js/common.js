@@ -132,9 +132,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.addEventListener('touchstart', (e) => {
         const card = e.target.closest('.coord-card, .drawer-grid .item-card, .item-card');
         if (!card) return;
-        if (e.target.closest('.brand-logo')) return;
+        if (e.target.closest('.brand-logo')) return; 
         if (isSelectMode) return;
-
+        
         const touch = e.touches[0];
         pressTimer = setTimeout(() => {
             targetCard = card;
@@ -194,11 +194,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     slot.classList.remove('has-item');
                 });
 
-                if (topsImg) { const s = document.querySelector('.coord-item-slot.item-top'); if (s) { s.innerHTML = `<img src="${topsImg}">`; s.classList.add('has-item'); } }
-                if (outerImg) { const s = document.querySelector('.coord-item-slot.item-outer'); if (s) { s.innerHTML = `<img src="${outerImg}">`; s.classList.add('has-item'); } }
-                if (bottomsImg) { const s = document.querySelector('.coord-item-slot.item-bottom'); if (s) { s.innerHTML = `<img src="${bottomsImg}">`; s.classList.add('has-item'); } }
-                if (shoesImg) { const s = document.querySelector('.coord-item-slot.item-shoes'); if (s) { s.innerHTML = `<img src="${shoesImg}">`; s.classList.add('has-item'); } }
-                if (accessoryImg) { const s = document.querySelector('.coord-item-slot.item-accessory'); if (s) { s.innerHTML = `<img src="${accessoryImg}">`; s.classList.add('has-item'); } }
+                if (topsImg) { const s = document.querySelector('.coord-item-slot.item-top'); if(s){ s.innerHTML = `<img src="${topsImg}">`; s.classList.add('has-item'); } }
+                if (outerImg) { const s = document.querySelector('.coord-item-slot.item-outer'); if(s){ s.innerHTML = `<img src="${outerImg}">`; s.classList.add('has-item'); } }
+                if (bottomsImg) { const s = document.querySelector('.coord-item-slot.item-bottom'); if(s){ s.innerHTML = `<img src="${bottomsImg}">`; s.classList.add('has-item'); } }
+                if (shoesImg) { const s = document.querySelector('.coord-item-slot.item-shoes'); if(s){ s.innerHTML = `<img src="${shoesImg}">`; s.classList.add('has-item'); } }
+                if (accessoryImg) { const s = document.querySelector('.coord-item-slot.item-accessory'); if(s){ s.innerHTML = `<img src="${accessoryImg}">`; s.classList.add('has-item'); } }
 
                 coordDrawer.classList.add('is-open');
             }
@@ -206,77 +206,84 @@ document.addEventListener('DOMContentLoaded', async () => {
     }, true);
 
     if (batchDeleteBtn) {
-        batchDeleteBtn.addEventListener('click', async () => {
-            const selectedCards = Array.from(
-                document.querySelectorAll('.item-card.is-selected[data-item-id]')
-            );
+    batchDeleteBtn.addEventListener('click', async () => {
 
-            if (selectedCards.length === 0) {
-                alert('削除するアイテムが選択されていません');
-                return;
+        const selectedCards = Array.from(
+            document.querySelectorAll('.item-card.is-selected[data-item-id]')
+        );
+
+        if (selectedCards.length === 0) {
+            alert('削除するアイテムが選択されていません');
+            return;
+        }
+
+        if (!confirm('選択した服を削除しますか？')) return;
+
+        batchDeleteBtn.disabled = true;
+
+        try {
+            // 重複したIDを除外
+            const items = [
+                ...new Map(
+                    selectedCards.map(card => [
+                        card.dataset.itemId,
+                        card.dataset.imagePath
+                    ])
+                )
+            ];
+
+            const ids = items.map(item => item[0]);
+            const imagePaths = items.map(item => item[1]);
+
+            // データベースから削除
+            const { error: deleteError } = await supabaseClient
+                .from('clothing_items')
+                .delete()
+                .in('id', ids);
+
+            if (deleteError) throw deleteError;
+
+            // Storageから画像を削除
+            const validPaths = imagePaths.filter(path => path);
+
+            if (validPaths.length > 0) {
+                const { error: storageError } = await supabaseClient
+                    .storage
+                    .from('clothing-images')
+                    .remove(validPaths);
+
+                if (storageError) {
+                    console.error('画像削除エラー:', storageError);
+                    alert('服のデータは削除しましたが、画像の削除に失敗しました。');
+                }
             }
 
-            if (!confirm('選択した服を削除しますか？')) return;
-
-            batchDeleteBtn.disabled = true;
-
-            try {
-                const items = [
-                    ...new Map(
-                        selectedCards.map(card => [
-                            card.dataset.itemId,
-                            card.dataset.imagePath
-                        ])
-                    )
-                ];
-
-                const ids = items.map(item => item[0]);
-                const imagePaths = items.map(item => item[1]);
-
-                const { error: deleteError } = await supabaseClient
-                    .from('clothing_items')
-                    .delete()
-                    .in('id', ids);
-
-                if (deleteError) throw deleteError;
-
-                const validPaths = imagePaths.filter(path => path);
-
-                if (validPaths.length > 0) {
-                    const { error: storageError } = await supabaseClient
-                        .storage
-                        .from('clothing-images')
-                        .remove(validPaths);
-
-                    if (storageError) {
-                        console.error('画像削除エラー:', storageError);
-                        alert('服のデータは削除しましたが、画像の削除に失敗しました。');
-                    }
-                }
-
-                if (typeof window.loadClothingItems === 'function') {
-                    await window.loadClothingItems();
-                }
-
-                exitSelectMode();
-                alert('選択した服を削除しました！');
-
-            } catch (error) {
-                console.error('服の削除エラー:', error);
-                alert('削除に失敗しました。\n' + error.message);
-
-            } finally {
-                batchDeleteBtn.disabled = false;
+            // 一覧を再読み込み
+            if (typeof window.loadClothingItems === 'function') {
+                await window.loadClothingItems();
             }
-        });
-    }
 
+            exitSelectMode();
+            alert('選択した服を削除しました！');
+
+        } catch (error) {
+            console.error('服の削除エラー:', error);
+            alert('削除に失敗しました。\n' + error.message);
+
+        } finally {
+            batchDeleteBtn.disabled = false;
+        }
+    });
+}
+
+    // キャンセルボタン（選択モードを完全に終了する）
     if (batchCancelBtn) {
         batchCancelBtn.addEventListener('click', () => {
-            exitSelectMode();
+            exitSelectMode(); 
         });
     }
 
+    // 選択モード関連の補助関数
     function enterSelectMode() {
         isSelectMode = true;
         document.body.classList.add('is-select-mode');
@@ -311,6 +318,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         targetCard = null;
     }
 
+    // カスタムメニュー内の「編集」「削除」ボタン
     if (customContextMenu) {
         const editBtn = customContextMenu.querySelector('.edit-btn');
         const deleteBtn = customContextMenu.querySelector('.delete-btn');
@@ -341,19 +349,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                         const accessoryImg = targetCard.querySelector('.slot-accessory img, [data-category="accessory"] img')?.src;
 
                         document.querySelectorAll('.coord-item-slot').forEach(slot => {
-                            slot.innerHTML = '';
+                            slot.innerHTML = ''; 
                             slot.classList.remove('has-item');
                         });
 
-                        if (topsImg) { const s = document.querySelector('.coord-item-slot.item-top'); if (s) { s.innerHTML = `<img src="${topsImg}">`; s.classList.add('has-item'); } }
-                        if (outerImg) { const s = document.querySelector('.coord-item-slot.item-outer'); if (s) { s.innerHTML = `<img src="${outerImg}">`; s.classList.add('has-item'); } }
-                        if (bottomsImg) { const s = document.querySelector('.coord-item-slot.item-bottom'); if (s) { s.innerHTML = `<img src="${bottomsImg}">`; s.classList.add('has-item'); } }
-                        if (shoesImg) { const s = document.querySelector('.coord-item-slot.item-shoes'); if (s) { s.innerHTML = `<img src="${shoesImg}">`; s.classList.add('has-item'); } }
-                        if (accessoryImg) { const s = document.querySelector('.coord-item-slot.item-accessory'); if (s) { s.innerHTML = `<img src="${accessoryImg}">`; s.classList.add('has-item'); } }
+                        if (topsImg) { const s = document.querySelector('.coord-item-slot.item-top'); if(s){ s.innerHTML = `<img src="${topsImg}">`; s.classList.add('has-item'); } }
+                        if (outerImg) { const s = document.querySelector('.coord-item-slot.item-outer'); if(s){ s.innerHTML = `<img src="${outerImg}">`; s.classList.add('has-item'); } }
+                        if (bottomsImg) { const s = document.querySelector('.coord-item-slot.item-bottom'); if(s){ s.innerHTML = `<img src="${bottomsImg}">`; s.classList.add('has-item'); } }
+                        if (shoesImg) { const s = document.querySelector('.coord-item-slot.item-shoes'); if(s){ s.innerHTML = `<img src="${shoesImg}">`; s.classList.add('has-item'); } }
+                        if (accessoryImg) { const s = document.querySelector('.coord-item-slot.item-accessory'); if(s){ s.innerHTML = `<img src="${accessoryImg}">`; s.classList.add('has-item'); } }
 
                         coordDrawer.classList.add('is-open');
                     }
-                }
+                } 
                 else if (targetCard.classList.contains('item-card')) {
                     const itemModal = document.querySelector('.item-detail-modal-overlay');
                     if (itemModal) {
@@ -408,62 +416,7 @@ const submitReportBtn = document.getElementById('submitReportBtn');
 const reportFormView = document.getElementById('reportFormView');
 const reportSuccessView = document.getElementById('reportSuccessView');
 
-// 添付ファイル関連の要素
-const reportUploadBtn = document.getElementById('reportUploadBtn');
-const reportFileInput = document.getElementById('reportFileInput');
-const reportPreviewWrapper = document.getElementById('reportPreviewWrapper');
-const reportPreviewImg = document.getElementById('reportPreviewImg');
-const reportFileName = document.getElementById('reportFileName');
-const reportRemoveFileBtn = document.getElementById('reportRemoveFileBtn');
-
 if (reportProblemBtn && reportModal) {
-    let attachedReportFile = null;
-
-    const clearAttachedReportFile = () => {
-        attachedReportFile = null;
-        if (reportFileInput) reportFileInput.value = '';
-        if (reportPreviewImg) {
-            reportPreviewImg.src = '';
-            reportPreviewImg.style.display = 'none';
-        }
-        if (reportFileName) {
-            reportFileName.textContent = '';
-            reportFileName.style.display = 'none';
-        }
-        if (reportPreviewWrapper) reportPreviewWrapper.style.display = 'none';
-    };
-
-    const handleReportFile = (file) => {
-        if (!file) return;
-        attachedReportFile = file;
-
-        if (reportPreviewWrapper) reportPreviewWrapper.style.display = 'flex';
-
-        if (file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                if (reportPreviewImg) {
-                    reportPreviewImg.src = e.target.result;
-                    reportPreviewImg.style.display = 'block';
-                }
-                if (reportFileName) {
-                    reportFileName.textContent = '';
-                    reportFileName.style.display = 'none';
-                }
-            };
-            reader.readAsDataURL(file);
-        } else {
-            if (reportPreviewImg) {
-                reportPreviewImg.src = '';
-                reportPreviewImg.style.display = 'none';
-            }
-            if (reportFileName) {
-                reportFileName.textContent = `選択中のファイル: ${file.name}`;
-                reportFileName.style.display = 'block';
-            }
-        }
-    };
-
     const closeReportModal = () => {
         reportModal.classList.remove('is-active');
         setTimeout(() => {
@@ -473,15 +426,12 @@ if (reportProblemBtn && reportModal) {
                 reportTextarea.value = '';
                 reportTextarea.classList.remove('has-error');
             }
-            clearAttachedReportFile();
         }, 200);
     };
 
     reportProblemBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (typeof morePopupMenu !== 'undefined' && morePopupMenu) {
-            morePopupMenu.classList.remove('is-active');
-        }
+        if (morePopupMenu) morePopupMenu.classList.remove('is-active');
         if (reportFormView) reportFormView.style.display = 'block';
         if (reportSuccessView) reportSuccessView.style.display = 'none';
         reportModal.classList.add('is-active');
@@ -490,7 +440,7 @@ if (reportProblemBtn && reportModal) {
     reportModal.querySelectorAll('.modal-close-trigger').forEach(btn => {
         btn.addEventListener('click', closeReportModal);
     });
-
+    
     reportModal.addEventListener('click', (e) => {
         if (e.target === reportModal) closeReportModal();
     });
@@ -501,36 +451,6 @@ if (reportProblemBtn && reportModal) {
                 reportTextarea.classList.remove('has-error');
             }
         });
-
-        reportTextarea.addEventListener('paste', (e) => {
-            const items = e.clipboardData?.items;
-            if (!items) return;
-
-            for (const item of items) {
-                if (item.type.startsWith('image/')) {
-                    const file = item.getAsFile();
-                    if (file) {
-                        handleReportFile(file);
-                        break;
-                    }
-                }
-            }
-        });
-    }
-
-    if (reportUploadBtn && reportFileInput) {
-        reportUploadBtn.addEventListener('click', () => {
-            reportFileInput.click();
-        });
-
-        reportFileInput.addEventListener('change', (e) => {
-            const file = e.target.files?.[0];
-            if (file) handleReportFile(file);
-        });
-    }
-
-    if (reportRemoveFileBtn) {
-        reportRemoveFileBtn.addEventListener('click', clearAttachedReportFile);
     }
 
     if (submitReportBtn && reportTextarea) {
@@ -550,37 +470,6 @@ if (reportProblemBtn && reportModal) {
 /* ==========================================
  * 5. アイテム追加モーダル（選択カード・カメラ・アルバム・AI・詳細）
  * ========================================== */
-// 11/26 データベースつなげるため追加
-let selectedClothingFile = null;
-let hiddenImageInputEl = null;
-
-function handleClothingImage(file) {
-    if (!file) return;
-
-    if (!file.type || !file.type.startsWith('image/')) {
-        alert('画像ファイルを選択してください。');
-        return;
-    }
-
-    selectedClothingFile = file;
-
-    const previewImage = document.getElementById('previewImage');
-    if (previewImage) {
-        previewImage.src = URL.createObjectURL(file);
-    }
-
-    const addItemModal = document.querySelector('.add-item-modal-overlay');
-    if (addItemModal) {
-        addItemModal.classList.remove('is-active');
-    }
-
-    const detailModal = document.querySelector('.item-detail-modal-overlay');
-    const modalTitle = document.getElementById('modalTitle');
-
-    if (modalTitle) modalTitle.textContent = 'アイテムを追加';
-    if (detailModal) detailModal.classList.add('is-active');
-}
-
 document.addEventListener('DOMContentLoaded', () => {
     // 追加モーダルの開閉
     window.addEventListener('click', (e) => {
@@ -599,53 +488,78 @@ document.addEventListener('DOMContentLoaded', () => {
             modalOverlay.classList.remove('is-active');
         }
     });
-
-    // 1. カメラで撮影（#cameraTriggerBtn / #cameraFileInput）
-    const cameraTriggerBtn = document.getElementById('cameraTriggerBtn');
-    const cameraFileInput = document.getElementById('cameraFileInput');
-
-    if (cameraTriggerBtn && cameraFileInput) {
-        cameraTriggerBtn.addEventListener('click', (e) => {
-            if (e.target === cameraFileInput) return;
-            e.stopPropagation();
-            cameraFileInput.click();
-        });
-
-        cameraFileInput.addEventListener('change', (e) => {
-            const file = e.target.files?.[0];
-            if (file) {
-                handleClothingImage(file);
-            }
-            e.target.value = '';
-        });
-    }
-
-    // 2. ファイル選択（アルバム）用のインプット取得・生成と処理
-    hiddenImageInputEl = document.getElementById('hiddenImageInput');
-    if (!hiddenImageInputEl) {
-        hiddenImageInputEl = document.createElement('input');
-        hiddenImageInputEl.type = 'file';
-        hiddenImageInputEl.id = 'hiddenImageInput';
-        hiddenImageInputEl.accept = 'image/*';
-        hiddenImageInputEl.style.display = 'none';
-        document.body.appendChild(hiddenImageInputEl);
-    }
-
-    window.addEventListener('click', (e) => {
-        const albumCard = e.target.closest('.selection-card:nth-child(2)') || e.target.closest('[title="アルバム"]');
-        if (albumCard && hiddenImageInputEl) {
-            hiddenImageInputEl.click();
-        }
-    });
-
-    hiddenImageInputEl.addEventListener('change', (e) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            handleClothingImage(file);
-        }
-        e.target.value = '';
-    });
 });
+// 11/26 データベースつなげるため追加
+let selectedClothingFile = null;
+
+// ファイル選択（アルバム）用のインプット自動生成と処理
+let hiddenInput = document.getElementById('hiddenImageInput');
+if (!hiddenInput) {
+    hiddenInput = document.createElement('input');
+    hiddenInput.type = 'file';
+    hiddenInput.id = 'hiddenImageInput';
+    hiddenInput.accept = 'image/*';
+    hiddenInput.style.display = 'none';
+    document.body.appendChild(hiddenInput);
+}
+
+window.addEventListener('click', (e) => {
+    const albumCard = e.target.closest('.selection-card:nth-child(2)') || e.target.closest('[title="アルバム"]');
+    if (albumCard) {
+        hiddenInput.click();
+    }
+});
+
+// hiddenInput.addEventListener('change', (e) => {        11/26　データベースつなげるためいったん以下の文に置き換え。526~560
+//     const file = e.target.files[0];
+//     if (file) {
+//         const previewImage = document.getElementById('previewImage');
+//         if (previewImage) {
+//             previewImage.src = URL.createObjectURL(file);
+//         }
+//         const detailModal = document.querySelector('.item-detail-modal-overlay');
+//         const modalTitle = document.getElementById('modalTitle');
+//         if (modalTitle) modalTitle.textContent = "アイテムを追加";
+//         if (detailModal) detailModal.classList.add('is-active');
+//     }
+// });
+
+
+function handleClothingImage(file) {
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+        alert('画像ファイルを選択してください。');
+        return;
+    }
+
+    selectedClothingFile = file;
+
+    const previewImage = document.getElementById('previewImage');
+    if (previewImage) {
+        previewImage.src = URL.createObjectURL(file);
+    }
+
+    const detailModal = document.querySelector('.item-detail-modal-overlay');
+    const modalTitle = document.getElementById('modalTitle');
+
+    if (modalTitle) modalTitle.textContent = 'アイテムを追加';
+    if (detailModal) detailModal.classList.add('is-active');
+}
+
+// アルバムから画像を選択
+hiddenInput.addEventListener('change', (e) => {
+    handleClothingImage(e.target.files[0]);
+});
+
+// カメラから画像を選択
+const cameraInput = document.getElementById('cameraFileInput');
+
+if (cameraInput) {
+    cameraInput.addEventListener('change', (e) => {
+        handleClothingImage(e.target.files[0]);
+    });
+}
 
 
 /* ==========================================
@@ -666,7 +580,7 @@ if (colorPalette) {
         const colorName = dot.getAttribute('data-color');
         if (colorName && selectedColorNameSpan) {
             selectedColorNameSpan.textContent = colorName;
-            if (customColorInput) customColorInput.value = "";
+            if (customColorInput) customColorInput.value = ""; 
         }
     });
 }
@@ -768,6 +682,14 @@ document.addEventListener('DOMContentLoaded', () => {
 const addToClosetBtn = document.getElementById('addToClosetBtn');
 const detailModal = document.querySelector('.item-detail-modal-overlay');
 
+// if (addToClosetBtn && detailModal) {           11/26  以下の文に置き換え 691~795
+//     addToClosetBtn.addEventListener('click', () => {
+//         console.log('✨ クローゼットにアイテムを追加しました！（仮）');
+//         detailModal.classList.remove('is-active');
+//     });
+// }
+
+
 if (addToClosetBtn && detailModal) {
     addToClosetBtn.addEventListener('click', async () => {
 
@@ -781,6 +703,7 @@ if (addToClosetBtn && detailModal) {
         let uploadedPath = null;
 
         try {
+            // ログインユーザーを取得
             const { data: userData, error: userError } =
                 await supabaseClient.auth.getUser();
 
@@ -790,9 +713,11 @@ if (addToClosetBtn && detailModal) {
 
             const user = userData.user;
 
+            // 画像の保存先を作成
             const fileExt = selectedClothingFile.name.split('.').pop().toLowerCase();
             const filePath = `${user.id}/${crypto.randomUUID()}.${fileExt}`;
 
+            // Storageに画像をアップロード
             const { error: uploadError } = await supabaseClient
                 .storage
                 .from('clothing-images')
@@ -804,6 +729,7 @@ if (addToClosetBtn && detailModal) {
 
             uploadedPath = filePath;
 
+            // 服の情報を取得
             const textInputs = detailModal.querySelectorAll('input[type="text"]');
 
             const itemName = textInputs[0]?.value.trim() || '';
@@ -826,6 +752,7 @@ if (addToClosetBtn && detailModal) {
             const isFavorite =
                 document.getElementById('favoriteBtn')?.classList.contains('is-active') || false;
 
+            // データベースに保存
             const { error: insertError } = await supabaseClient
                 .from('clothing_items')
                 .insert({
@@ -842,7 +769,7 @@ if (addToClosetBtn && detailModal) {
             if (insertError) throw insertError;
 
             alert('服をクローゼットに追加しました！');
-
+            // クローゼットの表示を自動更新
             if (typeof window.loadClothingItems === 'function') {
                 try {
                     await window.loadClothingItems();
@@ -852,7 +779,7 @@ if (addToClosetBtn && detailModal) {
             }
 
             selectedClothingFile = null;
-            if (hiddenImageInputEl) hiddenImageInputEl.value = '';
+            hiddenInput.value = '';
 
             const cameraInput = document.getElementById('cameraFileInput');
             if (cameraInput) cameraInput.value = '';
@@ -862,9 +789,9 @@ if (addToClosetBtn && detailModal) {
         } catch (error) {
             console.error('服の保存エラー:', error);
 
+            // DB保存に失敗した場合はアップロード済み画像を削除
             if (uploadedPath) {
-                await supabaseClient
-                    .storage
+                await supabaseClient.storage
                     .from('clothing-images')
                     .remove([uploadedPath]);
             }
@@ -931,14 +858,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             generateBtn.textContent = "生成中...";
-
+            
             setTimeout(() => {
                 generateBtn.textContent = "画像を生成する";
-                aiResultArea.style.display = 'block';
+                aiResultArea.style.display = 'block'; 
             }, 800);
         });
     }
 
+    // AI生成画像を選択したとき
     document.addEventListener('click', (e) => {
         if (e.target.classList.contains('selectable-ai-img')) {
             const selectedUrl = e.target.getAttribute('data-img-url');
@@ -1011,11 +939,12 @@ function initCategoryFilter(selectId, cardSelector, defaultFilter = 'all') {
     applyFilter();
 }
 
-
 // ======================================
 // ログインユーザー情報を表示    11/24追加
 // ======================================
+
 async function loadUserProfile() {
+
     const { data, error } = await supabaseClient.auth.getUser();
 
     if (error || !data.user) {
@@ -1025,11 +954,14 @@ async function loadUserProfile() {
 
     const user = data.user;
 
+    // ユーザー名
     const userName =
         user.user_metadata?.display_name || "MODEX User";
 
+    // メールアドレス
     const userEmail = user.email || "";
 
+    // HTMLに反映
     document.querySelectorAll("[data-user-name]")
         .forEach(element => {
             element.textContent = userName;
@@ -1041,13 +973,14 @@ async function loadUserProfile() {
         });
 }
 
+// 実行
 loadUserProfile();
-
-
 // ======================================
 // プロフィール画像をホーム画面に表示
 // ======================================
+
 async function loadUserAvatar() {
+
     const { data, error } =
         await supabaseClient.auth.getUser();
 
