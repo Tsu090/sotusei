@@ -195,7 +195,8 @@ function updateWeatherSVG(code) {
     }
 
     if (iconContainer) iconContainer.innerHTML = svgContent;
-    if (textEl) textEl.textContent = `今日の天気に合わせる（${text}）`;
+    if (textEl) textEl.textContent = `今日の天気に合わせる
+    （${text}）`;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
