@@ -476,8 +476,8 @@ if (moreBtn && morePopupMenu) {
 
 
 /* ==========================================
- * 4. 問題報告モーダルの処理
- * ========================================== */
+- 4. 問題報告モーダルの処理
+- ========================================== */
 const reportProblemBtn = document.getElementById('reportProblemBtn');
 const reportModal = document.getElementById('reportModal');
 const reportTextarea = document.getElementById('reportTextarea');
@@ -485,7 +485,62 @@ const submitReportBtn = document.getElementById('submitReportBtn');
 const reportFormView = document.getElementById('reportFormView');
 const reportSuccessView = document.getElementById('reportSuccessView');
 
+// 添付ファイル関連の要素
+const reportUploadBtn = document.getElementById('reportUploadBtn');
+const reportFileInput = document.getElementById('reportFileInput');
+const reportPreviewWrapper = document.getElementById('reportPreviewWrapper');
+const reportPreviewImg = document.getElementById('reportPreviewImg');
+const reportFileName = document.getElementById('reportFileName');
+const reportRemoveFileBtn = document.getElementById('reportRemoveFileBtn');
+
 if (reportProblemBtn && reportModal) {
+    let attachedReportFile = null;
+
+    const clearAttachedReportFile = () => {
+        attachedReportFile = null;
+        if (reportFileInput) reportFileInput.value = '';
+        if (reportPreviewImg) {
+            reportPreviewImg.src = '';
+            reportPreviewImg.style.display = 'none';
+        }
+        if (reportFileName) {
+            reportFileName.textContent = '';
+            reportFileName.style.display = 'none';
+        }
+        if (reportPreviewWrapper) reportPreviewWrapper.style.display = 'none';
+    };
+
+    const handleReportFile = (file) => {
+        if (!file) return;
+        attachedReportFile = file;
+
+        if (reportPreviewWrapper) reportPreviewWrapper.style.display = 'flex';
+
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if (reportPreviewImg) {
+                    reportPreviewImg.src = e.target.result;
+                    reportPreviewImg.style.display = 'block';
+                }
+                if (reportFileName) {
+                    reportFileName.textContent = '';
+                    reportFileName.style.display = 'none';
+                }
+            };
+            reader.readAsDataURL(file);
+        } else {
+            if (reportPreviewImg) {
+                reportPreviewImg.src = '';
+                reportPreviewImg.style.display = 'none';
+            }
+            if (reportFileName) {
+                reportFileName.textContent = `選択中のファイル: ${file.name}`;
+                reportFileName.style.display = 'block';
+            }
+        }
+    };
+
     const closeReportModal = () => {
         reportModal.classList.remove('is-active');
         setTimeout(() => {
@@ -495,12 +550,15 @@ if (reportProblemBtn && reportModal) {
                 reportTextarea.value = '';
                 reportTextarea.classList.remove('has-error');
             }
+            clearAttachedReportFile();
         }, 200);
     };
 
     reportProblemBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (morePopupMenu) morePopupMenu.classList.remove('is-active');
+        if (typeof morePopupMenu !== 'undefined' && morePopupMenu) {
+            morePopupMenu.classList.remove('is-active');
+        }
         if (reportFormView) reportFormView.style.display = 'block';
         if (reportSuccessView) reportSuccessView.style.display = 'none';
         reportModal.classList.add('is-active');
@@ -520,6 +578,39 @@ if (reportProblemBtn && reportModal) {
                 reportTextarea.classList.remove('has-error');
             }
         });
+
+        // テキストエリアにスクショを直接貼り付け（Ctrl+V / Cmd+V）
+        reportTextarea.addEventListener('paste', (e) => {
+            const items = e.clipboardData?.items;
+            if (!items) return;
+
+            for (const item of items) {
+                if (item.type.startsWith('image/')) {
+                    const file = item.getAsFile();
+                    if (file) {
+                        handleReportFile(file);
+                        break;
+                    }
+                }
+            }
+        });
+    }
+
+    // アップロードボタンからファイル選択
+    if (reportUploadBtn && reportFileInput) {
+        reportUploadBtn.addEventListener('click', () => {
+            reportFileInput.click();
+        });
+
+        reportFileInput.addEventListener('change', (e) => {
+            const file = e.target.files?.[0];
+            if (file) handleReportFile(file);
+        });
+    }
+
+    // プレビューの「✕」で添付削除
+    if (reportRemoveFileBtn) {
+        reportRemoveFileBtn.addEventListener('click', clearAttachedReportFile);
     }
 
     if (submitReportBtn && reportTextarea) {
@@ -534,7 +625,6 @@ if (reportProblemBtn && reportModal) {
         });
     }
 }
-
 
 /* ==========================================
  * 5. アイテム追加モーダル（選択カード・カメラ・アルバム・AI・詳細）
@@ -557,21 +647,18 @@ document.addEventListener('DOMContentLoaded', () => {
             modalOverlay.classList.remove('is-active');
         }
     });
+<<<<<<< HEAD
 });
 // 11/26 データベースつなげるため追加
 let selectedClothingFile = null;
+=======
+>>>>>>> 49ebe34cd16cad0aabfe89886d91f6a84117596d
 
-// ファイル選択（アルバム）用のインプット自動生成と処理
-let hiddenInput = document.getElementById('hiddenImageInput');
-if (!hiddenInput) {
-    hiddenInput = document.createElement('input');
-    hiddenInput.type = 'file';
-    hiddenInput.id = 'hiddenImageInput';
-    hiddenInput.accept = 'image/*';
-    hiddenInput.style.display = 'none';
-    document.body.appendChild(hiddenInput);
-}
+    // 画像ファイルを受け取って詳細モーダルを開く共通処理
+    const openDetailWithFile = (file) => {
+        if (!file) return;
 
+<<<<<<< HEAD
 window.addEventListener('click', (e) => {
     const albumCard = e.target.closest('.selection-card:nth-child(2)') || e.target.closest('[title="アルバム"]');
     if (albumCard) {
@@ -619,6 +706,66 @@ function handleClothingImage(file) {
 // アルバムから画像を選択
 hiddenInput.addEventListener('change', (e) => {
     handleClothingImage(e.target.files[0]);
+=======
+        const previewImage = document.getElementById('previewImage');
+        if (previewImage) {
+            previewImage.src = URL.createObjectURL(file);
+        }
+
+        const addItemModal = document.querySelector('.add-item-modal-overlay');
+        if (addItemModal) {
+            addItemModal.classList.remove('is-active');
+        }
+
+        const detailModal = document.querySelector('.item-detail-modal-overlay');
+        const modalTitle = document.getElementById('modalTitle');
+        if (modalTitle) modalTitle.textContent = "アイテムを追加";
+        if (detailModal) detailModal.classList.add('is-active');
+    };
+
+    // 1. カメラで撮影（#cameraTriggerBtn / #cameraFileInput）
+    const cameraTriggerBtn = document.getElementById('cameraTriggerBtn');
+    const cameraFileInput = document.getElementById('cameraFileInput');
+
+    if (cameraTriggerBtn && cameraFileInput) {
+        cameraTriggerBtn.addEventListener('click', (e) => {
+            // input自身のクリックが二重発火しないようにする
+            if (e.target === cameraFileInput) return;
+            e.stopPropagation();
+            cameraFileInput.click();
+        });
+
+        cameraFileInput.addEventListener('change', (e) => {
+            const file = e.target.files?.[0];
+            openDetailWithFile(file);
+            e.target.value = ''; // 同じ画像を連続で選んでも反応するようにリセット
+        });
+    }
+
+    // 2. ファイル選択（アルバム）用のインプット自動生成と処理
+    let hiddenInput = document.getElementById('hiddenImageInput');
+    if (!hiddenInput) {
+        hiddenInput = document.createElement('input');
+        hiddenInput.type = 'file';
+        hiddenInput.id = 'hiddenImageInput';
+        hiddenInput.accept = 'image/*';
+        hiddenInput.style.display = 'none';
+        document.body.appendChild(hiddenInput);
+    }
+
+    window.addEventListener('click', (e) => {
+        const albumCard = e.target.closest('.selection-card:nth-child(2)') || e.target.closest('[title="アルバム"]');
+        if (albumCard) {
+            hiddenInput.click();
+        }
+    });
+
+    hiddenInput.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
+        openDetailWithFile(file);
+        e.target.value = '';
+    });
+>>>>>>> 49ebe34cd16cad0aabfe89886d91f6a84117596d
 });
 
 // カメラから画像を選択

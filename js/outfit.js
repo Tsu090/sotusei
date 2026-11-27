@@ -273,52 +273,57 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 /* ==========================================
-     * 12. スマホ向け：ハンドル／ヘッダー操作で服一覧を上下に切り替え
+     * 12. スマホ向け：上にスライドしたときだけ服一覧を広げる
      * ========================================== */
     const drawerContent = document.querySelector('.coord-drawer-content');
     const drawerHandle = document.getElementById('drawerHandle');
-    const drawerHeader = document.querySelector('.drawer-header');
-    const dragTargets = [drawerHandle, drawerHeader].filter(Boolean);
+    const itemDrawer = document.querySelector('.item-drawer');
 
     let startY = 0;
     let currentDeltaY = 0;
     let isDraggingDrawer = false;
 
-    dragTargets.forEach((target) => {
-        target.addEventListener('touchstart', (e) => {
-            if (window.innerWidth > 600 || !drawerContent) return;
+    if (drawerHandle && drawerContent) {
+        drawerHandle.addEventListener('touchstart', (e) => {
+            if (window.innerWidth > 600) return;
             startY = e.touches[0].clientY;
             currentDeltaY = 0;
             isDraggingDrawer = true;
-            drawerContent.style.transition = 'none';
+            if (itemDrawer) itemDrawer.style.transition = 'none';
         }, { passive: true });
 
-        target.addEventListener('touchmove', (e) => {
-            if (!isDraggingDrawer || window.innerWidth > 600 || !drawerContent) return;
+        drawerHandle.addEventListener('touchmove', (e) => {
+            if (!isDraggingDrawer || window.innerWidth > 600) return;
             currentDeltaY = e.touches[0].clientY - startY;
-            const clampedDelta = Math.max(-100, Math.min(100, currentDeltaY));
-            drawerContent.style.transform = `translateY(${clampedDelta * 0.3}px)`;
+
+            // 上に引くときだけプレビューの追従感を出す
+            if (currentDeltaY < 0 && itemDrawer) {
+                const clampedDelta = Math.max(-100, currentDeltaY);
+                itemDrawer.style.transform = `translateY(${clampedDelta * 0.25}px)`;
+            }
         }, { passive: true });
 
         const finishDrawerDrag = () => {
-            if (!isDraggingDrawer || !drawerContent) return;
+            if (!isDraggingDrawer) return;
             isDraggingDrawer = false;
-            drawerContent.style.transition = 'transform 0.2s ease';
-            drawerContent.style.transform = '';
-
-            // 25px以上上に引いたら展開、25px以上下に引いたら戻す
-            if (currentDeltaY < -25) {
-                drawerContent.classList.add('is-expanded');
-            } else if (currentDeltaY > 25) {
-                drawerContent.classList.remove('is-expanded');
-            } else if (Math.abs(currentDeltaY) < 8) {
-                // ほぼタップだけの場合はトグル切り替え
-                drawerContent.classList.toggle('is-expanded');
+            if (itemDrawer) {
+                itemDrawer.style.transition = '';
+                itemDrawer.style.transform = '';
             }
+
+            // 35px以上「上」にスライドしたときだけ開く
+            if (currentDeltaY < -35) {
+                drawerContent.classList.add('is-expanded');
+            } else if (currentDeltaY > 35) {
+                // 下にスライドしたら戻す
+                drawerContent.classList.remove('is-expanded');
+            }
+            // ※ 35px未満の軽いタッチ・タップでは開閉しない（フィルター操作を邪魔しない）
+
             currentDeltaY = 0;
         };
 
-        target.addEventListener('touchend', finishDrawerDrag);
-        target.addEventListener('touchcancel', finishDrawerDrag);
-    });
+        drawerHandle.addEventListener('touchend', finishDrawerDrag);
+        drawerHandle.addEventListener('touchcancel', finishDrawerDrag);
+    }
 });
