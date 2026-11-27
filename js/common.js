@@ -261,18 +261,89 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }, true);
 
-    // 一括削除ボタン（確認なし・即削除）
+    // 一括削除ボタン（確認なし・即削除）  11/26 コメント化し、277～346追加
+    // if (batchDeleteBtn) {
+    //     batchDeleteBtn.addEventListener('click', () => {
+    //         const selectedCards = document.querySelectorAll('.is-selected');
+    //         if (selectedCards.length === 0) {
+    //             alert('削除するアイテムが選択されていません');
+    //             return;
+    //         }
+    //         selectedCards.forEach(card => card.remove());
+    //         exitSelectMode(); 
+    //     });
+    // }
+
     if (batchDeleteBtn) {
-        batchDeleteBtn.addEventListener('click', () => {
-            const selectedCards = document.querySelectorAll('.is-selected');
-            if (selectedCards.length === 0) {
-                alert('削除するアイテムが選択されていません');
-                return;
+    batchDeleteBtn.addEventListener('click', async () => {
+
+        const selectedCards = Array.from(
+            document.querySelectorAll('.item-card.is-selected[data-item-id]')
+        );
+
+        if (selectedCards.length === 0) {
+            alert('削除するアイテムが選択されていません');
+            return;
+        }
+
+        if (!confirm('選択した服を削除しますか？')) return;
+
+        batchDeleteBtn.disabled = true;
+
+        try {
+            // 重複したIDを除外
+            const items = [
+                ...new Map(
+                    selectedCards.map(card => [
+                        card.dataset.itemId,
+                        card.dataset.imagePath
+                    ])
+                )
+            ];
+
+            const ids = items.map(item => item[0]);
+            const imagePaths = items.map(item => item[1]);
+
+            // データベースから削除
+            const { error: deleteError } = await supabaseClient
+                .from('clothing_items')
+                .delete()
+                .in('id', ids);
+
+            if (deleteError) throw deleteError;
+
+            // Storageから画像を削除
+            const validPaths = imagePaths.filter(path => path);
+
+            if (validPaths.length > 0) {
+                const { error: storageError } = await supabaseClient
+                    .storage
+                    .from('clothing-images')
+                    .remove(validPaths);
+
+                if (storageError) {
+                    console.error('画像削除エラー:', storageError);
+                    alert('服のデータは削除しましたが、画像の削除に失敗しました。');
+                }
             }
-            selectedCards.forEach(card => card.remove());
-            exitSelectMode(); 
-        });
-    }
+
+            // 一覧を再読み込み
+            if (typeof window.loadClothingItems === 'function') {
+                await window.loadClothingItems();
+            }
+
+            exitSelectMode();
+            alert('選択した服を削除しました！');
+
+        } catch (error) {
+            console.error('服の削除エラー:', error);
+            alert('削除に失敗しました。\n' + error.message);
+
+        } finally {
+            batchDeleteBtn.disabled = false;
+        }
+    });
+}
 
     // キャンセルボタン（選択モードを完全に終了する）
     if (batchCancelBtn) {
@@ -487,6 +558,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+// 11/26 データベースつなげるため追加
+let selectedClothingFile = null;
 
 // ファイル選択（アルバム）用のインプット自動生成と処理
 let hiddenInput = document.getElementById('hiddenImageInput');
@@ -506,19 +579,56 @@ window.addEventListener('click', (e) => {
     }
 });
 
-hiddenInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-        const previewImage = document.getElementById('previewImage');
-        if (previewImage) {
-            previewImage.src = URL.createObjectURL(file);
-        }
-        const detailModal = document.querySelector('.item-detail-modal-overlay');
-        const modalTitle = document.getElementById('modalTitle');
-        if (modalTitle) modalTitle.textContent = "アイテムを追加";
-        if (detailModal) detailModal.classList.add('is-active');
+// hiddenInput.addEventListener('change', (e) => {        11/26　データベースつなげるためいったん以下の文に置き換え。526~560
+//     const file = e.target.files[0];
+//     if (file) {
+//         const previewImage = document.getElementById('previewImage');
+//         if (previewImage) {
+//             previewImage.src = URL.createObjectURL(file);
+//         }
+//         const detailModal = document.querySelector('.item-detail-modal-overlay');
+//         const modalTitle = document.getElementById('modalTitle');
+//         if (modalTitle) modalTitle.textContent = "アイテムを追加";
+//         if (detailModal) detailModal.classList.add('is-active');
+//     }
+// });
+
+
+function handleClothingImage(file) {
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+        alert('画像ファイルを選択してください。');
+        return;
     }
+
+    selectedClothingFile = file;
+
+    const previewImage = document.getElementById('previewImage');
+    if (previewImage) {
+        previewImage.src = URL.createObjectURL(file);
+    }
+
+    const detailModal = document.querySelector('.item-detail-modal-overlay');
+    const modalTitle = document.getElementById('modalTitle');
+
+    if (modalTitle) modalTitle.textContent = 'アイテムを追加';
+    if (detailModal) detailModal.classList.add('is-active');
+}
+
+// アルバムから画像を選択
+hiddenInput.addEventListener('change', (e) => {
+    handleClothingImage(e.target.files[0]);
 });
+
+// カメラから画像を選択
+const cameraInput = document.getElementById('cameraFileInput');
+
+if (cameraInput) {
+    cameraInput.addEventListener('change', (e) => {
+        handleClothingImage(e.target.files[0]);
+    });
+}
 
 
 /* ==========================================
@@ -641,10 +751,125 @@ document.addEventListener('DOMContentLoaded', () => {
 const addToClosetBtn = document.getElementById('addToClosetBtn');
 const detailModal = document.querySelector('.item-detail-modal-overlay');
 
+// if (addToClosetBtn && detailModal) {           11/26  以下の文に置き換え 691~795
+//     addToClosetBtn.addEventListener('click', () => {
+//         console.log('✨ クローゼットにアイテムを追加しました！（仮）');
+//         detailModal.classList.remove('is-active');
+//     });
+// }
+
+
 if (addToClosetBtn && detailModal) {
-    addToClosetBtn.addEventListener('click', () => {
-        console.log('✨ クローゼットにアイテムを追加しました！（仮）');
-        detailModal.classList.remove('is-active');
+    addToClosetBtn.addEventListener('click', async () => {
+
+        if (!selectedClothingFile) {
+            alert('服の画像を選択してください。');
+            return;
+        }
+
+        addToClosetBtn.disabled = true;
+
+        let uploadedPath = null;
+
+        try {
+            // ログインユーザーを取得
+            const { data: userData, error: userError } =
+                await supabaseClient.auth.getUser();
+
+            if (userError || !userData.user) {
+                throw new Error('ログイン情報を取得できません。');
+            }
+
+            const user = userData.user;
+
+            // 画像の保存先を作成
+            const fileExt = selectedClothingFile.name.split('.').pop().toLowerCase();
+            const filePath = `${user.id}/${crypto.randomUUID()}.${fileExt}`;
+
+            // Storageに画像をアップロード
+            const { error: uploadError } = await supabaseClient
+                .storage
+                .from('clothing-images')
+                .upload(filePath, selectedClothingFile, {
+                    contentType: selectedClothingFile.type
+                });
+
+            if (uploadError) throw uploadError;
+
+            uploadedPath = filePath;
+
+            // 服の情報を取得
+            const textInputs = detailModal.querySelectorAll('input[type="text"]');
+
+            const itemName = textInputs[0]?.value.trim() || '';
+            const brand = textInputs[1]?.value.trim() || '';
+
+            const categorySelect = document.getElementById('categorySelect');
+            const categoryInput = document.getElementById('categoryInput');
+
+            const category =
+                categoryInput?.value.trim() ||
+                categorySelect?.value || '';
+
+            const color =
+                document.getElementById('selectedColorName')?.textContent || '';
+
+            const seasons = Array.from(
+                document.querySelectorAll('#seasonPicker .season-btn.is-active')
+            ).map(btn => btn.textContent.trim());
+
+            const isFavorite =
+                document.getElementById('favoriteBtn')?.classList.contains('is-active') || false;
+
+            // データベースに保存
+            const { error: insertError } = await supabaseClient
+                .from('clothing_items')
+                .insert({
+                    user_id: user.id,
+                    image_path: filePath,
+                    item_name: itemName,
+                    brand: brand,
+                    category: category,
+                    color: color,
+                    seasons: seasons,
+                    is_favorite: isFavorite
+                });
+
+            if (insertError) throw insertError;
+
+            alert('服をクローゼットに追加しました！');
+            // クローゼットの表示を自動更新
+            if (typeof window.loadClothingItems === 'function') {
+                try {
+                    await window.loadClothingItems();
+                } catch (refreshError) {
+                    console.error('一覧の更新エラー:', refreshError);
+                }
+            }
+
+            selectedClothingFile = null;
+            hiddenInput.value = '';
+
+            const cameraInput = document.getElementById('cameraFileInput');
+            if (cameraInput) cameraInput.value = '';
+
+            detailModal.classList.remove('is-active');
+
+        } catch (error) {
+            console.error('服の保存エラー:', error);
+
+            // DB保存に失敗した場合はアップロード済み画像を削除
+            if (uploadedPath) {
+                await supabaseClient.storage
+                    .from('clothing-images')
+                    .remove([uploadedPath]);
+            }
+
+            alert('服の保存に失敗しました。\n' + error.message);
+
+        } finally {
+            addToClosetBtn.disabled = false;
+        }
     });
 }
 
