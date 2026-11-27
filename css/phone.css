@@ -765,9 +765,9 @@
         width: 100% !important;
     }
 
-.weather-situation-bar {
+    .weather-situation-bar {
         display: flex !important;
-        flex-direction: column !important;
+        flex-wrap: wrap;
         align-items: stretch !important;
         gap: 8px !important;
         padding: 10px 12px !important;
@@ -776,7 +776,6 @@
 
     .weather-widget-part {
         display: flex !important;
-        flex-wrap: wrap !important;
         align-items: center !important;
         gap: 6px 8px !important;
         width: 100% !important;
@@ -802,6 +801,7 @@
         padding: 4px 20px 4px 4px !important;
         background-position: right 4px center !important;
         box-sizing: border-box !important;
+        margin: auto;
     }
 
     .situation-part {
@@ -853,9 +853,12 @@
 
     /* 下部アクションボタン（文章で提案 / 保存） */
     .coord-action-buttons {
-        justify-content: space-between !important;
+        display: flex;
+        justify-content: flex-end !important;
         gap: 8px !important;
         margin-top: 12px !important;
+        width: 250px;
+        margin-left: auto;
     }
 
     .btn-text-suggest,
