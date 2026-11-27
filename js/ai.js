@@ -384,3 +384,149 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const prevBtn = document.getElementById('coordPrevBtn');
+    const nextBtn = document.getElementById('coordNextBtn');
+    const pageCountEl = document.getElementById('coordPageCount');
+    const mediaImgs = document.querySelectorAll('.coord-sub-grid .coord-media-img');
+    const adviceCommentEl = document.getElementById('aiAdviceComment');
+    const advicePointsEl = document.getElementById('aiAdvicePoints');
+    const carouselEl = document.getElementById('otherCoordsCarousel');
+
+    const recommendedCoords = [
+        {
+            coordImg: 'https://via.placeholder.com/420x560?text=Coord+1',
+            coordAlt: 'AI提案コーデ 1',
+            tryOnImg: 'https://via.placeholder.com/420x560?text=Try-On+1',
+            tryOnAlt: '着てみた画像 1',
+            miniImg: 'https://via.placeholder.com/70x90?text=Coord1',
+            comment: '今日は暖かいため、白シャツにデニムでさわやかにまとめています。',
+            points: [
+                '春らしい軽やかな印象に',
+                'シンプルなアイテムでバランスよく',
+                '動きやすくて快適',
+                'カジュアルながらも清潔感のあるスタイル'
+            ]
+        },
+        {
+            coordImg: 'https://via.placeholder.com/420x560?text=Coord+2',
+            coordAlt: 'AI提案コーデ 2',
+            tryOnImg: 'https://via.placeholder.com/420x560?text=Try-On+2',
+            tryOnAlt: '着てみた画像 2',
+            miniImg: 'https://via.placeholder.com/70x90?text=Coord2',
+            comment: '少し肌寒いので、羽織りものを足して温度調節しやすい組み合わせにしています。',
+            points: [
+                '脱ぎ着しやすいレイヤード構成',
+                '落ち着いた色味で大人っぽく',
+                '街歩きにもなじむシルエット',
+                '重くなりすぎない軽快なバランス'
+            ]
+        },
+        {
+            coordImg: 'https://via.placeholder.com/420x560?text=Coord+3',
+            coordAlt: 'AI提案コーデ 3',
+            tryOnImg: 'https://via.placeholder.com/420x560?text=Try-On+3',
+            tryOnAlt: '着てみた画像 3',
+            miniImg: 'https://via.placeholder.com/70x90?text=Coord3',
+            comment: 'リラックス感を重視しつつ、足元をまとめてだらしなく見えないように整えました。',
+            points: [
+                '長時間でも疲れにくい着心地',
+                '色のトーンを揃えて統一感アップ',
+                '写真映えするすっきりしたライン',
+                '休日のお出かけにぴったり'
+            ]
+        }
+    ];
+
+    if (recommendedCoords.length === 0) return;
+
+    let currentIndex = 0;
+
+    function updateActiveMiniCard(index) {
+        if (!carouselEl) return;
+        const cards = carouselEl.querySelectorAll('.mini-coord-card');
+        cards.forEach((card, i) => {
+            card.classList.toggle('is-active', i === index);
+        });
+    }
+
+    function renderMiniCards() {
+        if (!carouselEl) return;
+        carouselEl.innerHTML = '';
+
+        recommendedCoords.forEach((coord, i) => {
+            const card = document.createElement('div');
+            card.className = 'mini-coord-card';
+
+            const img = document.createElement('img');
+            img.src = coord.miniImg || coord.coordImg;
+            img.alt = `コーデ${i + 1}`;
+
+            card.appendChild(img);
+            card.addEventListener('click', () => {
+                currentIndex = i;
+                renderCoord(currentIndex);
+            });
+
+            carouselEl.appendChild(card);
+        });
+    }
+
+    function renderCoord(index) {
+        const coord = recommendedCoords[index];
+        if (!coord) return;
+
+        if (mediaImgs.length >= 2) {
+            mediaImgs[0].src = coord.coordImg;
+            mediaImgs[0].alt = coord.coordAlt;
+            mediaImgs[1].src = coord.tryOnImg;
+            mediaImgs[1].alt = coord.tryOnAlt;
+        }
+
+        if (pageCountEl) {
+            pageCountEl.textContent = `${index + 1}/${recommendedCoords.length}`;
+        }
+
+        if (adviceCommentEl) {
+            adviceCommentEl.textContent = coord.comment;
+        }
+
+        if (advicePointsEl) {
+            advicePointsEl.innerHTML = '';
+            coord.points.forEach((pointText) => {
+                const li = document.createElement('li');
+                li.className = 'advice-point-item';
+
+                const badge = document.createElement('span');
+                badge.className = 'check-badge';
+                badge.textContent = '✓';
+
+                const span = document.createElement('span');
+                span.textContent = pointText;
+
+                li.appendChild(badge);
+                li.appendChild(span);
+                advicePointsEl.appendChild(li);
+            });
+        }
+
+        updateActiveMiniCard(index);
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + recommendedCoords.length) % recommendedCoords.length;
+            renderCoord(currentIndex);
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % recommendedCoords.length;
+            renderCoord(currentIndex);
+        });
+    }
+
+    renderMiniCards();
+    renderCoord(currentIndex);
+});
